@@ -1,0 +1,4386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RUBY_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="RailsFacetType" name="Ruby on Rails">
+      <configuration>
+        <RAILS_FACET_CONFIG_ID NAME="RAILS_FACET_SUPPORT_REMOVED" VALUE="false" />
+        <RAILS_FACET_CONFIG_ID NAME="RAILS_TESTS_SOURCES_PATCHED" VALUE="true" />
+        <RAILS_FACET_CONFIG_ID NAME="RAILS_FACET_APPLICATION_ROOT" VALUE="$MODULE_DIR$" />
+      </configuration>
+    </facet>
+  </component>
+  <component name="ModuleRunConfigurationManager">
+    <shared />
+  </component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/features" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/.bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/components" />
+      <excludeFolder url="file://$MODULE_DIR$/log" />
+      <excludeFolder url="file://$MODULE_DIR$/public/packs" />
+      <excludeFolder url="file://$MODULE_DIR$/public/system" />
+      <excludeFolder url="file://$MODULE_DIR$/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/cache" />
+    </content>
+    <orderEntry type="jdk" jdkName="ruby-3.3.8-p144" jdkType="RUBY_SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="action_text-trix (v2.1.15) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="action_text-trix" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/action_text-trix-2.1.15" />
+          <option name="version" value="2.1.15" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/action_text-trix-2.1.15/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/action_text-trix-2.1.15/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/action_text-trix-2.1.15/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/action_text-trix-2.1.15/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="actioncable (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="actioncable" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actioncable-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actioncable-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actioncable-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actioncable-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actioncable-8.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="actionmailbox (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="actionmailbox" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1/db" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1/config" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1/db" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailbox-8.1.1/config" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="actionmailer (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="actionmailer" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailer-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailer-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionmailer-8.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="actionpack (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="actionpack" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionpack-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionpack-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionpack-8.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="actiontext (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="actiontext" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actiontext-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actiontext-8.1.1/db" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actiontext-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actiontext-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actiontext-8.1.1/db" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actiontext-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actiontext-8.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="actionview (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="actionview" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionview-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionview-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionview-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionview-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/actionview-8.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="activejob (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="activejob" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activejob-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activejob-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activejob-8.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="activemodel (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="activemodel" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activemodel-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activemodel-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activemodel-8.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="activerecord (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="activerecord" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activerecord-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activerecord-8.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activerecord-8.1.1/examples" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activerecord-8.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activerecord-8.1.1/examples" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activerecord-8.1.1/examples" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="activestorage (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="activestorage" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1/db" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1/config" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1/db" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activestorage-8.1.1/config" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="activesupport (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="activesupport" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activesupport-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activesupport-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/activesupport-8.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="addressable (v2.8.8) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="addressable" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8" />
+          <option name="version" value="2.8.8" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8/tasks" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8/tasks" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/addressable-2.8.8/tasks" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ast (v2.4.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="ast" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ast-2.4.3" />
+          <option name="version" value="2.4.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ast-2.4.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ast-2.4.3/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="base64 (v0.3.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="base64" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/base64-0.3.0" />
+          <option name="version" value="0.3.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/base64-0.3.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/base64-0.3.0/sig" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/base64-0.3.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/base64-0.3.0/sig" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bcrypt_pbkdf (v1.1.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="bcrypt_pbkdf" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2" />
+          <option name="version" value="1.1.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bcrypt_pbkdf-1.1.2/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bigdecimal (v3.3.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="bigdecimal" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1" />
+          <option name="version" value="3.3.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1/sample" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1/sample" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bigdecimal-3.3.1/sample" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bindex (v0.8.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="bindex" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1" />
+          <option name="version" value="0.8.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1/test" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1/test" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bindex-0.8.1/test" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bootsnap (v1.19.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="bootsnap" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0" />
+          <option name="version" value="1.19.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bootsnap-1.19.0/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="brakeman (v7.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="brakeman" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1" />
+          <option name="version" value="7.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1/bundle" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1/bundle" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/brakeman-7.1.1/bundle" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="builder (v3.3.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="builder" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0" />
+          <option name="version" value="3.3.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/rakelib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/rakelib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/builder-3.3.0/rakelib" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="bundler-audit (v0.9.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="bundler-audit" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3" />
+          <option name="version" value="0.9.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/bundler-audit-0.9.3/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="capybara (v3.40.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="capybara" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/capybara-3.40.0" />
+          <option name="version" value="3.40.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/capybara-3.40.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/capybara-3.40.0/spec" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/capybara-3.40.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/capybara-3.40.0/spec" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/capybara-3.40.0/spec" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="concurrent-ruby (v1.3.5) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="concurrent-ruby" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/concurrent-ruby-1.3.5" />
+          <option name="version" value="1.3.5" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/concurrent-ruby-1.3.5/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/concurrent-ruby-1.3.5/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/concurrent-ruby-1.3.5/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/concurrent-ruby-1.3.5/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/concurrent-ruby-1.3.5/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="connection_pool (v3.0.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="connection_pool" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/connection_pool-3.0.2" />
+          <option name="version" value="3.0.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/connection_pool-3.0.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/connection_pool-3.0.2/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="crass (v1.0.6) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="crass" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/crass-1.0.6" />
+          <option name="version" value="1.0.6" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/crass-1.0.6/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/crass-1.0.6/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="date (v3.5.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="date" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/date-3.5.0" />
+          <option name="version" value="3.5.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/date-3.5.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/date-3.5.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/date-3.5.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/date-3.5.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/date-3.5.0/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="debug (v1.11.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="debug" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0" />
+          <option name="version" value="1.11.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/misc" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/misc" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/debug-1.11.0/misc" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="dotenv (v3.2.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="dotenv" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/dotenv-3.2.0" />
+          <option name="version" value="3.2.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/dotenv-3.2.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/dotenv-3.2.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/dotenv-3.2.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/dotenv-3.2.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/dotenv-3.2.0/bin" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="drb (v2.2.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="drb" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/drb-2.2.3" />
+          <option name="version" value="2.2.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/drb-2.2.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/drb-2.2.3/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ed25519 (v1.4.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="ed25519" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ed25519-1.4.0" />
+          <option name="version" value="1.4.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ed25519-1.4.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ed25519-1.4.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ed25519-1.4.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ed25519-1.4.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ed25519-1.4.0/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="erb (v6.0.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="erb" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0" />
+          <option name="version" value="6.0.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/_doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/libexec" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/_doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/libexec" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/_doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erb-6.0.0/libexec" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="erubi (v1.13.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="erubi" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erubi-1.13.1" />
+          <option name="version" value="1.13.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erubi-1.13.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/erubi-1.13.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="et-orbi (v1.4.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="et-orbi" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/et-orbi-1.4.0" />
+          <option name="version" value="1.4.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/et-orbi-1.4.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/et-orbi-1.4.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ffi (v1.17.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="ffi" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu" />
+          <option name="version" value="1.17.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/sig" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/rakelib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/samples" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/sig" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/rakelib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/samples" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/rakelib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ffi-1.17.2-x86_64-linux-gnu/samples" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="fugit (v1.12.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="fugit" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/fugit-1.12.1" />
+          <option name="version" value="1.12.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/fugit-1.12.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/fugit-1.12.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="globalid (v1.3.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="globalid" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/globalid-1.3.0" />
+          <option name="version" value="1.3.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/globalid-1.3.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/globalid-1.3.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="i18n (v1.14.7) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="i18n" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/i18n-1.14.7" />
+          <option name="version" value="1.14.7" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/i18n-1.14.7/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/i18n-1.14.7/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="image_processing (v1.14.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="image_processing" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/image_processing-1.14.0" />
+          <option name="version" value="1.14.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/image_processing-1.14.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/image_processing-1.14.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="importmap-rails (v2.2.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="importmap-rails" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/importmap-rails-2.2.2" />
+          <option name="version" value="2.2.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/importmap-rails-2.2.2/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/importmap-rails-2.2.2/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/importmap-rails-2.2.2/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/importmap-rails-2.2.2/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="io-console (v0.8.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="io-console" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/io-console-0.8.1" />
+          <option name="version" value="0.8.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/io-console-0.8.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/io-console-0.8.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/io-console-0.8.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/io-console-0.8.1/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/io-console-0.8.1/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="irb (v1.15.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="irb" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3" />
+          <option name="version" value="1.15.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/man" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/man" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/irb-1.15.3/man" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jbuilder (v2.14.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="jbuilder" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1" />
+          <option name="version" value="2.14.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/gemfiles" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/.devcontainer" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/gemfiles" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/.devcontainer" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/gemfiles" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/jbuilder-2.14.1/.devcontainer" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="json (v2.17.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="json" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/json-2.17.1" />
+          <option name="version" value="2.17.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/json-2.17.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/json-2.17.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/json-2.17.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/json-2.17.1/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/json-2.17.1/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="kamal (v2.9.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="kamal" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/kamal-2.9.0" />
+          <option name="version" value="2.9.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/kamal-2.9.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/kamal-2.9.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/kamal-2.9.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/kamal-2.9.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/kamal-2.9.0/bin" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="language_server-protocol (v3.17.0.5) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="language_server-protocol" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/language_server-protocol-3.17.0.5" />
+          <option name="version" value="3.17.0.5" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/language_server-protocol-3.17.0.5/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/language_server-protocol-3.17.0.5/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="lint_roller (v1.1.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="lint_roller" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/lint_roller-1.1.0" />
+          <option name="version" value="1.1.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/lint_roller-1.1.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/lint_roller-1.1.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="logger (v1.7.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="logger" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/logger-1.7.0" />
+          <option name="version" value="1.7.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/logger-1.7.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/logger-1.7.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="loofah (v2.24.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="loofah" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/loofah-2.24.1" />
+          <option name="version" value="2.24.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/loofah-2.24.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/loofah-2.24.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mail (v2.9.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="mail" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mail-2.9.0" />
+          <option name="version" value="2.9.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mail-2.9.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mail-2.9.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="marcel (v1.1.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="marcel" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/marcel-1.1.0" />
+          <option name="version" value="1.1.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/marcel-1.1.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/marcel-1.1.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="matrix (v0.4.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="matrix" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/matrix-0.4.3" />
+          <option name="version" value="0.4.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/matrix-0.4.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/matrix-0.4.3/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mini_magick (v5.3.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="mini_magick" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_magick-5.3.1" />
+          <option name="version" value="5.3.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_magick-5.3.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_magick-5.3.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mini_mime (v1.1.5) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="mini_mime" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5" />
+          <option name="version" value="1.1.5" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/bench" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/bench" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/bench" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mini_mime-1.1.5/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="minitest (v5.26.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="minitest" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/minitest-5.26.2" />
+          <option name="version" value="5.26.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/minitest-5.26.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/minitest-5.26.2/test" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/minitest-5.26.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/minitest-5.26.2/test" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/minitest-5.26.2/test" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="msgpack (v1.8.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="msgpack" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/msgpack-1.8.0" />
+          <option name="version" value="1.8.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/msgpack-1.8.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/msgpack-1.8.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/msgpack-1.8.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/msgpack-1.8.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/msgpack-1.8.0/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="mysql2 (v0.5.7) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="mysql2" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7" />
+          <option name="version" value="0.5.7" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7/support" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7/support" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/mysql2-0.5.7/support" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="net-imap (v0.5.12) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="net-imap" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12" />
+          <option name="version" value="0.5.12" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/sample" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/rakelib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/sample" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/rakelib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/sample" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-imap-0.5.12/rakelib" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="net-pop (v0.1.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="net-pop" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-pop-0.1.2" />
+          <option name="version" value="0.1.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-pop-0.1.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-pop-0.1.2/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-pop-0.1.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-pop-0.1.2/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-pop-0.1.2/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="net-protocol (v0.2.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="net-protocol" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2" />
+          <option name="version" value="0.2.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-protocol-0.2.2/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="net-scp (v4.1.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="net-scp" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-scp-4.1.0" />
+          <option name="version" value="4.1.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-scp-4.1.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-scp-4.1.0/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-scp-4.1.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-scp-4.1.0/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-scp-4.1.0/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="net-sftp (v4.0.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="net-sftp" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-sftp-4.0.0" />
+          <option name="version" value="4.0.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-sftp-4.0.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-sftp-4.0.0/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-sftp-4.0.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-sftp-4.0.0/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-sftp-4.0.0/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="net-smtp (v0.5.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="net-smtp" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-smtp-0.5.1" />
+          <option name="version" value="0.5.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-smtp-0.5.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-smtp-0.5.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="net-ssh (v7.3.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="net-ssh" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0" />
+          <option name="version" value="7.3.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0/support" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0/support" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/net-ssh-7.3.0/support" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="nio4r (v2.7.5) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="nio4r" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nio4r-2.7.5" />
+          <option name="version" value="2.7.5" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nio4r-2.7.5/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nio4r-2.7.5/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nio4r-2.7.5/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nio4r-2.7.5/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nio4r-2.7.5/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="nokogiri (v1.18.10) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="nokogiri" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu" />
+          <option name="version" value="1.18.10" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/gumbo-parser" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/gumbo-parser" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/nokogiri-1.18.10-x86_64-linux-gnu/gumbo-parser" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ostruct (v0.6.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="ostruct" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ostruct-0.6.3" />
+          <option name="version" value="0.6.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ostruct-0.6.3/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ostruct-0.6.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ostruct-0.6.3/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ostruct-0.6.3/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ostruct-0.6.3/bin" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="parallel (v1.27.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="parallel" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parallel-1.27.0" />
+          <option name="version" value="1.27.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parallel-1.27.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parallel-1.27.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="parser (v3.3.10.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="parser" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parser-3.3.10.0" />
+          <option name="version" value="3.3.10.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parser-3.3.10.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parser-3.3.10.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parser-3.3.10.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parser-3.3.10.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/parser-3.3.10.0/bin" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="pp (v0.6.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="pp" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/pp-0.6.3" />
+          <option name="version" value="0.6.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/pp-0.6.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/pp-0.6.3/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="prettyprint (v0.2.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="prettyprint" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0" />
+          <option name="version" value="0.2.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prettyprint-0.2.0/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="prism (v1.6.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="prism" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0" />
+          <option name="version" value="1.6.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/rbi" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/sig" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/src" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/include" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/rbi" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/sig" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/src" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/include" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/rbi" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/src" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/prism-1.6.0/include" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="propshaft (v1.3.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="propshaft" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/propshaft-1.3.1" />
+          <option name="version" value="1.3.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/propshaft-1.3.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/propshaft-1.3.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="psych (v5.2.6) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="psych" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/psych-5.2.6" />
+          <option name="version" value="5.2.6" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/psych-5.2.6/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/psych-5.2.6/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/psych-5.2.6/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/psych-5.2.6/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/psych-5.2.6/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="public_suffix (v7.0.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="public_suffix" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/public_suffix-7.0.0" />
+          <option name="version" value="7.0.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/public_suffix-7.0.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/public_suffix-7.0.0/data" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/public_suffix-7.0.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/public_suffix-7.0.0/data" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/public_suffix-7.0.0/data" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="puma (v7.1.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="puma" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0" />
+          <option name="version" value="7.1.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/tools" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/tools" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/docs" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/puma-7.1.0/tools" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="raabro (v1.4.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="raabro" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/raabro-1.4.0" />
+          <option name="version" value="1.4.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/raabro-1.4.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/raabro-1.4.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="racc (v1.8.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="racc" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1" />
+          <option name="version" value="1.8.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/racc-1.8.1/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rack (v3.2.4) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rack" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-3.2.4" />
+          <option name="version" value="3.2.4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-3.2.4/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-3.2.4/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rack-session (v2.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rack-session" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-session-2.1.1" />
+          <option name="version" value="2.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-session-2.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-session-2.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rack-test (v2.2.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rack-test" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-test-2.2.0" />
+          <option name="version" value="2.2.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-test-2.2.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rack-test-2.2.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rackup (v2.3.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rackup" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rackup-2.3.1" />
+          <option name="version" value="2.3.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rackup-2.3.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rackup-2.3.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rackup-2.3.1/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rackup-2.3.1/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rackup-2.3.1/bin" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rails (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rails" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rails-dom-testing (v2.3.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rails-dom-testing" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-dom-testing-2.3.0" />
+          <option name="version" value="2.3.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-dom-testing-2.3.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-dom-testing-2.3.0/test" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-dom-testing-2.3.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-dom-testing-2.3.0/test" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-dom-testing-2.3.0/test" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rails-html-sanitizer (v1.6.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rails-html-sanitizer" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-html-sanitizer-1.6.2" />
+          <option name="version" value="1.6.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-html-sanitizer-1.6.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-html-sanitizer-1.6.2/test" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-html-sanitizer-1.6.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-html-sanitizer-1.6.2/test" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rails-html-sanitizer-1.6.2/test" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="railties (v8.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="railties" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/railties-8.1.1" />
+          <option name="version" value="8.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/railties-8.1.1/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/railties-8.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/railties-8.1.1/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/railties-8.1.1/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/railties-8.1.1/exe" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rainbow (v3.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rainbow" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rainbow-3.1.1" />
+          <option name="version" value="3.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rainbow-3.1.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rainbow-3.1.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rake (v13.3.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rake" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1" />
+          <option name="version" value="13.3.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rake-13.3.1/exe" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rdoc (v6.17.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rdoc" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0" />
+          <option name="version" value="6.17.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0/man" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0/man" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rdoc-6.17.0/man" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="regexp_parser (v2.11.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="regexp_parser" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/regexp_parser-2.11.3" />
+          <option name="version" value="2.11.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/regexp_parser-2.11.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/regexp_parser-2.11.3/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="reline (v0.6.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="reline" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/reline-0.6.3" />
+          <option name="version" value="0.6.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/reline-0.6.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/reline-0.6.3/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rexml (v3.4.4) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rexml" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rexml-3.4.4" />
+          <option name="version" value="3.4.4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rexml-3.4.4/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rexml-3.4.4/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rexml-3.4.4/doc" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rexml-3.4.4/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rexml-3.4.4/doc" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rubocop (v1.81.7) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rubocop" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7" />
+          <option name="version" value="1.81.7" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/assets" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/config" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/assets" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/config" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-1.81.7/assets" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rubocop-ast (v1.48.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rubocop-ast" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-ast-1.48.0" />
+          <option name="version" value="1.48.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-ast-1.48.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-ast-1.48.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rubocop-performance (v1.26.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rubocop-performance" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-performance-1.26.1" />
+          <option name="version" value="1.26.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-performance-1.26.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-performance-1.26.1/config" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-performance-1.26.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-performance-1.26.1/config" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rubocop-rails (v2.34.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rubocop-rails" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-rails-2.34.2" />
+          <option name="version" value="2.34.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-rails-2.34.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-rails-2.34.2/config" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-rails-2.34.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-rails-2.34.2/config" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rubocop-rails-omakase (v1.1.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rubocop-rails-omakase" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubocop-rails-omakase-1.1.0" />
+          <option name="version" value="1.1.0" />
+        </properties>
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ruby-progressbar (v1.13.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="ruby-progressbar" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-progressbar-1.13.0" />
+          <option name="version" value="1.13.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-progressbar-1.13.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-progressbar-1.13.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="ruby-vips (v2.2.5) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="ruby-vips" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5" />
+          <option name="version" value="2.2.5" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5/example" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5/example" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/ruby-vips-2.2.5/example" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="rubyzip (v3.2.2) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="rubyzip" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubyzip-3.2.2" />
+          <option name="version" value="3.2.2" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubyzip-3.2.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubyzip-3.2.2/samples" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubyzip-3.2.2/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubyzip-3.2.2/samples" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/rubyzip-3.2.2/samples" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="securerandom (v0.4.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="securerandom" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/securerandom-0.4.1" />
+          <option name="version" value="0.4.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/securerandom-0.4.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/securerandom-0.4.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="selenium-webdriver (v4.39.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="selenium-webdriver" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/selenium-webdriver-4.39.0" />
+          <option name="version" value="4.39.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/selenium-webdriver-4.39.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/selenium-webdriver-4.39.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/selenium-webdriver-4.39.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/selenium-webdriver-4.39.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/selenium-webdriver-4.39.0/bin" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="solid_cable (v3.0.12) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="solid_cable" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cable-3.0.12" />
+          <option name="version" value="3.0.12" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cable-3.0.12/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cable-3.0.12/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cable-3.0.12/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cable-3.0.12/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="solid_cache (v1.0.10) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="solid_cache" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cache-1.0.10" />
+          <option name="version" value="1.0.10" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cache-1.0.10/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cache-1.0.10/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cache-1.0.10/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_cache-1.0.10/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="solid_queue (v1.2.4) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="solid_queue" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_queue-1.2.4" />
+          <option name="version" value="1.2.4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_queue-1.2.4/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_queue-1.2.4/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_queue-1.2.4/config" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_queue-1.2.4/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_queue-1.2.4/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/solid_queue-1.2.4/config" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="sshkit (v1.24.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="sshkit" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0" />
+          <option name="version" value="1.24.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/.docker" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/examples" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/.docker" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/examples" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/test" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/.docker" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/.github" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/sshkit-1.24.0/examples" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="stimulus-rails (v1.3.4) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="stimulus-rails" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stimulus-rails-1.3.4" />
+          <option name="version" value="1.3.4" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stimulus-rails-1.3.4/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stimulus-rails-1.3.4/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stimulus-rails-1.3.4/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stimulus-rails-1.3.4/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="stringio (v3.1.9) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="stringio" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9" />
+          <option name="version" value="3.1.9" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9/docs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9/docs" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/stringio-3.1.9/docs" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="thor (v1.4.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="thor" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thor-1.4.0" />
+          <option name="version" value="1.4.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thor-1.4.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thor-1.4.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thor-1.4.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thor-1.4.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thor-1.4.0/bin" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="thruster (v0.1.16) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="thruster" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thruster-0.1.16-x86_64-linux" />
+          <option name="version" value="0.1.16" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thruster-0.1.16-x86_64-linux/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thruster-0.1.16-x86_64-linux/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thruster-0.1.16-x86_64-linux/exe" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thruster-0.1.16-x86_64-linux/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/thruster-0.1.16-x86_64-linux/exe" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="timeout (v0.5.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="timeout" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/timeout-0.5.0" />
+          <option name="version" value="0.5.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/timeout-0.5.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/timeout-0.5.0/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="tsort (v0.2.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="tsort" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0" />
+          <option name="version" value="0.2.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0/bin" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tsort-0.2.0/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="turbo-rails (v2.0.20) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="turbo-rails" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/turbo-rails-2.0.20" />
+          <option name="version" value="2.0.20" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/turbo-rails-2.0.20/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/turbo-rails-2.0.20/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/turbo-rails-2.0.20/config" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/turbo-rails-2.0.20/app" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/turbo-rails-2.0.20/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/turbo-rails-2.0.20/config" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="tzinfo (v2.0.6) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="tzinfo" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tzinfo-2.0.6" />
+          <option name="version" value="2.0.6" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tzinfo-2.0.6/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/tzinfo-2.0.6/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="unicode-display_width (v3.2.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="unicode-display_width" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-display_width-3.2.0" />
+          <option name="version" value="3.2.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-display_width-3.2.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-display_width-3.2.0/data" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-display_width-3.2.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-display_width-3.2.0/data" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-display_width-3.2.0/data" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="unicode-emoji (v4.1.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="unicode-emoji" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0" />
+          <option name="version" value="4.1.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0/data" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0/spec" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0/data" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0/spec" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0/data" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/unicode-emoji-4.1.0/spec" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="uri (v1.1.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="uri" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/uri-1.1.1" />
+          <option name="version" value="1.1.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/uri-1.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/uri-1.1.1/docs" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/uri-1.1.1/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/uri-1.1.1/docs" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/uri-1.1.1/docs" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="useragent (v0.16.11) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="useragent" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/useragent-0.16.11" />
+          <option name="version" value="0.16.11" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/useragent-0.16.11/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/useragent-0.16.11/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="web-console (v4.2.1) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="web-console" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/web-console-4.2.1" />
+          <option name="version" value="4.2.1" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/web-console-4.2.1/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/web-console-4.2.1/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="websocket (v1.2.11) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="websocket" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11" />
+          <option name="version" value="1.2.11" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11/.github" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11/.github" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11/spec" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-1.2.11/.github" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="websocket-driver (v0.8.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="websocket-driver" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-driver-0.8.0" />
+          <option name="version" value="0.8.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-driver-0.8.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-driver-0.8.0/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-driver-0.8.0/ext" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-driver-0.8.0/lib" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-driver-0.8.0/ext" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="websocket-extensions (v0.1.5) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="websocket-extensions" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-extensions-0.1.5" />
+          <option name="version" value="0.1.5" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-extensions-0.1.5/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/websocket-extensions-0.1.5/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xpath (v3.2.0) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="xpath" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/xpath-3.2.0" />
+          <option name="version" value="3.2.0" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/xpath-3.2.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/xpath-3.2.0/spec" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/xpath-3.2.0/lib" />
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/xpath-3.2.0/spec" />
+        </SOURCES>
+        <excluded>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/xpath-3.2.0/spec" />
+        </excluded>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="zeitwerk (v2.7.3) [path][gem]" type="rubylib">
+        <properties>
+          <option name="additionalInfo">
+            <AdditionalInfo>
+              <option name="authors" value="N/A" />
+              <option name="email" value="N/A" />
+              <option name="homepage" value="N/A" />
+              <option name="summary" value="N/A" />
+            </AdditionalInfo>
+          </option>
+          <option name="fromPath" value="true" />
+          <option name="name" value="zeitwerk" />
+          <option name="requirePaths">
+            <list>
+              <option value="lib" />
+            </list>
+          </option>
+          <option name="url" value="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/zeitwerk-2.7.3" />
+          <option name="version" value="2.7.3" />
+        </properties>
+        <CLASSES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/zeitwerk-2.7.3/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$USER_HOME$/.gem/ruby/3.3.0/ruby/3.3.0/gems/zeitwerk-2.7.3/lib" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="PROVIDED" name="bundler (v2.7.2, ruby-3.3.8-p144) [gem]" level="application" />
+  </component>
+  <component name="RModuleSettingsStorage">
+    <LOAD_PATH number="0" />
+    <I18N_FOLDERS number="1" string0="$MODULE_DIR$/config/locales" />
+  </component>
+  <component name="RailsPaths" isManagedAutomatically="true">
+    <entry key="app">
+      <value>file://$MODULE_DIR$/app</value>
+    </entry>
+    <entry key="app/assets">
+      <value>file://$MODULE_DIR$/app/assets</value>
+    </entry>
+    <entry key="app/channels">
+      <value>file://$MODULE_DIR$/app/channels</value>
+    </entry>
+    <entry key="app/controllers">
+      <value>file://$MODULE_DIR$/app/controllers</value>
+    </entry>
+    <entry key="app/helpers">
+      <value>file://$MODULE_DIR$/app/helpers</value>
+    </entry>
+    <entry key="app/mailers">
+      <value>file://$MODULE_DIR$/app/mailers</value>
+    </entry>
+    <entry key="app/models">
+      <value>file://$MODULE_DIR$/app/models</value>
+    </entry>
+    <entry key="app/views">
+      <value>file://$MODULE_DIR$/app/views</value>
+    </entry>
+    <entry key="config">
+      <value>file://$MODULE_DIR$/config</value>
+    </entry>
+    <entry key="config/cable">
+      <value>file://$MODULE_DIR$/config/cable.yml</value>
+    </entry>
+    <entry key="config/cache">
+      <value>file://$MODULE_DIR$/config/cache.yml</value>
+    </entry>
+    <entry key="config/database">
+      <value>file://$MODULE_DIR$/config/database.yml</value>
+    </entry>
+    <entry key="config/environment">
+      <value>file://$MODULE_DIR$/config/environment.rb</value>
+    </entry>
+    <entry key="config/environments">
+      <value>file://$MODULE_DIR$/config/environments</value>
+    </entry>
+    <entry key="config/initializers">
+      <value>file://$MODULE_DIR$/config/initializers</value>
+    </entry>
+    <entry key="config/locales">
+      <value>file://$MODULE_DIR$/config/locales</value>
+    </entry>
+    <entry key="config/routes">
+      <value>file://$MODULE_DIR$/config/routes</value>
+    </entry>
+    <entry key="config/routes.rb">
+      <value>file://$MODULE_DIR$/config/routes.rb</value>
+    </entry>
+    <entry key="config/solid_cache">
+      <value>file://$MODULE_DIR$/config/solid_cache.yml</value>
+    </entry>
+    <entry key="db">
+      <value>file://$MODULE_DIR$/db</value>
+    </entry>
+    <entry key="db/migrate">
+      <value>file://$MODULE_DIR$/db/migrate</value>
+    </entry>
+    <entry key="db/seeds.rb">
+      <value>file://$MODULE_DIR$/db/seeds.rb</value>
+    </entry>
+    <entry key="lib">
+      <value>file://$MODULE_DIR$/lib</value>
+    </entry>
+    <entry key="lib/assets">
+      <value>file://$MODULE_DIR$/lib/assets</value>
+    </entry>
+    <entry key="lib/tasks">
+      <value>file://$MODULE_DIR$/lib/tasks</value>
+    </entry>
+    <entry key="lib/templates">
+      <value>file://$MODULE_DIR$/lib/templates</value>
+    </entry>
+    <entry key="log">
+      <value>file://$MODULE_DIR$/log/development.log</value>
+    </entry>
+    <entry key="public">
+      <value>file://$MODULE_DIR$/public</value>
+    </entry>
+    <entry key="public/javascripts">
+      <value>file://$MODULE_DIR$/public/javascripts</value>
+    </entry>
+    <entry key="public/stylesheets">
+      <value>file://$MODULE_DIR$/public/stylesheets</value>
+    </entry>
+    <entry key="test/mailers/previews">
+      <value>file://$MODULE_DIR$/test/mailers/previews</value>
+      <value>file://$MODULE_DIR$/test/mailers/previews</value>
+    </entry>
+    <entry key="tmp">
+      <value>file://$MODULE_DIR$/tmp</value>
+    </entry>
+    <entry key="vendor">
+      <value>file://$MODULE_DIR$/vendor</value>
+    </entry>
+    <entry key="vendor/assets">
+      <value>file://$MODULE_DIR$/vendor/assets</value>
+    </entry>
+  </component>
+</module>

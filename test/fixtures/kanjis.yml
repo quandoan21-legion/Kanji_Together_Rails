@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  character: MyString
+  onyomi: MyString
+  kunyomi: MyString
+  jlpt_level: 1
+  kanji_story: MyText
+  meaning: MyText
+  translation: MyString
+  stroke_count: 1
+  components: MyString
+  radical: MyString
+  examples: MyText
+  example_sentences: MyText
+  writing_image_url: MyString
+
+two:
+  character: MyString
+  onyomi: MyString
+  kunyomi: MyString
+  jlpt_level: 1
+  kanji_story: MyText
+  meaning: MyText
+  translation: MyString
+  stroke_count: 1
+  components: MyString
+  radical: MyString
+  examples: MyText
+  example_sentences: MyText
+  writing_image_url: MyString

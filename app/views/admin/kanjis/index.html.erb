@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Danh sách Kanji hệ thống</h3>
+        <div class="card-tools">
+          <%= link_to new_admin_kanji_path, class: "btn btn-success btn-sm" do %>
+            <i class="fas fa-plus"></i> Thêm Kanji mới
+          <% end %>
+        </div>
+      </div>
+
+      <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap table-bordered">
+          <thead class="bg-light">
+          <tr>
+            <th>Chữ</th>
+            <th>Hán Việt</th>
+            <th>Nghĩa</th>
+            <th>JLPT</th>
+            <th>Âm (On/Kun)</th>
+            <th>Số nét</th>
+            <th>Bộ thủ</th>
+            <th>Thành phần</th>
+            <th>Câu chuyện</th>
+            <th>Ảnh</th>
+            <th class="text-center">Hành động</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @kanjis.each do |kanji| %>
+            <tr>
+              <td class="text-bold text-lg" style="color: #007bff;"><%= kanji.character %></td>
+              <td><%= kanji.translation %></td>
+              <td><%= kanji.meaning %></td>
+              <td><span class="badge badge-info">N<%= kanji.jlpt_level %></span></td>
+              <td>
+                <small class="text-muted">On:</small> <%= kanji.onyomi %><br>
+                <small class="text-muted">Kun:</small> <%= kanji.kunyomi %>
+              </td>
+              <td class="text-center"><%= kanji.stroke_count %></td>
+              <td class="text-center"><%= kanji.radical %></td>
+              <td><%= kanji.components %></td>
+              <td style="white-space: normal; min-width: 200px; max-width: 300px;">
+                <small><%= kanji.kanji_story %></small>
+              </td>
+              <td class="text-center">
+                <% if kanji.writing_image_url.present? %>
+                  <img src="<%= kanji.writing_image_url %>" width="50" class="img-thumbnail shadow-sm">
+                <% else %>
+                  <i class="fas fa-image text-gray"></i>
+                <% end %>
+              </td>
+              <td class="text-center">
+                <div class="btn-group">
+                  <%= link_to edit_admin_kanji_path(kanji), class: "btn btn-warning btn-sm mr-1", title: "Sửa" do %>
+                    <i class="fas fa-edit"></i>
+                  <% end %>
+
+                  <%= button_to admin_kanji_path(kanji),
+                                method: :delete,
+                                onclick: "return confirm('Bạn có chắc chắn muốn xóa chữ [ #{kanji.character} ] không?')",
+                                class: "btn btn-danger btn-sm",
+                                form_class: "d-inline" do %>
+                    <i class="fas fa-trash"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
