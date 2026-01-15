@@ -21,8 +21,15 @@ contributor = User.create!(
 # 4. Tạo các bài Kanji mẫu với trạng thái Đang chờ duyệt (Pending)
 stories = [
   {
-    title: "目",
-    definition: "Hình tượng một con mắt xoay dọc. Hai gạch bên trong là con ngươi.",
+    title: "東",
+    definition: "Hình t là con ngươi.",
+    example: "目が痛い (Tôi bị đau mắt)",
+    user: contributor,
+    status: :pending
+  },
+  {
+    title: "漢",
+    definition: "Hình tượngsdasd Hai gạch bên trong là con ngươi.",
     example: "目が痛い (Tôi bị đau mắt)",
     user: contributor,
     status: :pending
@@ -35,16 +42,31 @@ stories = [
     status: :pending
   },
   {
+    title: "昨",
+    definition: "sdsdsdsddbang mở.",
+    example: "dddddđ )",
+    user: contributor,
+    status: :pending
+  },
+  {
+    title: "先",
+    definition: "mo.",
+    example: "dddddđ )",
+    user: contributor,
+    status: :pending
+  },
+  {
     title: "木",
     definition: "Hình ảnh một cái cây có tán lá và rễ đâm xuống đất.",
     example: "木の下で休む (Nghỉ ngơi dưới gốc cây)",
     user: contributor,
     status: :pending
   }
+
 ]
 
 stories.each do |s|
   Story.create!(s)
 end
 
-puts "--- Đã tạo thành công 1 Admin, 1 User và 3 bài Kanji chờ duyệt! ---"
+puts "--- Đã tạo thành công 1 Admin, 1 User và bài Kanji chờ duyệt! ---"
