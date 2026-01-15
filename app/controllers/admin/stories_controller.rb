@@ -7,14 +7,19 @@ class Admin::StoriesController < ApplicationController
   def index
     # 1. Khởi tạo query lấy dữ liệu kèm User để tránh lỗi N+1
     @stories = Story.includes(:user).joins(:user)
-
     # 2. Xử lý Lọc theo trạng thái (Status)
     # Nếu params[:status] có giá trị (không rỗng), ta mới thực hiện lọc
     # Nếu params[:status] rỗng (tương ứng với "Tất cả"), hệ thống sẽ lấy hết
     if params[:status].present?
       @stories = @stories.where(status: params[:status])
     end
-
+    if params[:kanji_id].present?
+      @kanji = Kanji.find(params[:kanji_id])
+      @stories = @kanji.stories.order(created_at: :desc).page(params[:page])
+    else
+      # Nếu không có (truy cập bình thường), hiện tất cả như cũ
+      @stories = Story.all.order(created_at: :desc).page(params[:page])
+    end
     # 3. Giữ nguyên lọc theo Email
     if params[:email].present?
       @stories = @stories.where("users.email LIKE ?", "%#{params[:email]}%")
@@ -24,43 +29,45 @@ class Admin::StoriesController < ApplicationController
     @stories = @stories.order(created_at: :desc)
   end
   def show
+    @story = Story.find(params[:id])
+    # Thêm dòng này:
+    @current_kanji = Kanji.find_by(character: @story.title)
   end
 
   def approve
     ActiveRecord::Base.transaction do
-      # 1. Cập nhật Story
-      @story.update!(status: :approved, rejection_reason: nil)
+      @story.update!(status: :approved)
 
-      # 2. Ghi nhật ký duyệt (Audit Log)
-      ReviewAuditLog.create!(
-        story: @story,
-        admin: current_user,
-        action: "approve"
-      )
-
-      # 3. ĐỒNG BỘ SANG KANJI
+      # 1. Tìm hoặc tạo Kanji gốc
       kanji = Kanji.find_or_initialize_by(character: @story.title)
 
+      # 2. Cập nhật thông tin chuẩn do Admin điền từ form
+      kanji.assign_attributes(
+        translation: params[:translation],
+        meaning: params[:meaning],
+        onyomi: params[:onyomi],
+        kunyomi: params[:kunyomi],
+        jlpt_level: params[:jlpt_level],
+        stroke_count: params[:stroke_count],
+        writing_image_url: params[:writing_image_url],
+        radical: params[:radical],
+        components: params[:components],
+        kanji_story: params[:kanji_story],
+        example_sentences: params[:example_sentences],
+        examples: params[:examples]
+      )
 
-      kanji.meaning = "Chưa cập nhật" if kanji.meaning.blank?
-
-
-      kanji.translation = "Chưa cập nhật" if kanji.translation.blank?
-
-      # 'kanji_story' lưu nội dung câu chuyện đầy đủ
-      kanji.kanji_story = @story.definition if kanji.respond_to?(:kanji_story)
-
-      # Các cột khác
-      kanji.examples = @story.example if kanji.respond_to?(:examples)
-      kanji.jlpt_level = 5 if kanji.jlpt_level.nil?
-
+      # Nếu Kanji chưa có câu chuyện chính, lấy cái này làm chính
+      kanji.kanji_story = @story.definition if kanji.kanji_story.blank?
       kanji.save!
+
+      # 3. QUAN TRỌNG: Gắn bài đóng góp này vào Kanji
+      @story.update!(kanji_id: kanji.id)
     end
 
-    redirect_to admin_story_path(@story), notice: "Duyệt thành công! Chữ '#{@story.title}' đã lên trang Quản lý."
+    redirect_to admin_stories_path, notice: "Đã duyệt đóng góp mới cho chữ #{@story.title}!"
   rescue => e
-    puts "---------- LỖI DUYỆT THỰC TẾ: #{e.message} ----------"
-    redirect_to admin_story_path(@story), alert: "Lỗi đồng bộ: #{e.message}"
+    redirect_to admin_story_path(@story), alert: "Lỗi: #{e.message}"
   end
   def reject
     ActiveRecord::Base.transaction do
@@ -74,6 +81,7 @@ class Admin::StoriesController < ApplicationController
         action: "reject",
         reason: params[:rejection_reason]
       )
+
 
       # Tìm Kanji dựa trên chữ (character) và xóa nó đi
       kanji = Kanji.find_by(character: @story.title)

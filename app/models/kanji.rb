@@ -1,8 +1,9 @@
 class Kanji < ApplicationRecord
   before_validation :strip_whitespace
+  has_many :stories, dependent: :nullify
   # Định nghĩa Regex: Chỉ chấp nhận các ký tự trong dải Unicode của Kanji
-  VALID_KATAKANA_REGEX = /\A\s*[\u30a0-\u30ff]+\s*\z/
-  VALID_HIRAGANA_REGEX = /\A\s*[\u3040-\u309f]+\s*\z/
+  VALID_KATAKANA_REGEX = /\A[\u30a0-\u30ff\u3001\u30fb, \s-]+\z/
+  VALID_HIRAGANA_REGEX = /\A[\u3040-\u309f\u3001\u30fb, \s-]+\z/
   VALID_KANJI_REGEX = /\A\s*[\u4e00-\u9faf]+\s*\z/
 
   validates :character, presence: true,
@@ -32,4 +33,5 @@ class Kanji < ApplicationRecord
   end
   validates :meaning, :translation, presence: true
   validates :jlpt_level, inclusion: { in: 1..5 }, allow_nil: true
+
 end

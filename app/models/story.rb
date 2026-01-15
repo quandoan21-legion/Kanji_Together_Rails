@@ -5,6 +5,7 @@ class Story < ApplicationRecord
   # Quan hệ (Associations)
   belongs_to :user
   has_many :review_audit_logs, dependent: :destroy
+  belongs_to :kanji, optional: true
 
   # Quản lý trạng thái
   enum :status, { pending: 0, approved: 1, rejected: 2 }, default: :pending

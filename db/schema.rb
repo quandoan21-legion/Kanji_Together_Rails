@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_15_090553) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_15_165056) do
   create_table "kanjis", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "character"
     t.string "components"
@@ -45,12 +45,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_15_090553) do
     t.datetime "created_at", null: false
     t.text "definition"
     t.text "example"
+    t.integer "kanji_id"
     t.datetime "rejection_date"
     t.text "rejection_reason"
     t.integer "status"
     t.string "title"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["kanji_id"], name: "index_stories_on_kanji_id"
     t.index ["user_id"], name: "index_stories_on_user_id"
   end
 

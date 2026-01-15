@@ -1,67 +1,113 @@
 <div class="row">
   <div class="col-12">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title">Danh sách Kanji hệ thống</h3>
+    <div class="card shadow">
+      <div class="card-header bg-primary text-white">
+        <h3 class="card-title font-weight-bold">
+          <i class="fas fa-book-open mr-1"></i> Danh sách Kanji hệ thống
+        </h3>
         <div class="card-tools">
-          <%= link_to new_admin_kanji_path, class: "btn btn-success btn-sm" do %>
-            <i class="fas fa-plus"></i> Thêm Kanji mới
+          <%= link_to new_admin_kanji_path, class: "btn btn-success btn-sm elevation-2" do %>
+            <i class="fas fa-plus-circle"></i> Thêm Kanji mới
           <% end %>
         </div>
       </div>
 
       <div class="card-body table-responsive p-0">
-        <table class="table table-hover text-nowrap table-bordered">
+        <table class="table table-hover table-bordered mb-0">
           <thead class="bg-light">
-          <tr>
-            <th>Chữ</th>
+          <tr class="text-center align-middle">
+            <th style="width: 80px;">Chữ</th>
             <th>Hán Việt</th>
             <th>Nghĩa</th>
-            <th>JLPT</th>
+            <th style="width: 70px;">JLPT</th>
             <th>Âm (On/Kun)</th>
-            <th>Số nét</th>
+            <th style="width: 80px;">Số nét</th>
             <th>Bộ thủ</th>
-            <th>Thành phần</th>
-            <th>Câu chuyện</th>
-            <th>Ảnh</th>
-            <th class="text-center">Hành động</th>
+            <th style="width: 300px;">Câu chuyện & Đóng góp</th>
+            <th style="width: 100px;">Ảnh</th>
+            <th style="width: 120px;">Hành động</th>
           </tr>
           </thead>
           <tbody>
           <% @kanjis.each do |kanji| %>
-            <tr>
-              <td class="text-bold text-lg" style="color: #007bff;"><%= kanji.character %></td>
-              <td><%= kanji.translation %></td>
-              <td><%= kanji.meaning %></td>
-              <td><span class="badge badge-info">N<%= kanji.jlpt_level %></span></td>
-              <td>
-                <small class="text-muted">On:</small> <%= kanji.onyomi %><br>
-                <small class="text-muted">Kun:</small> <%= kanji.kunyomi %>
+            <tr class="align-middle">
+              <td class="text-center align-middle">
+                <span class="text-bold text-lg" style="color: #007bff; font-size: 1.5rem;"><%= kanji.character %></span>
               </td>
-              <td class="text-center"><%= kanji.stroke_count %></td>
-              <td class="text-center"><%= kanji.radical %></td>
-              <td><%= kanji.components %></td>
-              <td style="white-space: normal; min-width: 200px; max-width: 300px;">
-                <small><%= kanji.kanji_story %></small>
+
+              <td class="text-center align-middle text-uppercase font-weight-bold">
+                <%= kanji.translation %>
               </td>
-              <td class="text-center">
-                <% if kanji.writing_image_url.present? %>
-                  <img src="<%= kanji.writing_image_url %>" width="50" class="img-thumbnail shadow-sm">
+
+              <td class="align-middle">
+                <%= truncate(kanji.meaning, length: 50) %>
+              </td>
+
+              <td class="text-center align-middle">
+                <span class="badge badge-info shadow-sm">N<%= kanji.jlpt_level %></span>
+              </td>
+
+              <td class="align-middle">
+                <div class="small">
+                  <strong class="text-muted">On:</strong> <%= kanji.onyomi %><br>
+                  <strong class="text-muted">Kun:</strong> <%= kanji.kunyomi %>
+                </div>
+              </td>
+
+              <td class="text-center align-middle">
+                <span class="badge badge-light border"><%= kanji.stroke_count %></span>
+              </td>
+
+              <td class="text-center align-middle font-weight-bold text-secondary">
+                <%= kanji.radical %>
+              </td>
+
+              <td class="align-middle" style="white-space: normal;">
+                <div class="main-story-box p-2 bg-light rounded border-left border-primary mb-2 shadow-sm">
+                  <small class="text-primary d-block font-weight-bold mb-1">
+                    <i class="fas fa-star text-warning"></i> CÂU CHUYỆN CHÍNH
+                  </small>
+                  <div style="font-size: 0.85rem; line-height: 1.4;">
+                    <%= kanji.kanji_story.present? ? truncate(kanji.kanji_story, length: 120) : "Chưa có nội dung chính" %>
+                  </div>
+                </div>
+
+                <% contributor_count = kanji.stories.count %>
+                <% if contributor_count > 0 %>
+                  <div class="contribution-info mt-2">
+                    <small class="text-muted font-weight-bold">
+                      <i class="fas fa-users"></i> <%= contributor_count %> người đóng góp khác
+                    </small>
+                    <br>
+                    <%# Nút dẫn sang trang Stories đã lọc theo Kanji ID %>
+                    <%= link_to admin_stories_path(kanji_id: kanji.id), class: "btn btn-xs btn-outline-info btn-block mt-1" do %>
+                      <i class="fas fa-tasks"></i> Quản lý đóng góp
+                    <% end %>
+                  </div>
                 <% else %>
-                  <i class="fas fa-image text-gray"></i>
+                  <small class="text-muted font-italic">Chưa có đóng góp khác</small>
                 <% end %>
               </td>
-              <td class="text-center">
-                <div class="btn-group">
-                  <%= link_to edit_admin_kanji_path(kanji), class: "btn btn-warning btn-sm mr-1", title: "Sửa" do %>
+
+              <td class="text-center align-middle">
+                <% if kanji.writing_image_url.present? %>
+                  <img src="<%= kanji.writing_image_url %>" width="45" class="img-thumbnail shadow-sm">
+                <% else %>
+                  <i class="fas fa-image text-gray fa-2x"></i>
+                <% end %>
+              </td>
+
+              <td class="text-center align-middle">
+                <div class="btn-group shadow-sm">
+                  <%= link_to edit_admin_kanji_path(kanji), class: "btn btn-warning btn-sm", title: "Sửa thông tin Kanji" do %>
                     <i class="fas fa-edit"></i>
                   <% end %>
 
                   <%= button_to admin_kanji_path(kanji),
                                 method: :delete,
-                                onclick: "return confirm('Bạn có chắc chắn muốn xóa chữ [ #{kanji.character} ] không?')",
+                                data: { confirm: "Bạn có chắc chắn muốn xóa chữ [ #{kanji.character} ] và toàn bộ dữ liệu liên quan không?" },
                                 class: "btn btn-danger btn-sm",
-                                form_class: "d-inline" do %>
+                                form_class: "d-inline ml-1" do %>
                     <i class="fas fa-trash"></i>
                   <% end %>
                 </div>
@@ -71,6 +117,14 @@
           </tbody>
         </table>
       </div>
+
+      <% if @kanjis.respond_to?(:total_pages) %>
+        <div class="card-footer clearfix bg-white">
+          <div class="float-right">
+            <%= paginate @kanjis if defined?(paginate) %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
