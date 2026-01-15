@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-body p-0">
+    <div class="card-header">
+      <h3 class="card-title font-weight-bold">Quản lý duyệt bài</h3>
+      <div class="card-tools">
+        <%= form_with url: admin_stories_path, method: :get, class: "form-inline" do |f| %>
+          <div class="input-group input-group-sm">
+            <%= f.select :status,
+                         [['Tất cả', ''], ['Chờ duyệt', 'pending'], ['Đã duyệt', 'approved'], ['Bị từ chối', 'rejected']],
+                         { selected: params[:status] },
+                         { class: "form-control mr-2", onchange: "this.form.submit();" }
+            %>
+            <%= f.text_field :email, placeholder: "Email người tạo...", class: "form-control mr-2", value: params[:email] %>
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-default">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Chữ Kanji</th>
+        <th>Người tạo</th>
+        <th>Trạng thái</th>
+        <th class="text-center">Hành động</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @stories.each do |story| %>
+        <tr>
+          <td>#<%= story.id %></td>
+          <td class="text-primary font-weight-bold"><%= story.title %></td>
+          <td><%= story.user.email %></td>
+          <td>
+              <span class="badge <%= 'badge-warning' if story.pending? %> <%= 'badge-success' if story.approved? %> <%= 'badge-danger' if story.rejected? %>">
+                <%= story.status.upcase %>
+              </span>
+          </td>
+          <td class="text-center">
+            <%= link_to "Vào duyệt", admin_story_path(story), class: "btn btn-info btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

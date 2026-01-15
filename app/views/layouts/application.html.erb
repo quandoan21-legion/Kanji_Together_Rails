@@ -24,15 +24,27 @@
 
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="#" class="brand-link">
-      <span class="brand-text font-weight-light">Kanji Together</span>
+      <span class="brand-text font-weight-light pl-3">Kanji Together</span>
     </a>
+
     <div class="sidebar">
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
           <li class="nav-item">
-            <%= link_to admin_kanjis_path, class: "nav-link" do %>
+            <%= link_to admin_kanjis_path, class: "nav-link #{'active' if controller_name == 'kanjis'}" do %>
               <i class="nav-icon fas fa-book-open"></i>
               <p>Quản lý Kanji</p>
+            <% end %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to admin_stories_path, class: "nav-link #{'active' if controller_name == 'stories'}" do %>
+              <i class="nav-icon fas fa-tasks"></i>
+              <p>
+                Duyệt Kanji (User)
+                <%# Hiển thị số lượng bài đang chờ duyệt %>
+                <span class="right badge badge-warning"><%= Story.pending.count rescue 0 %></span>
+              </p>
             <% end %>
           </li>
         </ul>
