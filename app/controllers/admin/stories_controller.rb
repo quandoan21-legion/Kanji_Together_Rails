@@ -7,10 +7,10 @@ class Admin::StoriesController < ApplicationController
   def index
     @stories = Story.includes(:user).joins(:user)
 
-    # Lọc theo trạng thái (nếu có)
+    # Lọc theo trạng thái
     @stories = @stories.where(status: params[:status]) if params[:status].present?
 
-    # Lọc theo Email (Phần gây lỗi nếu thiếu .joins(:user))
+    # Lọc theo Email
     if params[:email].present?
       @stories = @stories.where("users.email LIKE ?", "%#{params[:email]}%")
     end
@@ -20,11 +20,9 @@ class Admin::StoriesController < ApplicationController
   end
 
   def show
-    # @story đã được set bởi before_action
   end
 
   def approve
-    # Sử dụng transaction để đảm bảo cả 2 việc: cập nhật Story và ghi Log đều thành công
     ActiveRecord::Base.transaction do
       @story.update!(status: :approved, rejection_reason: nil)
 
@@ -68,6 +66,6 @@ class Admin::StoriesController < ApplicationController
   # Giả lập current_user nếu bạn chưa làm chức năng Login
   # Sau này khi có Login xóa hàm này đi
   def current_user
-    @current_user ||= User.find_by(role: :admin) # Lấy tạm 1 admin trong DB để test
+    @current_user ||= User.find_by(role: :admin)
   end
 end
