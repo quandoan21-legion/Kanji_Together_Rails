@@ -33,16 +33,28 @@
       <tbody>
       <% @stories.each do |story| %>
         <tr>
-          <td>#<%= story.id %></td>
-          <td class="text-primary font-weight-bold"><%= story.title %></td>
-          <td><%= story.user.email %></td>
+          <%# 1. Sửa story.id thành story["id"] %>
+          <td>#<%= story["id"] %></td>
+
+          <%# 2. Sửa story.title thành story["kanji_text"] (dựa trên JSON Java ở Hình 67) %>
+          <td class="text-primary font-weight-bold"><%= story["kanji_text"] %></td>
+
+          <%# 3. Sửa story.user.email thành story["user_email"] (dựa trên Hình 67) %>
+          <td><%= story["user_email"] || "Ẩn danh" %></td>
+
           <td>
-              <span class="badge <%= 'badge-warning' if story.pending? %> <%= 'badge-success' if story.approved? %> <%= 'badge-danger' if story.rejected? %>">
-                <%= story.status.upcase %>
-              </span>
+            <%# 4. Sửa các hàm kiểm tra status thành so sánh chuỗi trực tiếp %>
+            <span class="badge
+                <%= 'badge-warning' if story["status"] == 'pending' %>
+                <%= 'badge-success' if story["status"] == 'approved' %>
+                <%= 'badge-danger' if story["status"] == 'rejected' %>">
+              <%= story["status"].upcase if story["status"] %>
+            </span>
           </td>
           <td class="text-center">
-            <%= link_to "Vào duyệt", admin_story_path(story), class: "btn btn-info btn-sm" %>
+            <%= link_to "Vào duyệt", admin_story_path(story["id"]),
+                        class: "btn btn-info btn-sm",
+                        data: { turbo: false, "turbo-prefetch": false } %>
           </td>
         </tr>
       <% end %>

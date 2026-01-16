@@ -1,38 +1,69 @@
-<%= form_with(model: [:admin, kanji], local: true) do |f| %>
-  <% if kanji.errors.any? %>
-    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 20px;">
-      <h2>Có lỗi xảy ra:</h2>
-      <ul><% kanji.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %></ul>
+<%= form_with scope: :kanji,
+              url: @kanji&.[]("id") ? admin_kanji_path(@kanji["id"]) : admin_kanjis_path,
+              method: (@kanji&.[]("id") ? :patch : :post),
+              local: true do |f| %>
+  <div class="card card-body shadow-sm">
+    <h5 class="text-primary font-weight-bold border-bottom pb-2">Thông tin cơ bản</h5>
+    <div class="row">
+      <div class="col-md-4 form-group">
+        <label>Chữ Kanji (*)</label>
+        <%= f.text_field :kanji, value: @kanji["kanji"], class: "form-control", required: true, placeholder: "VD: 休" %>
+      </div>
+      <div class="col-md-4 form-group">
+        <label>Hán Việt (*)</label>
+        <%= f.text_field :translation, value: @kanji["translation"], class: "form-control", required: true, placeholder: "VD: HƯU" %>
+      </div>
+      <div class="col-md-4 form-group">
+        <label>Cấp độ JLPT</label>
+        <%= f.number_field :jlpt, value: @kanji["jlpt"], in: 1..5, class: "form-control", placeholder: "1-5" %>
+      </div>
+      <div class="col-md-12 form-group">
+        <label>Nghĩa Tiếng Việt (*)</label>
+        <%= f.text_area :meaning, value: @kanji["meaning"], rows: 2, class: "form-control", required: true %>
+      </div>
     </div>
-  <% end %>
 
-  <fieldset>
-    <legend>Thông tin cơ bản</legend>
-    <div><%= f.label :character, "Chữ Kanji (*)" %><br><%= f.text_field :character %></div>
-    <div><%= f.label :translation, "Hán Việt (*)" %><br><%= f.text_field :translation %></div>
-    <div><%= f.label :meaning, "Nghĩa Tiếng Việt (*)" %><br><%= f.text_area :meaning, rows: 3 %></div>
-    <div><%= f.label :jlpt_level, "Cấp độ JLPT (1-5)" %><br><%= f.number_field :jlpt_level %></div>
-  </fieldset>
+    <h5 class="text-primary font-weight-bold border-bottom pb-2 mt-3">Âm & Cách viết</h5>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label>Onyomi (Âm On)</label>
+        <%= f.text_field :on_pronunciation, value: @kanji["on_pronunciation"], class: "form-control", placeholder: "VD: KYUU" %>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Kunyomi (Âm Kun)</label>
+        <%= f.text_field :kun_pronunciation, value: @kanji["kun_pronunciation"], class: "form-control", placeholder: "VD: yasu-mu" %>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Số nét</label>
+        <%= f.number_field :num_strokes, value: @kanji["num_strokes"], class: "form-control" %>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>URL ảnh cách viết (GIF/SVG)</label>
+        <%= f.text_field :writing_image_url, value: @kanji["writing_image_url"], class: "form-control" %>
+      </div>
+    </div>
 
-  <fieldset>
-    <legend>Âm & Cách viết</legend>
-    <div><%= f.label :onyomi %><br><%= f.text_field :onyomi %></div>
-    <div><%= f.label :kunyomi %><br><%= f.text_field :kunyomi %></div>
-    <div><%= f.label :stroke_count, "Số nét" %><br><%= f.number_field :stroke_count %></div>
-    <div><%= f.label :writing_image_url, "URL ảnh cách viết" %><br><%= f.text_field :writing_image_url %></div>
-  </fieldset>
+    <h5 class="text-primary font-weight-bold border-bottom pb-2 mt-3">Chi tiết bổ sung</h5>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label>Bộ thủ (Radical)</label>
+        <%= f.text_field :radical, value: @kanji["radical"], class: "form-control" %>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Bộ thành phần (Components)</label>
+        <%= f.text_field :components, value: @kanji["components"], class: "form-control" %>
+      </div>
+      <div class="col-md-12 form-group">
+        <label>Câu chuyện ghi nhớ</label>
+        <%= f.text_area :kanji_description, value: @kanji["kanji_description"], rows: 3, class: "form-control" %>
+      </div>
+    </div>
 
-  <fieldset>
-    <legend>Chi tiết & Ví dụ</legend>
-    <div><%= f.label :radical, "Bộ thủ" %><br><%= f.text_field :radical %></div>
-    <div><%= f.label :components, "Bộ thành phần" %><br><%= f.text_field :components %></div>
-    <div><%= f.label :kanji_story, "Câu chuyện" %><br><%= f.text_area :kanji_story, rows: 4 %></div>
-    <div><%= f.label :examples, "Từ ví dụ (Xuống dòng cho mỗi từ)" %><br><%= f.text_area :examples, rows: 5 %></div>
-    <div><%= f.label :example_sentences, "Câu ví dụ (Xuống dòng cho mỗi câu)" %><br><%= f.text_area :example_sentences, rows: 5 %></div>
-  </fieldset>
-
-  <div style="margin-top: 20px;">
-    <%= f.submit "Lưu Kanji", style: "padding: 10px 20px; background: blue; color: white; border: none; cursor: pointer;" %>
-    <%= link_to "Hủy", admin_kanjis_path %>
+    <div class="mt-4 border-top pt-3">
+      <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+        <i class="fas fa-save mr-1"></i> LƯU KANJI SANG JAVA
+      </button>
+      <%= link_to "Hủy bỏ", admin_kanjis_path, class: "btn btn-outline-secondary btn-lg ml-2" %>
+    </div>
   </div>
 <% end %>
