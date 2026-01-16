@@ -53,7 +53,6 @@ class Admin::StoriesController < ApplicationController
 
   def reject
     url = "http://localhost:8080/api/v1/kanji-stories/#{params[:id]}/reject"
-    # Gửi lý do qua query parameter giống như bạn đã test trong Postman
     response = HTTParty.put(url, query: { reason: params[:reason] })
 
     if response.success?

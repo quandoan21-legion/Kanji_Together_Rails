@@ -12,7 +12,7 @@ class Admin::KanjisController < ApplicationController
   end
 
   def new
-    @kanji = {} # Khởi tạo hash rỗng để form không bị nil
+    @kanji = {}
   end
 
   def edit
@@ -25,9 +25,7 @@ class Admin::KanjisController < ApplicationController
   end
 
   def create
-    # CHÌA KHÓA: Phẳng hóa dữ liệu để Java nhận được 'meaning' và 'radical'
     payload = kanji_params.to_h
-
     response = HTTParty.post(BASE_URL,
                              body: payload.to_json,
                              headers: { 'Content-Type' => 'application/json' })
@@ -59,10 +57,10 @@ class Admin::KanjisController < ApplicationController
     if response.success?
       redirect_to admin_kanjis_path, notice: "Đã xóa thành công!", status: :see_other
     else
-      redirect_to admin_kanjis_path, alert: "Lỗi xóa: Chữ này đang có ràng buộc dữ liệu ", status: :see_other
+      # Nếu xóa thất bại, thông báo lỗi từ Java trả về
+      redirect_to admin_kanjis_path, alert: "Lỗi: #{response.parsed_response['message']}"
     end
   end
-
   private
 
   def kanji_params
@@ -72,5 +70,10 @@ class Admin::KanjisController < ApplicationController
       :on_pronunciation, :kun_pronunciation, :num_strokes,
       :writing_image_url, :radical, :components, :kanji_description
     )
+  end
+  def show
+    response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
+    @kanji = response.success? ? JSON.parse(response.body)["data"] : nil
+    redirect_to admin_kanjis_path, alert: "Không tìm thấy Kanji" unless @kanji
   end
 end
