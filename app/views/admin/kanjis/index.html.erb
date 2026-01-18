@@ -39,7 +39,7 @@
               </td>
 
               <td class="text-center align-middle text-uppercase font-weight-bold">
-                <%= kanji["translation"] %>
+                <%= kanji["translation"]&.split(/\R/)&.reject(&:blank?)&.join(", ") %>
               </td>
 
               <td class="align-middle">

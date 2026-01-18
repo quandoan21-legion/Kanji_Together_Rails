@@ -1,7 +1,15 @@
 <%= form_with scope: :kanji,
               url: @kanji&.[]("id") ? admin_kanji_path(@kanji["id"]) : admin_kanjis_path,
               method: (@kanji&.[]("id") ? :patch : :post),
-              local: true do |f| %>
+              local: true,
+              data: { turbo: false },
+              html: {
+                id: "kanji-form",
+                class: "needs-validation",
+                novalidate: true,
+                onsubmit: "var btn = document.getElementById('btn-submit'); setTimeout(function(){ btn.disabled = true; btn.innerHTML = '<i class=\\'fas fa-spinner fa-spin\\'></i> Đang xử lý...'; }, 10);"
+              } do |f| %>
+
   <div class="card card-body shadow-sm">
     <h5 class="text-primary font-weight-bold border-bottom pb-2">Thông tin cơ bản</h5>
     <div class="row">
@@ -17,12 +25,19 @@
 
       <div class="col-md-4 form-group">
         <label>Hán Việt (*)</label>
-        <%= f.text_field :translation, value: @kanji["translation"],
-                         class: "form-control #{"is-invalid" if @errors&.[]("translation")}",
-                         placeholder: "VD: HƯU" %>
+
+        <%= f.text_field :translation,
+                         value: @kanji["translation"],
+                         class: "form-control font-weight-bold text-primary #{"is-invalid" if @errors&.[]("translation")}",
+                         style: "text-transform: uppercase;",
+                         placeholder: "VD: ÚC, UẤT, ỨC",
+                         onchange: "this.value = this.value.toUpperCase();" %>
+
         <% if @errors&.[]("translation") %>
           <div class="invalid-feedback d-block"><%= @errors["translation"] %></div>
         <% end %>
+
+        <small class="text-muted">Nhập nhiều từ ngăn cách bằng dấu phẩy (,).</small>
       </div>
 
       <div class="col-md-4 form-group">
@@ -148,9 +163,10 @@
     </div>
 
     <div class="mt-4 border-top pt-3 text-center">
-      <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
+      <button type="submit" id="btn-submit" class="btn btn-primary btn-lg px-5 shadow">
         <i class="fas fa-save mr-1"></i> LƯU KANJI
       </button>
+
       <%= link_to "Hủy bỏ", admin_kanjis_path, class: "btn btn-outline-secondary btn-lg ml-2" %>
     </div>
   </div>

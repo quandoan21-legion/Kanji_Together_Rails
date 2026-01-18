@@ -1,33 +1,46 @@
 class Admin::KanjisController < ApplicationController
+  # 1. Cấu hình chạy Localhost
   BASE_URL = "http://localhost:8080/api/v1/kanjis"
 
   def index
-    response = HTTParty.get(BASE_URL, query: { page: params[:page] || 0 })
-    if response.success?
-      @kanjis = JSON.parse(response.body)["data"] || []
-    else
+    # Localhost thường không cần header 'ngrok-skip...' nhưng vẫn cần bắt lỗi kết nối
+    begin
+      response = HTTParty.get(BASE_URL, query: { page: params[:page] || 0 })
+
+      if response.success?
+        @kanjis = JSON.parse(response.body)["data"] || []
+      else
+        @kanjis = []
+        flash.now[:alert] = "Lỗi từ Server: #{response.code}"
+      end
+    rescue Errno::ECONNREFUSED, JSON::ParserError
       @kanjis = []
-      flash.now[:alert] = "Không thể kết nối với Server"
+      flash.now[:alert] = "Không thể kết nối đến Java Server (localhost:8080). Hãy chắc chắn bạn đã chạy Backend!"
     end
   end
 
   def new
     @kanji = {}
-    @errors = {} # Khởi tạo lỗi trống
+    @errors = {}
   end
 
   def edit
-    response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
-    if response.success?
-      @kanji = JSON.parse(response.body)["data"]
-      @errors = {} # Khởi tạo lỗi trống khi vào trang edit
-    else
-      redirect_to admin_kanjis_path, alert: "Không tìm thấy dữ liệu Kanji"
+    begin
+      response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
+      if response.success?
+        @kanji = JSON.parse(response.body)["data"]
+        @errors = {}
+      else
+        redirect_to admin_kanjis_path, alert: "Không tìm thấy dữ liệu Kanji (ID: #{params[:id]})"
+      end
+    rescue
+      redirect_to admin_kanjis_path, alert: "Mất kết nối với Server khi tải dữ liệu."
     end
   end
 
   def create
     payload = kanji_params.to_h
+    # Localhost vẫn cần Content-Type json
     response = HTTParty.post(BASE_URL,
                              body: payload.to_json,
                              headers: { 'Content-Type' => 'application/json' })
@@ -47,25 +60,41 @@ class Admin::KanjisController < ApplicationController
     if response.success?
       redirect_to admin_kanjis_path, notice: "Đã xóa thành công!", status: :see_other
     else
-      redirect_to admin_kanjis_path, alert: "Lỗi: #{response.parsed_response['message']}"
+      message = response.parsed_response['message'] rescue "Lỗi không xác định"
+      redirect_to admin_kanjis_path, alert: "Lỗi: #{message}"
     end
+  rescue
+    redirect_to admin_kanjis_path, alert: "Không thể kết nối đến Server để xóa."
   end
 
   private
 
-  # Hàm dùng chung để xử lý kết quả trả về từ Java
+  # Hàm xử lý phản hồi thông minh (Giúp bạn biết tại sao ấn lưu bị lỗi)
   def handle_response(response, payload, render_view, success_message)
     if response.success?
       redirect_to admin_kanjis_path, notice: success_message
     else
-      # Java cần trả về lỗi theo định dạng {"message": "...", "errors": {"field": "lỗi"}}
-      @errors = response.parsed_response['errors'] || {}
-      @kanji = payload
-      @kanji["id"] = params[:id] if params[:id] # Đảm bảo giữ ID khi update lỗi
+      # Kiểm tra nếu Java trả về HTML lỗi (Tomcat Error Page) thay vì JSON
+      if response.parsed_response.is_a?(String)
+        flash.now[:alert] = "Lỗi Server (500). Java đang trả về HTML thay vì JSON."
+        @errors = {}
+      else
+        # Trường hợp Java trả về JSON lỗi Validate (400)
+        @errors = response.parsed_response['errors'] || {}
+        flash.now[:alert] = response.parsed_response['message'] || "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!"
+      end
 
-      flash.now[:alert] = response.parsed_response['message'] || "Vui lòng kiểm tra lại dữ liệu"
+      @kanji = payload
+      @kanji["id"] = params[:id] if params[:id]
+
       render render_view, status: :unprocessable_entity
     end
+  rescue JSON::ParserError, Errno::ECONNREFUSED
+    # Bắt lỗi nếu Java chưa bật hoặc trả về dữ liệu rác
+    flash.now[:alert] = "Không thể kết nối Server Java (Connection Refused). Hãy kiểm tra lại Backend!"
+    @kanji = payload
+    @errors = {}
+    render render_view, status: :unprocessable_entity
   end
 
   def kanji_params
@@ -78,8 +107,12 @@ class Admin::KanjisController < ApplicationController
   end
 
   def show
-    response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
-    @kanji = response.success? ? JSON.parse(response.body)["data"] : nil
-    redirect_to admin_kanjis_path, alert: "Không tìm thấy Kanji" unless @kanji
+    begin
+      response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
+      @kanji = response.success? ? JSON.parse(response.body)["data"] : nil
+      redirect_to admin_kanjis_path, alert: "Không tìm thấy Kanji" unless @kanji
+    rescue
+      redirect_to admin_kanjis_path, alert: "Lỗi kết nối Server"
+    end
   end
 end
