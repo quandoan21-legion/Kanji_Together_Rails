@@ -13,12 +13,14 @@ class Admin::KanjisController < ApplicationController
 
   def new
     @kanji = {}
+    @errors = {} # Khởi tạo lỗi trống
   end
 
   def edit
     response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
     if response.success?
       @kanji = JSON.parse(response.body)["data"]
+      @errors = {} # Khởi tạo lỗi trống khi vào trang edit
     else
       redirect_to admin_kanjis_path, alert: "Không tìm thấy dữ liệu Kanji"
     end
@@ -29,13 +31,7 @@ class Admin::KanjisController < ApplicationController
     response = HTTParty.post(BASE_URL,
                              body: payload.to_json,
                              headers: { 'Content-Type' => 'application/json' })
-    if response.success?
-      redirect_to admin_kanjis_path, notice: "Tạo thành công!"
-    else
-      @kanji = payload # Giữ lại dữ liệu đã nhập để hiện lại form
-      flash.now[:alert] = "Lỗi : #{response.parsed_response['message']}"
-      render :new, status: :unprocessable_entity
-    end
+    handle_response(response, payload, :new, "Tạo thành công!")
   end
 
   def update
@@ -43,13 +39,7 @@ class Admin::KanjisController < ApplicationController
     response = HTTParty.put("#{BASE_URL}/#{params[:id]}",
                             body: payload.to_json,
                             headers: { 'Content-Type' => 'application/json' })
-    if response.success?
-      redirect_to admin_kanjis_path, notice: "Cập nhật thành công !"
-    else
-      @kanji = payload.merge("id" => params[:id])
-      flash.now[:alert] = "Lỗi cập nhật: #{response.parsed_response['message']}"
-      render :edit, status: :unprocessable_entity
-    end
+    handle_response(response, payload, :edit, "Cập nhật thành công !")
   end
 
   def destroy
@@ -57,20 +47,36 @@ class Admin::KanjisController < ApplicationController
     if response.success?
       redirect_to admin_kanjis_path, notice: "Đã xóa thành công!", status: :see_other
     else
-      # Nếu xóa thất bại, thông báo lỗi từ Java trả về
       redirect_to admin_kanjis_path, alert: "Lỗi: #{response.parsed_response['message']}"
     end
   end
+
   private
 
+  # Hàm dùng chung để xử lý kết quả trả về từ Java
+  def handle_response(response, payload, render_view, success_message)
+    if response.success?
+      redirect_to admin_kanjis_path, notice: success_message
+    else
+      # Java cần trả về lỗi theo định dạng {"message": "...", "errors": {"field": "lỗi"}}
+      @errors = response.parsed_response['errors'] || {}
+      @kanji = payload
+      @kanji["id"] = params[:id] if params[:id] # Đảm bảo giữ ID khi update lỗi
+
+      flash.now[:alert] = response.parsed_response['message'] || "Vui lòng kiểm tra lại dữ liệu"
+      render render_view, status: :unprocessable_entity
+    end
+  end
+
   def kanji_params
-    # Đảm bảo permit đúng các trường để Java có thể map dữ liệu vào Entity
     params.require(:kanji).permit(
       :kanji, :translation, :meaning, :jlpt,
       :on_pronunciation, :kun_pronunciation, :num_strokes,
-      :writing_image_url, :radical, :components, :kanji_description
+      :writing_image_url, :radical, :components, :kanji_description,
+      :vocabulary, :examples
     )
   end
+
   def show
     response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
     @kanji = response.success? ? JSON.parse(response.body)["data"] : nil

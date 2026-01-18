@@ -7,61 +7,149 @@
     <div class="row">
       <div class="col-md-4 form-group">
         <label>Chữ Kanji (*)</label>
-        <%= f.text_field :kanji, value: @kanji["kanji"], class: "form-control", required: true, placeholder: "VD: 休" %>
+        <%= f.text_field :kanji, value: @kanji["kanji"],
+                         class: "form-control #{"is-invalid" if @errors&.[]("kanji")}",
+                         placeholder: "VD: 休" %>
+        <% if @errors&.[]("kanji") %>
+          <div class="invalid-feedback d-block"><%= @errors["kanji"] %></div>
+        <% end %>
       </div>
+
       <div class="col-md-4 form-group">
         <label>Hán Việt (*)</label>
-        <%= f.text_field :translation, value: @kanji["translation"], class: "form-control", required: true, placeholder: "VD: HƯU" %>
+        <%= f.text_field :translation, value: @kanji["translation"],
+                         class: "form-control #{"is-invalid" if @errors&.[]("translation")}",
+                         placeholder: "VD: HƯU" %>
+        <% if @errors&.[]("translation") %>
+          <div class="invalid-feedback d-block"><%= @errors["translation"] %></div>
+        <% end %>
       </div>
+
       <div class="col-md-4 form-group">
-        <label>Cấp độ JLPT</label>
-        <%= f.number_field :jlpt, value: @kanji["jlpt"], in: 1..5, class: "form-control", placeholder: "1-5" %>
+        <label>Cấp độ JLPT (*)</label>
+        <%= f.number_field :jlpt, value: @kanji["jlpt"], in: 1..5,
+                           class: "form-control #{"is-invalid" if @errors&.[]("jlpt")}", placeholder: "1-5" %>
+        <% if @errors&.[]("jlpt") %>
+          <div class="invalid-feedback d-block"><%= @errors["jlpt"] %></div>
+        <% end %>
       </div>
+
       <div class="col-md-12 form-group">
         <label>Nghĩa Tiếng Việt (*)</label>
-        <%= f.text_area :meaning, value: @kanji["meaning"], rows: 2, class: "form-control", required: true %>
+        <%= f.text_area :meaning, value: @kanji["meaning"], rows: 2,
+                        class: "form-control #{"is-invalid" if @errors&.[]("meaning")}" %>
+        <% if @errors&.[]("meaning") %>
+          <div class="invalid-feedback d-block"><%= @errors["meaning"] %></div>
+        <% end %>
       </div>
     </div>
 
     <h5 class="text-primary font-weight-bold border-bottom pb-2 mt-3">Âm & Cách viết</h5>
     <div class="row">
       <div class="col-md-6 form-group">
-        <label>Onyomi (Âm On)</label>
-        <%= f.text_field :on_pronunciation, value: @kanji["on_pronunciation"], class: "form-control", placeholder: "VD: KYUU" %>
+        <label>Onyomi (Âm On - mỗi cách đọc 1 dòng *)</label>
+        <%= f.text_area :on_pronunciation,
+                        value: @kanji["on_pronunciation"],
+                        rows: 3,
+                        class: "form-control #{"is-invalid" if @errors&.[]("on_pronunciation")}",
+                        placeholder: "VD:\nキュウ" %>
+        <% if @errors&.[]("on_pronunciation") %>
+          <div class="invalid-feedback d-block"><%= @errors["on_pronunciation"] %></div>
+        <% end %>
       </div>
+
       <div class="col-md-6 form-group">
-        <label>Kunyomi (Âm Kun)</label>
-        <%= f.text_field :kun_pronunciation, value: @kanji["kun_pronunciation"], class: "form-control", placeholder: "VD: yasu-mu" %>
+        <label>Kunyomi (Âm Kun - mỗi cách đọc 1 dòng *)</label>
+        <%= f.text_area :kun_pronunciation,
+                        value: @kanji["kun_pronunciation"],
+                        rows: 3,
+                        class: "form-control #{"is-invalid" if @errors&.[]("kun_pronunciation")}",
+                        placeholder: "VD:\nやす.む" %>
+        <% if @errors&.[]("kun_pronunciation") %>
+          <div class="invalid-feedback d-block"><%= @errors["kun_pronunciation"] %></div>
+        <% end %>
       </div>
+
       <div class="col-md-6 form-group">
-        <label>Số nét</label>
-        <%= f.number_field :num_strokes, value: @kanji["num_strokes"], class: "form-control" %>
+        <label>Số nét (*)</label>
+        <%= f.number_field :num_strokes, value: @kanji["num_strokes"],
+                           class: "form-control #{"is-invalid" if @errors&.[]("num_strokes")}" %>
+        <% if @errors&.[]("num_strokes") %>
+          <div class="invalid-feedback d-block"><%= @errors["num_strokes"] %></div>
+        <% end %>
       </div>
+
       <div class="col-md-6 form-group">
-        <label>URL ảnh cách viết (GIF/SVG)</label>
-        <%= f.text_field :writing_image_url, value: @kanji["writing_image_url"], class: "form-control" %>
+        <label>URL ảnh cách viết (GIF/SVG *)</label>
+        <%= f.text_field :writing_image_url, value: @kanji["writing_image_url"],
+                         class: "form-control #{"is-invalid" if @errors&.[]("writing_image_url")}" %>
+        <% if @errors&.[]("writing_image_url") %>
+          <div class="invalid-feedback d-block"><%= @errors["writing_image_url"] %></div>
+        <% end %>
       </div>
     </div>
 
     <h5 class="text-primary font-weight-bold border-bottom pb-2 mt-3">Chi tiết bổ sung</h5>
     <div class="row">
       <div class="col-md-6 form-group">
-        <label>Bộ thủ (Radical)</label>
-        <%= f.text_field :radical, value: @kanji["radical"], class: "form-control" %>
+        <label>Bộ thủ (Radical *)</label>
+        <%= f.text_field :radical, value: @kanji["radical"],
+                         class: "form-control #{"is-invalid" if @errors&.[]("radical")}",
+                         placeholder: "VD: 鬯 SƯỞNG" %>
+        <% if @errors&.[]("radical") %>
+          <div class="invalid-feedback d-block"><%= @errors["radical"] %></div>
+        <% end %>
       </div>
+
       <div class="col-md-6 form-group">
-        <label>Bộ thành phần (Components)</label>
-        <%= f.text_field :components, value: @kanji["components"], class: "form-control" %>
+        <label>Bộ thành phần (Components - Tùy chọn)</label>
+        <small class="text-muted d-block mb-1">Nhập mỗi bộ 1 dòng. Định dạng: [Chữ] [Tên]</small>
+        <%= f.text_area :components, value: @kanji["components"], rows: 3,
+                        class: "form-control #{"is-invalid" if @errors&.[]("components")}",
+                        placeholder: "VD:\n亻 Nhân\n木 Mộc\n尸 Thi" %>
+        <% if @errors&.[]("components") %>
+          <div class="invalid-feedback d-block"><%= @errors["components"] %></div>
+        <% end %>
       </div>
+
       <div class="col-md-12 form-group">
-        <label>Câu chuyện ghi nhớ</label>
-        <%= f.text_area :kanji_description, value: @kanji["kanji_description"], rows: 3, class: "form-control" %>
+        <label>Câu chuyện ghi nhớ (*)</label>
+        <%= f.text_area :kanji_description, value: @kanji["kanji_description"], rows: 3,
+                        class: "form-control #{"is-invalid" if @errors&.[]("kanji_description")}" %>
+        <% if @errors&.[]("kanji_description") %>
+          <div class="invalid-feedback d-block"><%= @errors["kanji_description"] %></div>
+        <% end %>
       </div>
     </div>
 
-    <div class="mt-4 border-top pt-3">
+    <h5 class="text-primary font-weight-bold border-bottom pb-2 mt-3">Dữ liệu mở rộng</h5>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label>Từ vựng (*)</label>
+        <small class="text-muted d-block mb-1">Định dạng: <strong>TỪ - PHIÊN ÂM - NGHĨA</strong> (Có 2 dấu gạch ngang)</small>
+        <%= f.text_area :vocabulary, value: @kanji["vocabulary"], rows: 5,
+                        class: "form-control #{"is-invalid" if @errors&.[]("vocabulary")}",
+                        placeholder: "VD:\n通る-とお.る-Đi qua\n走る-はし.る-Chạy" %>
+        <% if @errors&.[]("vocabulary") %>
+          <div class="invalid-feedback d-block"><%= @errors["vocabulary"] %></div>
+        <% end %>
+      </div>
+
+      <div class="col-md-6 form-group">
+        <label>Câu ví dụ (*)</label>
+        <small class="text-muted d-block mb-1">Định dạng: <strong>Câu- DỊCH TIẾNG VIỆT</strong> (Có 1 dấu gạch ngang)</small>
+        <%= f.text_area :examples, value: @kanji["examples"], rows: 5,
+                        class: "form-control #{"is-invalid" if @errors&.[]("examples")}",
+                        placeholder: "VD:\n私たちは先生です-Chúng tôi là giáo viên\nこれはペンです-Đây là cái bút" %>
+        <% if @errors&.[]("examples") %>
+          <div class="invalid-feedback d-block"><%= @errors["examples"] %></div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-4 border-top pt-3 text-center">
       <button type="submit" class="btn btn-primary btn-lg px-5 shadow">
-        <i class="fas fa-save mr-1"></i> LƯU KANJI SANG JAVA
+        <i class="fas fa-save mr-1"></i> LƯU KANJI
       </button>
       <%= link_to "Hủy bỏ", admin_kanjis_path, class: "btn btn-outline-secondary btn-lg ml-2" %>
     </div>

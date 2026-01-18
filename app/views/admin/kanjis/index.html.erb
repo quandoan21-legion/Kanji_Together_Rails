@@ -16,16 +16,17 @@
         <table class="table table-hover table-bordered mb-0">
           <thead class="bg-light">
           <tr class="text-center align-middle">
-            <th style="width: 80px;">Chữ</th>
+            <th style="width: 50px;">Chữ</th>
             <th>Hán Việt</th>
             <th>Nghĩa</th>
-            <th style="width: 70px;">JLPT</th>
+            <th style="width: 50px;">JLPT</th>
             <th>Âm (On/Kun)</th>
-            <th style="width: 80px;">Số nét</th>
-            <th>Bộ thủ</th>
-            <th style="width: 300px;">Câu chuyện</th>
-            <th style="width: 100px;">Ảnh</th>
-            <th style="width: 120px;">Hành động</th>
+            <th style="width: 50px;">Nét</th>
+            <th style="width: 180px;">Bộ thủ & Thành phần</th>
+            <th style="width: 250px;">Câu chuyện</th>
+            <th style="width: 300px;">Mở rộng (Từ vựng/Ví dụ)</th>
+            <th style="width: 70px;">Ảnh</th>
+            <th style="width: 100px; white-space: nowrap;">Hành động</th>
           </tr>
           </thead>
           <tbody>
@@ -46,50 +47,69 @@
               </td>
 
               <td class="text-center align-middle">
-                <%# Sửa từ "jlpt_level" thành "jlpt" %>
                 <span class="badge badge-info shadow-sm">N<%= kanji["jlpt"] %></span>
               </td>
 
               <td class="align-middle">
                 <div class="small">
-                  <%# Sử dụng đúng on_pronunciation và kun_pronunciation từ @JsonProperty của Java %>
-                  <strong class="text-muted">On:</strong> <%= kanji["on_pronunciation"] %><br>
-                  <strong class="text-muted">Kun:</strong> <%= kanji["kun_pronunciation"] %>
+                  <strong class="text-secondary">On:</strong>
+                  <%= kanji["on_pronunciation"]&.gsub(/\R/, " | ") %><br>
+                  <strong class="text-secondary">Kun:</strong>
+                  <%= kanji["kun_pronunciation"]&.gsub(/\R/, " | ") %>
                 </div>
               </td>
 
               <td class="text-center align-middle">
-                <%# Sửa từ "stroke_count" thành "num_strokes" %>
                 <span class="badge badge-light border"><%= kanji["num_strokes"] %></span>
               </td>
 
-              <td class="text-center align-middle font-weight-bold text-secondary">
-                <%= kanji["radical"] %>
-              </td>
-
-              <td class="align-middle" style="white-space: normal;">
-                <div class="main-story-box p-2 bg-light rounded border-left border-primary mb-2 shadow-sm">
-                  <small class="text-primary d-block font-weight-bold mb-1">
-                    <i class="fas fa-star text-warning"></i> CÂU CHUYỆN CHÍNH
-                  </small>
-                  <div style="font-size: 0.85rem; line-height: 1.4;">
-
-                    <%= kanji["kanji_description"].present? ? truncate(kanji["kanji_description"], length: 120) : "Chưa có nội dung" %>
-                  </div>
+              <td class="align-middle">
+                <div class="mb-1">
+                  <strong>Bộ thủ:</strong> <%= kanji["radical"] %>
                 </div>
 
-                <div class="contribution-info mt-2">
-                  <%= link_to admin_stories_path(kanji_id: kanji["id"]), class: "btn btn-xs btn-outline-info btn-block mt-1" do %>
-                    <i class="fas fa-tasks"></i> Quản lý đóng góp
+                <% if kanji["components"].present? %>
+                  <div>
+                    <strong>Thành phần:</strong>
+                    <%= kanji["components"].split(/\R/).reject(&:blank?).join(", ") %>
+                  </div>
+                <% end %>
+              </td>
+
+              <td class="align-middle">
+                <div class="bg-light rounded p-2 border" style="max-height: 100px; overflow-y: auto; font-size: 0.85rem;">
+                  <%= kanji["kanji_description"].present? ? simple_format(kanji["kanji_description"]) : "Chưa có" %>
+                </div>
+                <div class="contribution-info mt-1">
+                  <%= link_to admin_stories_path(kanji_id: kanji["id"]), class: "btn btn-xs btn-outline-info btn-block" do %>
+                    <i class="fas fa-tasks"></i> Quản lý
+                  <% end %>
+                </div>
+              </td>
+
+              <td class="align-middle small">
+                <div style="max-height: 120px; overflow-y: auto;">
+                  <% if kanji["vocabulary"].present? %>
+                    <div class="mb-2">
+                      <strong class="text-success"><i class="fas fa-language"></i> Từ vựng:</strong><br>
+                      <%= kanji["vocabulary"].gsub(/\R/, "<br>").html_safe %>
+                    </div>
+                  <% end %>
+
+                  <% if kanji["examples"].present? %>
+                    <div>
+                      <strong class="text-info"><i class="fas fa-quote-left"></i> Ví dụ:</strong><br>
+                      <%= kanji["examples"].gsub(/\R/, "<br>").html_safe %>
+                    </div>
                   <% end %>
                 </div>
               </td>
 
               <td class="text-center align-middle">
                 <% if kanji["writing_image_url"].present? %>
-                  <img src="<%= kanji["writing_image_url"] %>" width="45" class="img-thumbnail shadow-sm">
+                  <img src="<%= kanji["writing_image_url"] %>" width="40" class="img-thumbnail shadow-sm">
                 <% else %>
-                  <i class="fas fa-image text-gray fa-2x"></i>
+                  <i class="fas fa-image text-gray"></i>
                 <% end %>
               </td>
 
