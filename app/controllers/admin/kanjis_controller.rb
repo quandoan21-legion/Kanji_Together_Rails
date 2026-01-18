@@ -1,21 +1,33 @@
 class Admin::KanjisController < ApplicationController
-  # 1. Cấu hình chạy Localhost
-  BASE_URL = "http://localhost:8080/api/v1/kanjis"
+
+  # 1. Cấu hình Link Server Ngrok (Lấy từ ảnh bạn gửi)
+  BASE_URL = "https://454fbe6db3b4.ngrok-free.app/api/v1/kanjis"
+
+  # 2. Header bắt buộc để vượt qua màn hình cảnh báo của Ngrok
+  NGROK_HEADERS = {
+    'ngrok-skip-browser-warning' => 'true',
+    'Content-Type' => 'application/json'
+  }
 
   def index
-    # Localhost thường không cần header 'ngrok-skip...' nhưng vẫn cần bắt lỗi kết nối
     begin
-      response = HTTParty.get(BASE_URL, query: { page: params[:page] || 0 })
+      # Thêm headers: NGROK_HEADERS vào request
+      response = HTTParty.get(BASE_URL,
+                              query: { page: params[:page] || 0 },
+                              headers: NGROK_HEADERS)
 
       if response.success?
         @kanjis = JSON.parse(response.body)["data"] || []
       else
         @kanjis = []
-        flash.now[:alert] = "Lỗi từ Server: #{response.code}"
+        flash.now[:alert] = "Lỗi từ Server Ngrok: #{response.code}"
       end
-    rescue Errno::ECONNREFUSED, JSON::ParserError
+    rescue JSON::ParserError
       @kanjis = []
-      flash.now[:alert] = "Không thể kết nối đến Java Server (localhost:8080). Hãy chắc chắn bạn đã chạy Backend!"
+      flash.now[:alert] = "Lỗi dữ liệu: Ngrok trả về HTML thay vì JSON (Kiểm tra lại Header)."
+    rescue Errno::ECONNREFUSED, SocketError
+      @kanjis = []
+      flash.now[:alert] = "Không thể kết nối đến Server Ngrok. Kiểm tra lại link!"
     end
   end
 
@@ -26,7 +38,8 @@ class Admin::KanjisController < ApplicationController
 
   def edit
     begin
-      response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
+      response = HTTParty.get("#{BASE_URL}/#{params[:id]}", headers: NGROK_HEADERS)
+
       if response.success?
         @kanji = JSON.parse(response.body)["data"]
         @errors = {}
@@ -40,10 +53,11 @@ class Admin::KanjisController < ApplicationController
 
   def create
     payload = kanji_params.to_h
-    # Localhost vẫn cần Content-Type json
+    # Dùng NGROK_HEADERS để có cả Content-Type lẫn quyền truy cập
     response = HTTParty.post(BASE_URL,
                              body: payload.to_json,
-                             headers: { 'Content-Type' => 'application/json' })
+                             headers: NGROK_HEADERS)
+
     handle_response(response, payload, :new, "Tạo thành công!")
   end
 
@@ -51,12 +65,15 @@ class Admin::KanjisController < ApplicationController
     payload = kanji_params.to_h
     response = HTTParty.put("#{BASE_URL}/#{params[:id]}",
                             body: payload.to_json,
-                            headers: { 'Content-Type' => 'application/json' })
+                            headers: NGROK_HEADERS)
+
     handle_response(response, payload, :edit, "Cập nhật thành công !")
   end
 
   def destroy
-    response = HTTParty.delete("#{BASE_URL}/#{params[:id]}")
+    # Delete cũng cần header để Ngrok cho phép đi qua
+    response = HTTParty.delete("#{BASE_URL}/#{params[:id]}", headers: NGROK_HEADERS)
+
     if response.success?
       redirect_to admin_kanjis_path, notice: "Đã xóa thành công!", status: :see_other
     else
@@ -69,19 +86,18 @@ class Admin::KanjisController < ApplicationController
 
   private
 
-  # Hàm xử lý phản hồi thông minh (Giúp bạn biết tại sao ấn lưu bị lỗi)
   def handle_response(response, payload, render_view, success_message)
     if response.success?
       redirect_to admin_kanjis_path, notice: success_message
     else
-      # Kiểm tra nếu Java trả về HTML lỗi (Tomcat Error Page) thay vì JSON
+      # Nếu Ngrok trả về HTML (Lỗi 502/404 hoặc trang Warning chưa bypass được)
       if response.parsed_response.is_a?(String)
-        flash.now[:alert] = "Lỗi Server (500). Java đang trả về HTML thay vì JSON."
+        flash.now[:alert] = "Lỗi Server Ngrok (HTML Response). Có thể Server Java đang tắt hoặc Link sai."
         @errors = {}
       else
-        # Trường hợp Java trả về JSON lỗi Validate (400)
+        # Java trả về JSON lỗi Validate (400)
         @errors = response.parsed_response['errors'] || {}
-        flash.now[:alert] = response.parsed_response['message'] || "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!"
+        flash.now[:alert] = response.parsed_response['message'] || "Dữ liệu không hợp lệ!"
       end
 
       @kanji = payload
@@ -89,9 +105,8 @@ class Admin::KanjisController < ApplicationController
 
       render render_view, status: :unprocessable_entity
     end
-  rescue JSON::ParserError, Errno::ECONNREFUSED
-    # Bắt lỗi nếu Java chưa bật hoặc trả về dữ liệu rác
-    flash.now[:alert] = "Không thể kết nối Server Java (Connection Refused). Hãy kiểm tra lại Backend!"
+  rescue JSON::ParserError, SocketError
+    flash.now[:alert] = "Lỗi kết nối Ngrok. Vui lòng kiểm tra lại Link Server!"
     @kanji = payload
     @errors = {}
     render render_view, status: :unprocessable_entity
@@ -108,7 +123,7 @@ class Admin::KanjisController < ApplicationController
 
   def show
     begin
-      response = HTTParty.get("#{BASE_URL}/#{params[:id]}")
+      response = HTTParty.get("#{BASE_URL}/#{params[:id]}", headers: NGROK_HEADERS)
       @kanji = response.success? ? JSON.parse(response.body)["data"] : nil
       redirect_to admin_kanjis_path, alert: "Không tìm thấy Kanji" unless @kanji
     rescue
