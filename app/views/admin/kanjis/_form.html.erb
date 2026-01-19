@@ -1,3 +1,15 @@
+<% if @errors.present? %>
+  <div class="alert alert-danger shadow-sm mb-4">
+    <h5 class="alert-heading font-weight-bold"><i class="fas fa-exclamation-triangle mr-2"></i> Có lỗi xảy ra:</h5>
+    <hr>
+    <ul class="mb-0 pl-3">
+      <% @errors.each do |field, msg| %>
+        <li><strong><%= field.to_s.humanize %>:</strong> <%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
 <%= form_with scope: :kanji,
               url: @kanji&.[]("id") ? admin_kanji_path(@kanji["id"]) : admin_kanjis_path,
               method: (@kanji&.[]("id") ? :patch : :post),
@@ -7,6 +19,7 @@
                 id: "kanji-form",
                 class: "needs-validation",
                 novalidate: true,
+                # JS khóa nút submit để tránh bấm nhiều lần
                 onsubmit: "var btn = document.getElementById('btn-submit'); setTimeout(function(){ btn.disabled = true; btn.innerHTML = '<i class=\\'fas fa-spinner fa-spin\\'></i> Đang xử lý...'; }, 10);"
               } do |f| %>
 

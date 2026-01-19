@@ -3,34 +3,35 @@ class Admin::StoriesController < ApplicationController
   # before_action :authenticate_admin!
 
   def index
+    # THAY ĐỔI: Gửi tham số 'kanji' thay vì 'email' để khớp với Backend mới
     response = HTTParty.get("http://localhost:8080/api/v1/kanji-stories", query: {
       status: params[:status],
-      email: params[:email],
+      kanji: params[:kanji],   # <-- Đã sửa dòng này
       kanjiId: params[:kanji_id],
       page: params[:page] || 0
     })
     @stories = response.success? ? JSON.parse(response.body)["data"] : []
   end
 
-  # THÊM HÀM SHOW
+  # --- CÁC HÀM DƯỚI GIỮ NGUYÊN 100% ---
   def show
-    puts "====> DANG TRUY CAP VAO DUYET ID: #{params[:id]}" # Dòng này sẽ hiện ở Terminal Ruby
+    puts "====> DANG TRUY CAP VAO DUYET ID: #{params[:id]}"
 
     response = HTTParty.get("http://localhost:8080/api/v1/kanji-stories/#{params[:id]}")
 
     if response.success?
       @story = JSON.parse(response.body)["data"]
-      @stories = [] # Tránh lỗi badge ở layout
-      render :show # Buộc Rails phải render đúng file view show
+      @stories = []
+      render :show
     else
       puts "====> LOI GOI API JAVA: #{response.code}"
       redirect_to admin_stories_path, alert: "Java Server không trả về dữ liệu"
     end
   end
+
   def approve
     url = "http://localhost:8080/api/v1/kanji-stories/#{params[:id]}/approve"
 
-    # Gom tất cả các trường từ form vào body
     body_content = {
       meaning: params[:meaning],
       translation: params[:translation],

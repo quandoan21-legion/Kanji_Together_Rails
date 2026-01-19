@@ -1,72 +1,133 @@
-<div class="card card-outline card-primary shadow">
-  <div class="card-header bg-white py-3">
-    <h3 class="card-title font-weight-bold text-primary">
-      <i class="fas fa-edit mr-1"></i> BIÊN TẬP & DUYỆT ĐÓNG GÓP: <%= @story["kanji_text"] %>
-    </h3>
+<div class="container-fluid">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">
+      Biên tập & Duyệt: <span class="text-primary font-weight-bold"><%= @story["kanji_text"] %></span>
+    </h1>
+    <%= link_to admin_stories_path, class: "btn btn-secondary btn-sm shadow-sm" do %>
+      <i class="fas fa-arrow-left"></i> Quay lại danh sách
+    <% end %>
   </div>
 
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-4 border-right">
-        <div class="callout callout-info bg-light shadow-sm">
-          <h5 class="text-info font-weight-bold"><i class="fas fa-user-edit"></i> Đóng góp từ User</h5>
-          <hr>
-          <p><strong>Chữ Kanji:</strong> <span class="badge badge-secondary" style="font-size: 1.2rem;"><%= @story["kanji_text"] %></span></p>
-          <p class="font-weight-bold mb-1">Câu chuyện của User:</p>
-          <div class="p-3 bg-white border rounded shadow-sm mb-3">
-            <%= @story["kanji_story"] %>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-info text-white">
+          <h6 class="m-0 font-weight-bold"><i class="fas fa-user-edit mr-2"></i>Nội dung User đóng góp</h6>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="small text-muted font-weight-bold">NGƯỜI TẠO:</label>
+            <div class="font-weight-bold"><%= @story["user_email"] || "Ẩn danh" %></div>
           </div>
-          <p><small>Người tạo: <%= @story["user_email"] || "Ẩn danh" %></small></p>
+
+          <div class="mb-3">
+            <label class="small text-muted font-weight-bold">CHỮ KANJI:</label>
+            <div class="display-4 text-center border rounded bg-light py-2"><%= @story["kanji_text"] %></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="small text-muted font-weight-bold">CÂU CHUYỆN:</label>
+            <div class="p-3 bg-light border rounded text-dark" style="min-height: 100px; font-size: 1.1rem;">
+              <%= @story["kanji_story"] %>
+            </div>
+          </div>
+
+          <% if @story["kanji_description"].present? %>
+            <div class="mb-3">
+              <label class="small text-muted font-weight-bold">GHI CHÚ THÊM:</label>
+              <div class="small font-italic"><%= @story["kanji_description"] %></div>
+            </div>
+          <% end %>
         </div>
       </div>
+    </div>
 
-      <div class="col-md-8">
-        <%= form_with url: approve_admin_story_path(@story["id"]), method: :patch, local: true do |f| %>
-          <h5 class="text-dark font-weight-bold mb-3">1. Thông tin cơ bản (Cập nhật Kanji Tổng)</h5>
-          <div class="row">
-            <div class="col-md-6 form-group">
-              <label>Hán Việt (*)</label>
-              <%= f.text_field :translation, class: "form-control", value: @story["translation"], required: true %>
-            </div>
-            <div class="col-md-6 form-group">
-              <label>Nghĩa Tiếng Việt (*)</label>
-              <%= f.text_area :meaning, class: "form-control", rows: 2, value: @story["kanji_description"], required: true %>
-            </div>
-          </div>
+    <div class="col-md-8">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 bg-primary text-white">
+          <h6 class="m-0 font-weight-bold"><i class="fas fa-check-circle mr-2"></i>Kiểm tra & Phê duyệt</h6>
+        </div>
+        <div class="card-body">
 
-          <h5 class="text-dark font-weight-bold mt-3 mb-3">2. Chi tiết & Cách viết</h5>
-          <div class="row">
-            <div class="col-md-4 form-group">
-              <label>Onyomi</label>
-              <%= f.text_field :onyomi, class: "form-control", value: @story["on_pronunciation"], placeholder: "Ví dụ: KYUU" %>
+          <% if @story["kanji_id"].present? %>
+            <div class="alert alert-warning border-left-warning shadow-sm mb-4" role="alert">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-exclamation-triangle fa-2x mr-3"></i>
+                <div>
+                  <h5 class="alert-heading font-weight-bold mb-1">Chữ này đã có trong hệ thống!</h5>
+                  <p class="mb-0">
+                    Nội dung này sẽ được lưu vào <strong>Kho quản lý đóng góp (Stories)</strong> của chữ
+                    <a href="#" class="font-weight-bold text-dark"><%= @story["kanji_text"] %></a>
+                    chứ không tạo chữ mới.
+                  </p>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4 form-group">
-              <label>Kunyomi</label>
-              <%= f.text_field :kunyomi, class: "form-control", value: @story["kun_pronunciation"], placeholder: "Ví dụ: yasu-mu" %>
-            </div>
-            <div class="col-md-2 form-group">
-              <label>Số nét</label>
-              <%= f.number_field :stroke_count, class: "form-control", value: @story["num_strokes"] %>
-            </div>
-            <div class="col-md-2 form-group">
-              <label>JLPT (1-5)</label>
-              <%= f.number_field :jlpt_level, class: "form-control", in: 1..5, value: @story["jlpt"] || 5 %>
-            </div>
-          </div>
+          <% end %>
 
-          <div class="mt-4">
-            <button type="submit" class="btn btn-success btn-lg font-weight-bold shadow-sm w-100">
-              <i class="fas fa-check-circle"></i> XÁC NHẬN DUYỆT & ĐỒNG BỘ SANG HỆ THỐNG
+          <%= form_with url: approve_admin_story_path(@story["id"]), method: :patch, local: true do |f| %>
+
+            <h5 class="text-gray-800 font-weight-bold border-bottom pb-2 mb-3">1. Chuẩn hóa thông tin Kanji (Admin bổ sung)</h5>
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label>Hán Việt <span class="text-danger">*</span></label>
+                <%= f.text_field :translation, class: "form-control", value: @story["translation"], placeholder: "VD: NHÂN", required: true %>
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Nghĩa Tiếng Việt <span class="text-danger">*</span></label>
+                <%= f.text_field :meaning, class: "form-control", value: @story["meaning"], placeholder: "VD: Người", required: true %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label>Onyomi (Âm On)</label>
+                <%= f.text_field :on_pronunciation, class: "form-control", value: @story["on_pronunciation"], placeholder: "VD: JIN, NIN" %>
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Kunyomi (Âm Kun)</label>
+                <%= f.text_field :kun_pronunciation, class: "form-control", value: @story["kun_pronunciation"], placeholder: "VD: hito" %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label>Số nét</label>
+                <%= f.number_field :num_strokes, class: "form-control", value: @story["num_strokes"], placeholder: "VD: 2" %>
+              </div>
+              <div class="col-md-6 form-group">
+                <label>Cấp độ JLPT</label>
+                <%= f.select :jlpt, options_for_select((1..5).to_a.reverse.map { |n| ["N#{n}", n] }, @story["jlpt"] || 5), {}, { class: "form-control custom-select" } %>
+              </div>
+            </div>
+
+            <div class="alert alert-info mt-3">
+              <i class="fas fa-info-circle mr-1"></i>
+              Khi nhấn <strong>"Xác nhận duyệt"</strong>, câu chuyện bên trái sẽ được công khai và thông tin Kanji bên phải sẽ được cập nhật vào hệ thống.
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg btn-block font-weight-bold shadow mt-4">
+              <i class="fas fa-check mr-2"></i> XÁC NHẬN DUYỆT & ĐĂNG BÀI
             </button>
-          </div>
-        <% end %>
+          <% end %>
 
-        <hr class="my-4">
-        <h5 class="text-danger font-weight-bold mb-3">Từ chối đóng góp</h5>
-        <%= form_with url: reject_admin_story_path(@story["id"]), method: :patch, local: true, class: "d-flex" do |f| %>
-          <%= f.text_field :reason, class: "form-control", placeholder: "Lý do từ chối...", required: true %>
-          <button type="submit" class="btn btn-danger font-weight-bold ml-2">TỪ CHỐI</button>
-        <% end %>
+          <hr class="my-4">
+
+          <div class="bg-light p-3 rounded border">
+            <h6 class="text-danger font-weight-bold mb-3"><i class="fas fa-times-circle mr-1"></i>Từ chối đóng góp này</h6>
+            <%= form_with url: reject_admin_story_path(@story["id"]), method: :patch, local: true, class: "form-inline" do |f| %>
+              <div class="input-group w-100">
+                <%= f.text_field :reason, class: "form-control", placeholder: "Nhập lý do từ chối để gửi email cho User...", required: true %>
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-danger font-weight-bold">
+                    Xác nhận Từ chối
+                  </button>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
