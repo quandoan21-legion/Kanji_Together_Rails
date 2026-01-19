@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
 
   <%= csrf_meta_tags %>
-  <%= gemini_meta_tags if defined?(gemini_meta_tags) %>
+  <%= csp_meta_tag %>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -30,25 +30,23 @@
     <div class="sidebar">
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+
           <li class="nav-item">
-            <%= link_to admin_kanjis_path, class: "nav-link #{'active' if controller_name == 'kanjis'}" do %>
+            <%= link_to admin_kanjis_path, class: "nav-link #{'active' if controller_name == 'kanjis' && params[:status].blank?}" do %>
               <i class="nav-icon fas fa-book-open"></i>
               <p>Quản lý Kanji</p>
             <% end %>
           </li>
 
           <li class="nav-item">
-            <%= link_to admin_stories_path, class: "nav-link #{'active' if controller_name == 'stories'}" do %>
-              <i class="nav-icon fas fa-tasks"></i>
+            <%= link_to admin_stories_path(status: 'pending'), class: "nav-link #{'active' if params[:status] == 'pending'}" do %>
+              <i class="nav-icon fas fa-clock"></i>
               <p>
                 Duyệt Kanji (User)
-                <%# Hiển thị số lượng bài đang chờ duyệt %>
-                <span class="right badge badge-warning">
-                  <%= (controller_name == 'stories' && @stories.present?) ? @stories.select{|s| s["status"] == "pending"}.count : 0 %>
-                </span>
               </p>
             <% end %>
           </li>
+
         </ul>
       </nav>
     </div>
@@ -58,10 +56,18 @@
     <div class="content-header">
       <div class="container-fluid">
         <% if notice %>
-          <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h5><i class="icon fas fa-check"></i> Thông báo!</h5>
+          <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h5><i class="icon fas fa-check"></i> Thành công!</h5>
             <%= notice %>
+          </div>
+        <% end %>
+
+        <% if alert %>
+          <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <h5><i class="icon fas fa-ban"></i> Lỗi!</h5>
+            <%= alert %>
           </div>
         <% end %>
       </div>
