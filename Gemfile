@@ -53,6 +53,8 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem 'devise'
+  gem 'bcrypt', '~> 3.1.7' # Đảm bảo có gem này để mã hóa mật khẩu
 end
 
 group :development do

@@ -1,6 +1,8 @@
 <% if @errors.present? %>
   <div class="alert alert-danger shadow-sm mb-4">
-    <h5 class="alert-heading font-weight-bold"><i class="fas fa-exclamation-triangle mr-2"></i> Có lỗi xảy ra:</h5>
+    <h5 class="alert-heading font-weight-bold">
+      <i class="fas fa-exclamation-triangle mr-2"></i> Có lỗi xảy ra:
+    </h5>
     <hr>
     <ul class="mb-0 pl-3">
       <% @errors.each do |field, msg| %>
@@ -10,18 +12,25 @@
   </div>
 <% end %>
 
+<% is_edit = @kanji.present? && @kanji["id"].present? %>
+
 <%= form_with scope: :kanji,
-              url: @kanji&.[]("id") ? admin_kanji_path(@kanji["id"]) : admin_kanjis_path,
-              method: (@kanji&.[]("id") ? :patch : :post),
+              url: (is_edit ? admin_kanji_path(@kanji["id"]) : admin_kanjis_path),
+              method: (is_edit ? :patch : :post),
               local: true,
               data: { turbo: false },
               html: {
                 id: "kanji-form",
                 class: "needs-validation",
                 novalidate: true,
-                # JS khóa nút submit để tránh bấm nhiều lần
-                onsubmit: "var btn = document.getElementById('btn-submit'); setTimeout(function(){ btn.disabled = true; btn.innerHTML = '<i class=\\'fas fa-spinner fa-spin\\'></i> Đang xử lý...'; }, 10);"
+                onsubmit: "var btn = document.getElementById('btn-submit');
+                  setTimeout(function(){
+                    btn.disabled = true;
+                    btn.innerHTML = '<i class=\\'fas fa-spinner fa-spin\\'></i> Đang xử lý...';
+                  }, 10);"
               } do |f| %>
+
+
 
   <div class="card card-body shadow-sm">
     <h5 class="text-primary font-weight-bold border-bottom pb-2">Thông tin cơ bản</h5>

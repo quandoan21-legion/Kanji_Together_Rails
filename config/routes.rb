@@ -1,23 +1,22 @@
 Rails.application.routes.draw do
-  # Trang chủ vào thẳng danh sách Kanji của Admin
+  devise_for :admins, skip: [:registrations]
   root "admin/kanjis#index"
 
-  # Tất cả chức năng Admin phải nằm trong khối này
   namespace :admin do
-    # 1. Quản lý Kanji hệ thống (CRUD đầy đủ)
-    # Helper: admin_kanjis_path, new_admin_kanji_path...
+    # 1. Quản lý Kanji hệ thống
     resources :kanjis
 
-    # 2. Quản lý Duyệt Kanji do User đóng góp (MỚI THÊM)
-    # Chỉ cần: Xem ds (index), Form duyệt (edit), Duyệt (update), Xóa (destroy)
-    # Helper: admin_user_kanjis_path, edit_admin_user_kanji_path...
+    # 2. Quản lý Duyệt Kanji (Dành cho bản ghi KanjiCharacters thô)
     resources :user_kanjis, only: [:index, :edit, :update, :destroy]
 
     # 3. Quản lý Duyệt câu chuyện (Stories)
-    resources :stories, only: [:index, :show] do
+    resources :stories, only: [:index, :show, :destroy] do
       member do
+        # Sửa: Dùng cả patch và put cho reject để tránh lỗi lệch Method giữa View và Controller
         patch :approve
+        put :approve
         patch :reject
+        put :reject
       end
     end
   end
