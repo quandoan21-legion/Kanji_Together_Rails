@@ -1,134 +1,278 @@
-<div class="container-fluid">
+<style>
+    #input-translation {
+        text-transform: uppercase;
+    }
+    /* Thêm một chút padding để các ô text_area không bị quá sát */
+    .form-control-sm {
+        height: auto !important;
+        min-height: 31px;
+    }
+</style>
+
+<div class="container-fluid pb-4"> <%# Thêm pb-4 để dưới cùng không bị sát footer %>
+
+  <%# --- HEADER --- %>
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">
-      Biên tập & Duyệt: <span class="text-primary font-weight-bold"><%= @story["kanji_text"] %></span>
+      Biên tập Kanji: <span class="text-primary font-weight-bold"><%= @user_raw_data["kanji_text"] %></span>
     </h1>
-    <%= link_to admin_stories_path, class: "btn btn-secondary btn-sm shadow-sm" do %>
+    <%= link_to admin_stories_path(status: 'pending'), class: "btn btn-secondary btn-sm shadow-sm" do %>
       <i class="fas fa-arrow-left"></i> Quay lại danh sách
     <% end %>
   </div>
 
+  <%
+    is_official = @story["is_official"]
+    has_record = @story["kanji_id"].present?
+    is_locked = is_official
+    current_status = @user_raw_data["status"]
+  %>
+
   <div class="row">
+    <%# --- CỘT TRÁI: NỘI DUNG NGƯỜI DÙNG GỬI (Giữ nguyên) --- %>
     <div class="col-md-4">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-info text-white">
-          <h6 class="m-0 font-weight-bold"><i class="fas fa-user-edit mr-2"></i>Nội dung User đóng góp</h6>
+      <div class="card shadow mb-4 border-bottom-secondary">
+        <div class="card-header py-3 bg-secondary text-white">
+          <h6 class="m-0 font-weight-bold"><i class="fas fa-file-alt mr-2"></i>NỘI DUNG NGƯỜI DÙNG GỬI</h6>
         </div>
-        <div class="card-body">
-          <div class="mb-3">
-            <label class="small text-muted font-weight-bold">NGƯỜI TẠO:</label>
-            <div class="font-weight-bold"><%= @story["user_email"] || "Ẩn danh" %></div>
+        <div class="card-body bg-light text-dark text-break">
+          <div class="text-center mb-4">
+            <div class="display-4 font-weight-bold text-dark"><%= @user_raw_data["kanji_text"] %></div>
+            <small class="badge badge-pill badge-light border">
+              ID liên kết: <%= @user_raw_data["kanji_id"] || "Mới (NULL)" %>
+            </small>
           </div>
 
-          <div class="mb-3">
-            <label class="small text-muted font-weight-bold">CHỮ KANJI:</label>
-            <div class="display-4 text-center border rounded bg-light py-2"><%= @story["kanji_text"] %></div>
-          </div>
+          <dl class="row small mb-0">
+            <% [
+                 { label: "Hán Việt", key: "translation", val: @user_raw_data["user_translation"] },
+                 { label: "Nghĩa", key: "meaning", val: @user_raw_data["user_meaning"] },
+                 { label: "Âm Onyomi", key: "onyomi", val: @user_raw_data["user_onyomi"], class: "text-danger" },
+                 { label: "Âm Kunyomi", key: "kunyomi", val: @user_raw_data["user_kunyomi"], class: "text-primary" },
+                 { label: "Số nét", key: "stroke_count", val: @user_raw_data["user_num_strokes"] },
+                 { label: "Bộ thủ", key: "radical", val: @user_raw_data["user_radical"] },
+                 { label: "Bộ thành phần", key: "components", val: @user_raw_data["user_components"] }
+               ].each do |item| %>
+              <dt class="col-sm-5 text-muted"><%= item[:label] %>:</dt>
+              <dd class="col-sm-7 copyable-item d-flex align-items-center justify-content-between mb-1" data-target="<%= item[:key] %>">
+                <span class="<%= item[:class] %> text-val"><%= item[:val].presence || "-" %></span>
+                <% if item[:val].present? && item[:val].to_s.downcase != "trống" %>
+                  <i class="fas fa-bolt text-warning small"></i>
+                <% end %>
+              </dd>
+            <% end %>
+          </dl>
 
-          <div class="mb-3">
-            <label class="small text-muted font-weight-bold">CÂU CHUYỆN:</label>
-            <div class="p-3 bg-light border rounded text-dark" style="min-height: 100px; font-size: 1.1rem;">
-              <%= @story["kanji_story"] %>
+          <hr>
+          <div class="mb-3 small">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <small class="text-muted font-weight-bold text-uppercase">Câu chuyện (User):</small>
+              <button type="button" class="btn btn-outline-warning btn-xs py-0 copyable-item" data-target="kanji_description"><i class="fas fa-bolt"></i></button>
             </div>
+            <div class="p-2 bg-white border rounded shadow-sm story-val"><%= @user_raw_data["kanji_story"] %></div>
           </div>
 
-          <% if @story["kanji_description"].present? %>
-            <div class="mb-3">
-              <label class="small text-muted font-weight-bold">GHI CHÚ THÊM:</label>
-              <div class="small font-italic"><%= @story["kanji_description"] %></div>
+          <div class="mb-3 small">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <small class="text-muted font-weight-bold text-uppercase">Từ vựng (User):</small>
+              <button type="button" class="btn btn-outline-warning btn-xs py-0 copyable-item" data-target="vocabulary"><i class="fas fa-bolt"></i></button>
             </div>
-          <% end %>
+            <div class="p-2 bg-white border rounded shadow-sm voca-val"><%= @user_raw_data["user_vocabulary"].presence || "Trống" %></div>
+          </div>
+
+          <div class="small mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <small class="text-muted font-weight-bold text-uppercase">Ví dụ (User):</small>
+              <button type="button" class="btn btn-outline-warning btn-xs py-0 copyable-item" data-target="examples"><i class="fas fa-bolt"></i></button>
+            </div>
+            <div class="p-2 bg-white border rounded shadow-sm ex-val"><%= @user_raw_data["user_examples"].presence || "Trống" %></div>
+          </div>
+
+          <div class="bg-white p-3 rounded border shadow-sm mt-4">
+            <label class="small font-weight-bold text-muted text-uppercase d-block mb-3 text-center">Quản lý trạng thái</label>
+            <% is_rejected = (current_status == 'rejected') %>
+            <div class="form-group mb-3">
+              <label class="small font-weight-bold text-danger">Lý do từ chối (Bắt buộc):</label>
+              <textarea id="reject-reason-input"
+                        class="form-control form-control-sm border-danger <%= 'bg-light text-muted' if is_rejected %>"
+                        rows="3"
+                        placeholder="Vui lòng nhập lý do cụ thể..."
+                        <%= 'readonly' if is_rejected %>><%= @user_raw_data["reject_reason"] %></textarea>
+              <% if is_rejected %>
+                <small class="text-danger font-italic" style="font-size: 0.75rem;">* Đã khóa lý do. Nhấn "Hủy từ chối" để mở khóa.</small>
+              <% end %>
+            </div>
+
+            <% unless is_rejected %>
+              <button type="button" onclick="handleStatusChange('rejected')" class="btn btn-warning btn-block font-weight-bold shadow-sm mb-3">
+                <i class="fas fa-times-circle mr-1"></i> TỪ CHỐI ĐÓNG GÓP
+              </button>
+            <% else %>
+              <div class="alert alert-danger py-2 small text-center mb-3">
+                <i class="fas fa-info-circle"></i> Bài này đang bị <strong>TỪ CHỐI</strong>.
+              </div>
+              <button type="button" onclick="handleStatusChange('pending')" class="btn btn-outline-info btn-block btn-sm mb-3 shadow-sm">
+                <i class="fas fa-undo mr-1"></i> HỦY TỪ CHỐI
+              </button>
+            <% end %>
+
+            <%= button_to admin_story_path(@user_raw_data["id"]),
+                          method: :delete,
+                          data: { confirm: "CẢNH BÁO: Xóa vĩnh viễn đóng góp này?" },
+                          class: "btn btn-outline-danger btn-block btn-sm" do %>
+              <i class="fas fa-trash"></i> Xóa vĩnh viễn bài này
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
 
+    <%# --- CỘT PHẢI: BIÊN TẬP (Đã sửa Layout) --- %>
     <div class="col-md-8">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3 bg-primary text-white">
-          <h6 class="m-0 font-weight-bold"><i class="fas fa-check-circle mr-2"></i>Kiểm tra & Phê duyệt</h6>
-        </div>
-        <div class="card-body">
-
-          <% if @story["kanji_id"].present? %>
-            <div class="alert alert-warning border-left-warning shadow-sm mb-4" role="alert">
-              <div class="d-flex align-items-center">
-                <i class="fas fa-exclamation-triangle fa-2x mr-3"></i>
-                <div>
-                  <h5 class="alert-heading font-weight-bold mb-1">Chữ này đã có trong hệ thống!</h5>
-                  <p class="mb-0">
-                    Nội dung này sẽ được lưu vào <strong>Kho quản lý đóng góp (Stories)</strong> của chữ
-                    <a href="#" class="font-weight-bold text-dark"><%= @story["kanji_text"] %></a>
-                    chứ không tạo chữ mới.
-                  </p>
-                </div>
-              </div>
-            </div>
-          <% end %>
-
-          <%= form_with url: approve_admin_story_path(@story["id"]), method: :patch, local: true do |f| %>
-
-            <h5 class="text-gray-800 font-weight-bold border-bottom pb-2 mb-3">1. Chuẩn hóa thông tin Kanji (Admin bổ sung)</h5>
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label>Hán Việt <span class="text-danger">*</span></label>
-                <%= f.text_field :translation, class: "form-control", value: @story["translation"], placeholder: "VD: NHÂN", required: true %>
-              </div>
-              <div class="col-md-6 form-group">
-                <label>Nghĩa Tiếng Việt <span class="text-danger">*</span></label>
-                <%= f.text_field :meaning, class: "form-control", value: @story["meaning"], placeholder: "VD: Người", required: true %>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label>Onyomi (Âm On)</label>
-                <%= f.text_field :on_pronunciation, class: "form-control", value: @story["on_pronunciation"], placeholder: "VD: JIN, NIN" %>
-              </div>
-              <div class="col-md-6 form-group">
-                <label>Kunyomi (Âm Kun)</label>
-                <%= f.text_field :kun_pronunciation, class: "form-control", value: @story["kun_pronunciation"], placeholder: "VD: hito" %>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <label>Số nét</label>
-                <%= f.number_field :num_strokes, class: "form-control", value: @story["num_strokes"], placeholder: "VD: 2" %>
-              </div>
-              <div class="col-md-6 form-group">
-                <label>Cấp độ JLPT</label>
-                <%= f.select :jlpt, options_for_select((1..5).to_a.reverse.map { |n| ["N#{n}", n] }, @story["jlpt"] || 5), {}, { class: "form-control custom-select" } %>
-              </div>
-            </div>
-
-            <div class="alert alert-info mt-3">
-              <i class="fas fa-info-circle mr-1"></i>
-              Khi nhấn <strong>"Xác nhận duyệt"</strong>, câu chuyện bên trái sẽ được công khai và thông tin Kanji bên phải sẽ được cập nhật vào hệ thống.
-            </div>
-
-            <button type="submit" class="btn btn-success btn-lg btn-block font-weight-bold shadow mt-4">
-              <i class="fas fa-check mr-2"></i> XÁC NHẬN DUYỆT & ĐĂNG BÀI
-            </button>
-          <% end %>
-
-          <hr class="my-4">
-
-          <div class="bg-light p-3 rounded border">
-            <h6 class="text-danger font-weight-bold mb-3"><i class="fas fa-times-circle mr-1"></i>Từ chối đóng góp này</h6>
-            <%= form_with url: reject_admin_story_path(@story["id"]), method: :patch, local: true, class: "form-inline" do |f| %>
-              <div class="input-group w-100">
-                <%= f.text_field :reason, class: "form-control", placeholder: "Nhập lý do từ chối để gửi email cho User...", required: true %>
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-danger font-weight-bold">
-                    Xác nhận Từ chối
-                  </button>
-                </div>
-              </div>
+      <div class="card shadow mb-4 border-left-primary">
+        <div class="card-header py-3 bg-primary text-white d-flex justify-content-between align-items-center">
+          <h6 class="m-0 font-weight-bold"><i class="fas fa-edit mr-2"></i>DỮ LIỆU HỆ THỐNG & BIÊN TẬP</h6>
+          <div>
+            <% if @kanji_status == "official" %>
+              <span class="badge badge-warning text-dark shadow-sm"><i class="fas fa-lock"></i> KANJI CHÍNH THỨC</span>
+            <% elsif @kanji_status == "hidden" %>
+              <span class="badge badge-danger shadow-sm animated pulse infinite"><i class="fas fa-eye-slash"></i> CHỮ BỊ ẨN</span>
+            <% else %>
+              <span class="badge badge-success shadow-sm"><i class="fas fa-plus-circle"></i> KANJI MỚI</span>
             <% end %>
           </div>
+        </div>
 
+        <div class="card-body px-4"> <%# Thêm px-4 để nội dung không sát lề card %>
+          <% if @kanji_status == "hidden" %>
+            <div class="alert alert-warning border-left-warning shadow-sm mb-4">
+              <i class="fas fa-info-circle mr-2"></i> Chữ này đang bị ẩn. Nhấn <strong>PHÊ DUYỆT</strong> để khôi phục.
+            </div>
+          <% end %>
+
+          <%= form_with url: approve_admin_story_path(@user_raw_data["id"]), method: :put, id: "approve-form", local: true do |f| %>
+            <%= f.hidden_field :kanji, value: @user_raw_data["kanji_text"] %>
+            <%= hidden_field_tag :kanji_id, @story["kanji_id"] if has_record %>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="font-weight-bold small text-primary">Hán Việt <span class="text-danger">*</span></label>
+                <%= f.text_field :translation, id: "input-translation", name: "translation", class: "form-control form-control-sm", value: @story["translation"], required: true, readonly: is_locked %>
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="font-weight-bold small text-primary">Nghĩa Tiếng Việt <span class="text-danger">*</span></label>
+                <%= f.text_field :meaning, id: "input-meaning", name: "meaning", class: "form-control form-control-sm", value: @story["meaning"], required: true, readonly: is_locked %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="small font-weight-bold text-primary">Âm Onyomi <span class="text-danger">*</span></label>
+                <%= f.text_area :onyomi, id: "input-onyomi", name: "onyomi", class: "form-control form-control-sm", rows: 2, value: @story["onyomi"], required: true, readonly: is_locked %>
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="small font-weight-bold text-primary">Âm Kunyomi <span class="text-danger">*</span></label>
+                <%= f.text_area :kunyomi, id: "input-kunyomi", name: "kunyomi", class: "form-control form-control-sm", rows: 2, value: @story["kunyomi"], required: true, readonly: is_locked %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4 form-group">
+                <label class="small font-weight-bold text-primary">Số nét (1-60) <span class="text-danger">*</span></label>
+                <%= f.number_field :stroke_count, id: "input-stroke_count", name: "stroke_count", class: "form-control form-control-sm", value: @story["stroke_count"], required: true, readonly: is_locked %>
+              </div>
+              <div class="col-md-4 form-group">
+                <label class="small font-weight-bold text-primary">JLPT <span class="text-danger">*</span></label>
+                <%= f.select :jlpt_level, options_for_select((1..5).to_a.reverse.map { |n| ["N#{n}", n] }, @story["jlpt_level"] || 5), {}, { class: "form-control form-control-sm custom-select", name: "jlpt_level", disabled: is_locked } %>
+              </div>
+              <div class="col-md-4 form-group">
+                <label class="small font-weight-bold text-primary">Bộ thủ <span class="text-danger">*</span></label>
+                <%= f.text_field :radical, id: "input-radical", name: "radical", class: "form-control form-control-sm", value: @story["radical"], required: true, readonly: is_locked %>
+              </div>
+            </div>
+
+            <div class="row"> <%# Tạo Row mới để tránh bị tràn layout %>
+              <div class="col-md-4 form-group">
+                <label class="small font-weight-bold text-primary">Bộ thành phần</label>
+                <%= f.text_field :components, id: "input-components", name: "components", class: "form-control form-control-sm", value: @story["components"], readonly: is_locked %>
+              </div>
+              <div class="col-md-8 form-group">
+                <label class="font-weight-bold text-primary small">URL Ảnh Cách Viết (.gif) <span class="text-danger">*</span></label>
+                <%= f.text_field :writing_image_url, id: "input-writing_image_url", name: "writing_image_url", class: "form-control form-control-sm", value: @story["writing_image_url"], required: true %>
+              </div>
+            </div>
+
+            <div class="form-group mb-4">
+              <label class="font-weight-bold text-success h6">Câu chuyện ghi nhớ <span class="text-danger">*</span></label>
+              <%= f.text_area :kanji_description, id: "input-kanji_description", name: "kanji_description", class: "form-control shadow-sm", rows: 4, value: @story["kanji_description"], required: true %>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label class="font-weight-bold text-success small">Từ vựng <span class="text-danger">*</span></label>
+                <%= f.text_area :vocabulary, id: "input-vocabulary", name: "vocabulary", class: "form-control", rows: 6, value: @story["vocabulary"], required: true %>
+              </div>
+              <div class="col-md-6 form-group">
+                <label class="font-weight-bold text-success small">Ví dụ <span class="text-danger">*</span></label>
+                <%= f.text_area :examples, id: "input-examples", name: "examples", class: "form-control", rows: 6, value: @story["examples"], required: true %>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg btn-block shadow font-weight-bold py-3 mt-4">
+              <i class="fas fa-check-circle mr-2"></i> PHÊ DUYỆT & CÔNG KHAI
+            </button>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+    // --- GIỮ NGUYÊN TOÀN BỘ SCRIPT CỦA BẠN ---
+    function handleStatusChange(status) {
+        const reasonInput = document.getElementById('reject-reason-input');
+        const reason = reasonInput.value.trim();
+        if (status === 'rejected' && reason === "") {
+            alert("LỖI: Bạn phải nhập lý do từ chối!");
+            reasonInput.focus();
+            return;
+        }
+        if (confirm(`Xác nhận thay đổi trạng thái?`)) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '<%= reject_admin_story_path(@user_raw_data["id"]) %>';
+            const addHidden = (name, val) => {
+                const i = document.createElement('input'); i.type = 'hidden'; i.name = name; i.value = val;
+                form.appendChild(i);
+            };
+            addHidden('authenticity_token', '<%= form_authenticity_token %>');
+            addHidden('_method', 'put');
+            addHidden('status', status);
+            addHidden('reason', reason);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.copyable-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const targetKey = this.getAttribute('data-target');
+                const targetInput = document.getElementById('input-' + targetKey);
+                if (!targetInput || targetInput.readOnly) return;
+                let text = "";
+                const box = this.closest('.small')?.querySelector('.story-val, .voca-val, .ex-val') || this.querySelector('.text-val');
+                if (box) text = box.innerText.trim();
+                if (!text || text.toLowerCase() === 'trống' || text === '-') return;
+                targetInput.value = text;
+                targetInput.style.backgroundColor = "#d4edda";
+                setTimeout(() => { targetInput.style.backgroundColor = ""; }, 800);
+            });
+        });
+    });
+    const transInput = document.getElementById('input-translation');
+    if (transInput) {
+        transInput.addEventListener('blur', function() { this.value = this.value.toUpperCase(); });
+    }
+</script>
