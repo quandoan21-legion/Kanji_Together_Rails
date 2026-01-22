@@ -72,9 +72,17 @@
               <p>Quản lý Câu Hỏi</p>
             <% end %>
           </li>
+
+          <li class="nav-item">
+            <%= link_to admin_exams_path, class: "nav-link #{'active' if controller_name == 'exams'}" do %>
+              <i class="nav-icon fas fa-file-signature"></i>
+              <p>Quản lý Đề Thi</p>
+            <% end %>
+          </li>
         </ul>
       </nav>
     </div>
+
   </aside>
 
   <div class="content-wrapper">

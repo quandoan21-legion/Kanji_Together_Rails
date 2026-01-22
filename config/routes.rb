@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :user_kanjis, only: [:index, :edit, :update, :destroy]
     # Resources tự động tạo 7 routes chuẩn RESTful (index, new, create, show, edit, update, destroy)
     resources :questions
+    resources :exams
     # 3. Quản lý Duyệt câu chuyện (Stories)
     resources :stories, only: [:index, :show, :destroy] do
       member do

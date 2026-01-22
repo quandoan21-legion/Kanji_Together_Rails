@@ -10,11 +10,12 @@
 
   <div class="card-body">
     <div class="row mb-3">
-      <div class="col-md-4">
-        <%= form_with url: admin_questions_path, method: :get, local: true do |f| %>
-          <div class="input-group input-group-sm">
+      <div class="col-md-12">
+        <%= form_with url: admin_questions_path, method: :get, local: true, class: "form-inline" do |f| %>
+
+          <div class="input-group input-group-sm mr-2 mb-2">
             <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-filter"></i></span>
+              <span class="input-group-text"><i class="fas fa-filter"></i> Loại</span>
             </div>
             <%= f.select :type,
                          options_for_select([
@@ -27,6 +28,26 @@
                                             ], params[:type]),
                          {}, { class: "form-control", onchange: "this.form.submit()" } %>
           </div>
+
+          <div class="input-group input-group-sm mr-2 mb-2">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-info text-white"><i class="fas fa-search"></i> Kanji</span>
+            </div>
+            <%= text_field_tag :kanji, params[:kanji],
+                               class: "form-control",
+                               placeholder: "VD: 学 (Học)...",
+                               style: "width: 150px;" %>
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-info">Tìm</button>
+            </div>
+          </div>
+
+          <% if params[:type].present? || params[:kanji].present? %>
+            <%= link_to admin_questions_path, class: "btn btn-sm btn-outline-secondary mb-2" do %>
+              <i class="fas fa-sync"></i> Xóa lọc
+            <% end %>
+          <% end %>
+
         <% end %>
       </div>
     </div>
@@ -36,7 +57,7 @@
         <thead class="thead-light">
         <tr>
           <th style="width: 50px" class="text-center">ID</th>
-          <th style="width: 180px">Loại Câu Hỏi</th>
+          <th style="width: 150px">Kanji Liên Quan</th> <th style="width: 150px">Loại Câu Hỏi</th>
           <th>Nội dung</th>
           <th>Đáp án đúng</th>
           <th style="width: 120px" class="text-center">Thao tác</th>
@@ -47,6 +68,19 @@
           <% @questions.each do |q| %>
             <tr>
               <td class="text-center"><%= q['id'] %></td>
+
+              <td>
+                <% if q['related_kanjis'].present? %>
+                  <% q['related_kanjis'].each do |k| %>
+                    <span class="badge badge-light border mb-1" style="font-size: 14px;">
+                      <%= k['kanji'] %>
+                    </span>
+                  <% end %>
+                <% else %>
+                  <span class="text-muted small font-italic">-- Chung --</span>
+                <% end %>
+              </td>
+
               <td>
                 <% badge_class = case q['question_type']
                                  when 'READING' then 'badge-info'
@@ -60,7 +94,7 @@
                   <%= q['question_type'] %>
                 </span>
               </td>
-              <td><%= q['question_text'] %></td>
+              <td><%= truncate(q['question_text'], length: 60) %></td>
               <td class="text-success font-weight-bold"><%= q['correct_answer'] %></td>
               <td class="text-center">
                 <div class="btn-group">
@@ -77,8 +111,7 @@
           <% end %>
         <% else %>
           <tr>
-            <td colspan="5" class="text-center py-5 text-muted">
-              <i class="fas fa-inbox fa-3x mb-3"></i><br>
+            <td colspan="6" class="text-center py-5 text-muted"> <i class="fas fa-inbox fa-3x mb-3"></i><br>
               Không tìm thấy dữ liệu phù hợp
             </td>
           </tr>
