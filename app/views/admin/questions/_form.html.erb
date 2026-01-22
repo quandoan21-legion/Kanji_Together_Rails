@@ -1,0 +1,172 @@
+<%= form_with url: url, method: method, local: true do |f| %>
+
+  <div class="card-body">
+    <div class="form-group">
+      <label>Loại Câu Hỏi <span class="text-danger">*</span></label>
+      <%= f.select :question_type,
+                   options_for_select([
+                                        ['Reading (Cách đọc Hiragana)', 'READING'],
+                                        ['Compound (Ghép từ vựng)', 'COMPOUND'],
+                                        ['Story (Câu chuyện gợi nhớ)', 'STORY'],
+                                        ['Context (Hoàn thành câu)', 'CONTEXT'],
+                                        ['Odd One (Tìm chữ/nghĩa đúng)', 'ODD_ONE']
+                                      ], question['question_type']),
+                   { include_blank: '-- Vui lòng chọn dạng câu hỏi --' },
+                   { class: "form-control font-weight-bold border-primary", id: "type-selector", required: true, onchange: "updateFormLayout()" } %>
+    </div>
+
+    <div id="empty-state" class="text-center py-5 text-muted border rounded bg-light">
+      <i class="fas fa-hand-point-up fa-3x mb-3 text-primary"></i><br>
+      <h5 class="font-weight-normal">Vui lòng chọn <b>Loại câu hỏi</b> ở trên để bắt đầu nhập liệu</h5>
+    </div>
+
+    <div id="input-area" class="d-none animate__animated animate__fadeIn">
+
+      <div class="form-group bg-warning p-2 rounded d-none mb-3" id="odd-one-options" style="background-color: #fff3cd !important;">
+        <label class="text-dark d-block mb-2 font-weight-bold"><i class="fas fa-exchange-alt"></i> Chọn Chiều Câu Hỏi:</label>
+
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="direction_vn_jp" name="direction" class="custom-control-input" value="vn_jp" checked onchange="updateFormLayout()">
+          <label class="custom-control-label" for="direction_vn_jp">Việt ➔ Nhật (Tìm chữ Kanji)</label>
+        </div>
+
+        <div class="custom-control custom-radio custom-control-inline">
+          <input type="radio" id="direction_jp_vn" name="direction" class="custom-control-input" value="jp_vn" onchange="updateFormLayout()">
+          <label class="custom-control-label" for="direction_jp_vn">Nhật ➔ Việt (Tìm nghĩa)</label>
+        </div>
+      </div>
+
+      <div class="form-group bg-white border p-3 rounded shadow-sm">
+        <label id="lbl-question" class="text-primary font-weight-bold">Nội Dung Câu Hỏi <span class="text-danger">*</span></label>
+        <p id="hint-text" class="text-muted small mb-2"><i class="fas fa-info-circle"></i> Nhập thông tin câu hỏi.</p>
+        <%= f.text_area :question_text, value: question['question_text'], class: "form-control", id: "input-question", rows: 3, required: true %>
+      </div>
+
+      <hr>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="text-success font-weight-bold" id="lbl-correct"><i class="fas fa-check-circle"></i> Đáp Án ĐÚNG <span class="text-danger">*</span></label>
+            <%= f.text_field :correct_answer, value: question['correct_answer'], class: "form-control is-valid font-weight-bold", required: true %>
+          </div>
+        </div>
+        <div class="col-md-6 d-flex align-items-center">
+          <span class="text-muted small" id="lbl-answer-hint"><i class="fas fa-arrow-left"></i> Nhập đáp án chính xác vào đây.</span>
+        </div>
+      </div>
+
+      <label class="text-danger font-weight-bold mt-2"><i class="fas fa-times-circle"></i> Các Đáp Án SAI (Gây nhiễu) <span class="text-danger">*</span></label>
+      <div class="row">
+        <% 1.upto(3) do |i| %>
+          <div class="col-md-4">
+            <div class="form-group">
+              <%= f.text_field "wrong_answer_#{i}", value: question["wrong_answer_#{i}"], class: "form-control", placeholder: "Đáp án sai #{i}", required: true %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div> </div>
+
+  <div class="card-footer text-right">
+    <%= link_to "Hủy", admin_questions_path, class: "btn btn-default mr-2" %>
+    <button type="submit" class="btn btn-primary px-4 font-weight-bold">LƯU DỮ LIỆU</button>
+  </div>
+<% end %>
+
+<script>
+    function updateFormLayout() {
+        const type = document.getElementById('type-selector').value;
+        const inputArea = document.getElementById('input-area');
+        const emptyState = document.getElementById('empty-state');
+
+
+        if (!type) {
+            inputArea.classList.add('d-none');
+            emptyState.classList.remove('d-none');
+            return;
+        }
+
+
+        inputArea.classList.remove('d-none');
+        emptyState.classList.add('d-none');
+
+
+        const oddOneOptions = document.getElementById('odd-one-options');
+        const isVnToJp = document.getElementById('direction_vn_jp').checked;
+
+        const lblQuestion = document.getElementById('lbl-question');
+        const hintText = document.getElementById('hint-text');
+        const inputQuestion = document.getElementById('input-question');
+        const lblCorrect = document.getElementById('lbl-correct');
+        const lblAnswerHint = document.getElementById('lbl-answer-hint');
+
+        oddOneOptions.classList.add('d-none');
+        inputQuestion.setAttribute('rows', '3');
+
+        switch (type) {
+            case 'READING':
+                lblQuestion.innerText = "Chữ Kanji (Cần kiểm tra)";
+                hintText.innerHTML = "Ví dụ: Nhập <b>学生</b> (Học sinh).";
+                inputQuestion.placeholder = "Nhập chữ Kanji...";
+                inputQuestion.setAttribute('rows', '1');
+                lblCorrect.innerText = "Cách đọc (Hiragana)";
+                lblAnswerHint.innerText = "Nhập cách đọc đúng (VD: がくせい).";
+                break;
+
+            case 'COMPOUND':
+                lblQuestion.innerText = "Câu hỏi / Gợi ý";
+                hintText.innerHTML = "Ví dụ: Chữ nào ghép với <b>気</b> để thành nghĩa 'Thời tiết'?";
+                inputQuestion.placeholder = "Nhập câu hỏi gợi ý...";
+                lblCorrect.innerText = "Chữ Kanji còn thiếu";
+                lblAnswerHint.innerText = "Nhập chữ Kanji đúng (VD: 天).";
+                break;
+
+            case 'STORY':
+                lblQuestion.innerText = "Câu Chuyện (Mnemonic)";
+                hintText.innerHTML = "Ví dụ: <i>'Người (Nhân) đứng dựa vào gốc cây (Mộc)'</i>.";
+                inputQuestion.placeholder = "Nhập câu chuyện...";
+                lblCorrect.innerText = "Chữ Kanji tương ứng";
+                lblAnswerHint.innerText = "Nhập chữ Kanji đúng (VD: 休).";
+                break;
+
+            case 'CONTEXT':
+                lblQuestion.innerText = "Câu Văn (Ngữ Cảnh)";
+                hintText.innerHTML = "Ví dụ: <b>私は[...]へ行きます。</b>";
+                inputQuestion.placeholder = "Nhập câu văn có [...]...";
+                lblCorrect.innerText = "Từ cần điền";
+                lblAnswerHint.innerText = "Nhập từ vựng phù hợp.";
+                break;
+
+            case 'ODD_ONE':
+                oddOneOptions.classList.remove('d-none');
+                inputQuestion.setAttribute('rows', '1');
+
+                if (isVnToJp) {
+                    // Chiều: Việt -> Nhật
+                    lblQuestion.innerText = "Nghĩa Tiếng Việt";
+                    hintText.innerHTML = "Ví dụ: <b>Con Mèo</b>.";
+                    inputQuestion.placeholder = "Nhập nghĩa tiếng Việt...";
+                    lblCorrect.innerText = "Chữ Kanji ĐÚNG";
+                    lblAnswerHint.innerText = "Nhập Kanji đúng (VD: 猫).";
+                } else {
+                    // Chiều: Nhật -> Việt
+                    lblQuestion.innerText = "Chữ Kanji / Từ vựng";
+                    hintText.innerHTML = "Ví dụ: <b>学生</b>.";
+                    inputQuestion.placeholder = "Nhập Kanji...";
+                    lblCorrect.innerText = "Nghĩa Tiếng Việt ĐÚNG";
+                    lblAnswerHint.innerText = "Nhập nghĩa đúng (VD: Học sinh).";
+                }
+                break;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        updateFormLayout();
+    });
+</script>
+<style>
+    #type-selector option[value=""] {
+        display: none;
+    }
+</style>
