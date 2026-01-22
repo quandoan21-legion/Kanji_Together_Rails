@@ -1,0 +1,90 @@
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">Ngân Hàng Câu Hỏi</h3>
+    <div class="card-tools">
+      <%= link_to new_admin_question_path(type: params[:type]), class: "btn btn-primary btn-sm" do %>
+        <i class="fas fa-plus"></i> Tạo Câu Hỏi Mới
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <%= form_with url: admin_questions_path, method: :get, local: true do |f| %>
+          <div class="input-group input-group-sm">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><i class="fas fa-filter"></i></span>
+            </div>
+            <%= f.select :type,
+                         options_for_select([
+                                              ['-- Tất cả loại --', ''],
+                                              ['Reading (Cách đọc Hiragana)', 'READING'],
+                                              ['Compound (Ghép từ vựng)', 'COMPOUND'],
+                                              ['Story (Câu chuyện gợi nhớ)', 'STORY'],
+                                              ['Context (Hoàn thành câu)', 'CONTEXT'],
+                                              ['Odd One (Tìm chữ đúng nghĩa)', 'ODD_ONE']
+                                            ], params[:type]),
+                         {}, { class: "form-control", onchange: "this.form.submit()" } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th style="width: 50px" class="text-center">ID</th>
+          <th style="width: 180px">Loại Câu Hỏi</th>
+          <th>Nội dung</th>
+          <th>Đáp án đúng</th>
+          <th style="width: 120px" class="text-center">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @questions && @questions.any? %>
+          <% @questions.each do |q| %>
+            <tr>
+              <td class="text-center"><%= q['id'] %></td>
+              <td>
+                <% badge_class = case q['question_type']
+                                 when 'READING' then 'badge-info'
+                                 when 'COMPOUND' then 'badge-success'
+                                 when 'STORY' then 'badge-warning'
+                                 when 'CONTEXT' then 'badge-primary'
+                                 when 'ODD_ONE' then 'badge-secondary'
+                                 else 'badge-light'
+                                 end %>
+                <span class="badge <%= badge_class %>" style="font-size: 0.9em;">
+                  <%= q['question_type'] %>
+                </span>
+              </td>
+              <td><%= q['question_text'] %></td>
+              <td class="text-success font-weight-bold"><%= q['correct_answer'] %></td>
+              <td class="text-center">
+                <div class="btn-group">
+                  <%= link_to edit_admin_question_path(q['id']), class: "btn btn-sm btn-outline-primary", title: "Sửa" do %>
+                    <i class="fas fa-edit"></i>
+                  <% end %>
+
+                  <%= button_to admin_question_path(q['id']), method: :delete, form: {style: 'display:inline-block;'}, class: "btn btn-sm btn-outline-danger ml-1", onclick: "return confirm('Bạn chắc chắn muốn xóa câu hỏi này?');", title: "Xóa" do %>
+                    <i class="fas fa-trash"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="5" class="text-center py-5 text-muted">
+              <i class="fas fa-inbox fa-3x mb-3"></i><br>
+              Không tìm thấy dữ liệu phù hợp
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

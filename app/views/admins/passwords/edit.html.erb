@@ -1,25 +1,43 @@
-<h2>Change your password</h2>
+<div style="text-align: center; color: #64748b; font-size: 0.95rem; margin-bottom: 25px;">
+  Thiết lập mật khẩu mới cho tài khoản Admin
+</div>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "admins/shared/error_messages", resource: resource %>
+  <%# Hiển thị lỗi nếu có %>
+  <% if resource.errors.any? %>
+    <div style="background: rgba(239, 68, 68, 0.1); color: #ef4444; padding: 12px; border-radius: 12px; font-size: 0.85rem; margin-bottom: 20px; border: 1px solid rgba(239, 68, 68, 0.2);">
+      <%= resource.errors.full_messages.first %>
+    </div>
+  <% end %>
+
   <%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
+  <%# Ô nhập mật khẩu mới %>
+  <div class="input-group">
+    <i class="fa-solid fa-lock input-icon"></i>
+    <%= f.password_field :password,
+                         autofocus: true,
+                         autocomplete: "new-password",
+                         placeholder: "Mật khẩu mới (#{@minimum_password_length} ký tự tối thiểu)",
+                         class: "form-control",
+                         style: "width: 100%;" %>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  <%# Ô xác nhận mật khẩu %>
+  <div class="input-group">
+    <i class="fa-solid fa-check-double input-icon"></i>
+    <%= f.password_field :password_confirmation,
+                         autocomplete: "new-password",
+                         placeholder: "Xác nhận mật khẩu mới",
+                         class: "form-control",
+                         style: "width: 100%;" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Change my password" %>
+    <%= f.submit "CẬP NHẬT MẬT KHẨU", class: "btn-auth" %>
+  </div>
+
+  <div style="text-align: center; margin-top: 25px;">
+    <%= link_to "Quay lại đăng nhập", new_session_path(resource_name), style: "color: #3b82f6; text-decoration: none; font-size: 0.9rem; font-weight: 500;" %>
   </div>
 <% end %>
-
-<%= render "admins/shared/links" %>

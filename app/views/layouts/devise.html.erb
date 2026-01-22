@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kanji Together | Admin Portal</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+  <style>
+      :root {
+          --accent-color: #3b82f6;
+          --glass: rgba(255, 255, 255, 0.85);
+          --duration: 1s;
+          --sun-color: rgba(255, 255, 180, 0.4);
+      }
+
+      body, html {
+          margin: 0; padding: 0; height: 100%; width: 100%;
+          overflow: hidden; font-family: 'Plus Jakarta Sans', sans-serif;
+      }
+
+      .bg-anime {
+          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+          background-image: linear-gradient(rgba(15, 23, 42, 0.5), rgba(15, 23, 42, 0.5)),
+          url('https://images.unsplash.com/photo-1492571350019-22de08371fd3?auto=format&fit=crop&w=1920&q=80');
+          background-size: cover !important;
+          background-position: center !important;
+          z-index: -2;
+      }
+
+      .weather-container {
+          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+          pointer-events: none; z-index: -1;
+      }
+
+      /* --- 1. MƯA --- */
+      .drop {
+          position: absolute; background-color: rgba(255, 255, 255, 0.25);
+          width: 1px; height: 80px; animation: rain-fall var(--duration) linear infinite;
+      }
+      @keyframes rain-fall {
+          0% { top: -150px; transform: translateX(0); }
+          100% { top: 110vh; transform: translateX(15px); }
+      }
+
+      /* --- 2. TUYẾT --- */
+      .snowflake {
+          position: absolute; background: white; border-radius: 50%;
+          opacity: 0.6; box-shadow: 0 0 5px white; animation: snow-fall var(--duration) linear infinite;
+      }
+      @keyframes snow-fall {
+          0% { top: -20px; transform: translateX(0) rotate(0deg); }
+          100% { top: 110vh; transform: translateX(40px) rotate(360deg); }
+      }
+
+      /* --- 3. NẮNG --- */
+      .sun-ray {
+          position: absolute; top: -40%; right: -20%; width: 160%; height: 160%;
+          background: radial-gradient(circle at 85% 15%, var(--sun-color) 0%, transparent 65%);
+          animation: sun-pulse 6s ease-in-out infinite alternate;
+          filter: blur(15px);
+      }
+      .sun-particle {
+          position: absolute; background: rgba(255, 255, 200, 0.4); border-radius: 50%;
+          box-shadow: 0 0 8px 1px rgba(255, 255, 200, 0.2);
+          animation: sun-float var(--duration) ease-in-out infinite;
+      }
+      @keyframes sun-pulse { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+      @keyframes sun-float {
+          0% { transform: translate(0, 0); opacity: 0; }
+          50% { opacity: 0.7; }
+          100% { transform: translate(-80px, 120px); opacity: 0; }
+      }
+
+      /* --- 4. HOA ANH ĐÀO --- */
+      .petal {
+          position: absolute; background-color: #ffb7c5;
+          border-radius: 150% 0 150% 0; opacity: 0.7;
+          box-shadow: 0 0 5px rgba(255, 183, 197, 0.3);
+          animation: sakura-fall var(--duration) linear infinite;
+      }
+      @keyframes sakura-fall {
+          0% { top: -10vh; transform: translateX(0) rotate(0deg); }
+          100% { top: 110vh; transform: translateX(300px) rotate(720deg); }
+      }
+
+      /* --- 5. GIÓ (TỐI ƯU THEO YÊU CẦU) --- */
+      .leaf {
+          position: absolute;
+          background-color: #216c38;
+          width: 22px; height: 14px;
+          border-radius: 80% 10% 80% 10%;
+          box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+          opacity: 0.95;
+          animation: leaf-drift var(--duration) ease-in-out infinite;
+      }
+      .wind-line {
+          position: absolute;
+          /* Vệt gió sáng rõ hơn */
+          background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.6), transparent);
+          width: 350px; height: 2px;
+          border-radius: 100%;
+          filter: blur(1px);
+          animation: wind-sweep var(--duration) linear infinite;
+      }
+
+      @keyframes leaf-drift {
+          0% { transform: translate(-10vw, 0) rotate(0deg); opacity: 0; }
+          15% { opacity: 1; }
+          85% { opacity: 1; }
+          100% { transform: translate(110vw, 30vh) rotate(1080deg); opacity: 0; }
+      }
+
+      @keyframes wind-sweep {
+          0% { transform: translateX(-60vw); opacity: 0; }
+          50% { opacity: 0.7; }
+          100% { transform: translateX(120vw); opacity: 0; }
+      }
+
+      /* --- UI --- */
+      .main-wrapper {
+          height: 100vh; display: flex; align-items: center; justify-content: center;
+          position: relative; z-index: 10;
+      }
+      .auth-card {
+          background: var(--glass); backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px); border-radius: 32px;
+          padding: 50px 40px; width: 100%; max-width: 420px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      .brand { text-align: center; font-size: 2.2rem; font-weight: 800; margin-bottom: 35px; color: #1e293b; }
+      .brand span { color: var(--accent-color); }
+      .form-control { background: rgba(248, 250, 252, 0.6); border: 1px solid #e2e8f0; border-radius: 16px; height: 56px; padding-left: 50px; }
+      .input-group { position: relative; margin-bottom: 24px; }
+      .input-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: #64748b; z-index: 10; }
+      .btn-auth { background: linear-gradient(135deg, var(--accent-color), #2563eb); color: white; border: none; border-radius: 16px; height: 56px; width: 100%; font-weight: 700; cursor: pointer; transition: 0.3s; }
+      .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4); }
+  </style>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class="bg-anime"></div>
+<div class="weather-container" id="weather-root"></div>
+
+<div class="main-wrapper">
+  <div class="auth-card">
+    <div class="brand">Kanji<span>Together</span></div>
+    <%= yield %>
+  </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const root = document.getElementById('weather-root');
+        const weatherTypes = ['rain', 'snow', 'sun', 'sakura', 'wind'];
+        const currentWeather = weatherTypes[Math.floor(Math.random() * weatherTypes.length)];
+
+        if (currentWeather === 'rain') {
+            for (let i = 0; i < 120; i++) {
+                const drop = document.createElement('div');
+                drop.className = 'drop';
+                drop.style.left = Math.random() * 100 + 'vw';
+                drop.style.setProperty('--duration', (Math.random() * 0.5 + 0.8) + 's');
+                drop.style.animationDelay = (Math.random() * -2) + 's';
+                root.appendChild(drop);
+            }
+        } else if (currentWeather === 'snow') {
+            for (let i = 0; i < 80; i++) {
+                const snow = document.createElement('div');
+                snow.className = 'snowflake';
+                const size = Math.random() * 5 + 3 + 'px';
+                snow.style.width = size; snow.style.height = size;
+                snow.style.left = Math.random() * 100 + 'vw';
+                snow.style.setProperty('--duration', (Math.random() * 5 + 7) + 's');
+                snow.style.animationDelay = (Math.random() * -10) + 's';
+                root.appendChild(snow);
+            }
+        } else if (currentWeather === 'sun') {
+            const ray = document.createElement('div');
+            ray.className = 'sun-ray';
+            root.appendChild(ray);
+            for (let i = 0; i < 50; i++) {
+                const p = document.createElement('div');
+                p.className = 'sun-particle';
+                const size = Math.random() * 6 + 3 + 'px';
+                p.style.width = size; p.style.height = size;
+                p.style.left = Math.random() * 100 + 'vw';
+                p.style.top = Math.random() * 100 + 'vh';
+                p.style.setProperty('--duration', (Math.random() * 4 + 4) + 's');
+                p.style.animationDelay = (Math.random() * -8) + 's';
+                root.appendChild(p);
+            }
+        } else if (currentWeather === 'sakura') {
+            for (let i = 0; i < 60; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                const size = Math.random() * 8 + 10 + 'px';
+                petal.style.width = size; petal.style.height = size;
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.top = Math.random() * 100 + 'vh';
+                petal.style.setProperty('--duration', (Math.random() * 8 + 7) + 's');
+                petal.style.animationDelay = (Math.random() * -15) + 's';
+                root.appendChild(petal);
+            }
+        } else if (currentWeather === 'wind') {
+            // Vệt gió dài & rõ
+            for (let i = 0; i < 15; i++) {
+                const line = document.createElement('div');
+                line.className = 'wind-line';
+                line.style.top = Math.random() * 100 + 'vh';
+                line.style.setProperty('--duration', (Math.random() * 1.5 + 2.1) + 's');
+                line.style.animationDelay = (Math.random() * -5) + 's';
+                root.appendChild(line);
+            }
+            // Lá bay từ trái sang hết màn hình bên phải
+            for (let i = 0; i < 25; i++) {
+                const leaf = document.createElement('div');
+                leaf.className = 'leaf';
+                leaf.style.top = Math.random() * 100 + 'vh';
+                leaf.style.setProperty('--duration', (Math.random() * 3.3 + 5) + 's');
+                leaf.style.animationDelay = (Math.random() * -10) + 's';
+                root.appendChild(leaf);
+            }
+        }
+    });
+</script>
+</body>
+</html>

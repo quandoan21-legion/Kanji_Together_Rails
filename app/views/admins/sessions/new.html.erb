@@ -1,26 +1,25 @@
-<h2>Log in</h2>
+<p class="text-center text-muted mb-4 font-weight-bold">QUẢN TRỊ VIÊN HỆ THỐNG</p>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+
+  <div class="input-group">
+    <i class="fas fa-user-shield input-icon"></i>
+    <%= f.email_field :email, autofocus: true, class: "form-control", placeholder: "Email Admin" %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+  <div class="input-group">
+    <i class="fas fa-key input-icon"></i>
+    <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: "Mật khẩu" %>
   </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="custom-control custom-checkbox">
+      <%= f.check_box :remember_me, class: "custom-control-input", id: "remember" %>
+      <label class="custom-control-label small text-muted" for="remember" style="cursor: pointer;">Duy trì đăng nhập</label>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
+    <%= link_to "Quên mật khẩu?", new_admin_password_path, class: "small font-weight-bold text-primary" %>
   </div>
-<% end %>
 
-<%= render "admins/shared/links" %>
+  <%= f.submit "VÀO HỆ THỐNG", class: "btn-auth" %>
+
+<% end %>
