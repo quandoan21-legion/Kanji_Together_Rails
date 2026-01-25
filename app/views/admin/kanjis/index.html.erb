@@ -1,137 +1,232 @@
-<div class="row">
-  <div class="col-12">
-    <div class="card shadow">
-      <div class="card-header bg-primary text-white">
-        <h3 class="card-title font-weight-bold">
-          <i class="fas fa-book-open mr-1"></i> Danh sách Kanji hệ thống (Từ Java)
-        </h3>
-        <div class="card-tools">
-          <%= link_to new_admin_kanji_path, class: "btn btn-success btn-sm elevation-2" do %>
-            <i class="fas fa-plus-circle"></i> Thêm Kanji mới
-          <% end %>
+<div class="container-fluid">
+  <div class="row mb-3">
+    <div class="col-sm-6">
+      <h3 class="m-0 text-dark"><i class="fas fa-torii-gate text-primary mr-2"></i>Quản lý Kanji</h3>
+    </div>
+    <div class="col-sm-6 text-right">
+      <%= link_to new_admin_kanji_path, class: "btn btn-success shadow-sm" do %>
+        <i class="fas fa-plus-circle"></i> Thêm Kanji Mới
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card card-outline card-primary shadow-sm mb-3">
+    <div class="card-body py-2">
+      <%= form_with url: admin_kanjis_path, method: :get, local: true, class: "form-row align-items-center" do |f| %>
+        <div class="col-auto">
+          <div class="input-group">
+            <div class="input-group-prepend"><span class="input-group-text bg-white border-right-0"><i class="fas fa-filter text-muted"></i></span></div>
+            <%= f.select :status,
+                         options_for_select([
+                                              ['-- Tất cả trạng thái --', ''],
+                                              ['Hoạt động (Active)', 'ACTIVE'],
+                                              ['Chờ duyệt (Pending)', 'PENDING'],
+                                              ['Đã ẩn (Hidden)', 'HIDDEN'],
+                                              ['---------------', '', {disabled: true}],
+                                              ['Lịch sử: Đã duyệt (Approved)', 'APPROVED'],
+                                              ['Lịch sử: Đã từ chối (Rejected)', 'REJECTED']
+                                            ], params[:status]),
+                         {},
+                         { class: "form-control border-left-0 custom-select", onchange: "this.form.submit()" }
+            %>
+          </div>
         </div>
-      </div>
+        <div class="col">
+          <div class="input-group">
+            <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "Tìm kiếm Kanji, nghĩa, Hán việt..." %>
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Tìm kiếm</button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
 
-      <div class="card-body table-responsive p-0">
-        <table class="table table-hover table-bordered mb-0">
-          <thead class="bg-light">
-          <tr class="text-center align-middle">
-            <th style="width: 50px;">Chữ</th>
-            <th>Hán Việt</th>
-            <th>Nghĩa</th>
-            <th style="width: 50px;">JLPT</th>
-            <th>Âm (On/Kun)</th>
-            <th style="width: 50px;">Nét</th>
-            <th style="width: 180px;">Bộ thủ & Thành phần</th>
-            <th style="width: 250px;">Câu chuyện</th>
-            <th style="width: 300px;">Mở rộng (Từ vựng/Ví dụ)</th>
-            <th style="width: 70px;">Ảnh</th>
-            <th style="width: 100px; white-space: nowrap;">Hành động</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @kanjis.each do |kanji| %>
-            <tr class="align-middle">
-              <td class="text-center align-middle">
-                <span class="text-bold text-lg" style="color: #007bff; font-size: 1.5rem;">
-                  <%= kanji["kanji"] %>
-                </span>
-              </td>
+  <div class="card shadow">
+    <div class="card-header bg-primary py-2">
+      <h3 class="card-title text-white mt-1"><i class="fas fa-list mr-1"></i> Danh sách Kanji</h3>
+    </div>
+    <div class="card-body table-responsive p-0">
+      <table class="table table-hover table-striped table-bordered mb-0 align-middle">
+        <thead class="bg-light text-center">
+        <tr>
+          <th width="5%">ID</th>
+          <th width="10%">Kanji</th>
+          <th width="35%">Thông tin cơ bản</th>
+          <th width="10%">JLPT</th>
+          <th width="15%">Trạng thái</th>
+          <th width="20%">Hành động</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @kanjis.any? %>
+          <% @kanjis.each do |k| %>
+            <tr>
+              <td class="text-center text-muted">#<%= k["id"] %></td>
 
-              <td class="text-center align-middle text-uppercase font-weight-bold">
-                <%= kanji["translation"]&.split(/\R/)&.reject(&:blank?)&.join(", ") %>
-              </td>
-
-              <td class="align-middle">
-                <%= kanji["meaning"] %>
-              </td>
-
-              <td class="text-center align-middle">
-                <span class="badge badge-info shadow-sm">N<%= kanji["jlpt"] %></span>
-              </td>
-
-              <td class="align-middle">
-                <div class="small">
-                  <strong class="text-secondary">On:</strong>
-                  <%= kanji["on_pronunciation"]&.gsub(/\R/, " | ") %><br>
-                  <strong class="text-secondary">Kun:</strong>
-                  <%= kanji["kun_pronunciation"]&.gsub(/\R/, " | ") %>
-                </div>
-              </td>
-
-              <td class="text-center align-middle">
-                <span class="badge badge-light border"><%= kanji["num_strokes"] %></span>
+              <td class="text-center align-middle click-detail" style="cursor: pointer;" onclick='showKanjiDetail(<%= k.to_json %>)'>
+                <span class="text-primary font-weight-bold" style="font-size: 2.2rem;"><%= k["kanji"] %></span>
               </td>
 
               <td class="align-middle">
-                <div class="mb-1">
-                  <strong>Bộ thủ:</strong> <%= kanji["radical"] %>
-                </div>
-
-                <% if kanji["components"].present? %>
-                  <div>
-                    <strong>Thành phần:</strong>
-                    <%= kanji["components"].split(/\R/).reject(&:blank?).join(", ") %>
-                  </div>
-                <% end %>
-              </td>
-
-              <td class="align-middle">
-                <div class="bg-light rounded p-2 border" style="max-height: 100px; overflow-y: auto; font-size: 0.85rem;">
-                  <%= kanji["kanji_description"].present? ? simple_format(kanji["kanji_description"]) : "Chưa có" %>
-                </div>
-                <div class="contribution-info mt-1">
-                  <%= link_to admin_stories_path(kanji_id: kanji["id"]), class: "btn btn-xs btn-outline-info btn-block" do %>
-                    <i class="fas fa-tasks"></i> Quản lý
-                  <% end %>
-                </div>
-              </td>
-
-              <td class="align-middle small">
-                <div style="max-height: 120px; overflow-y: auto;">
-                  <% if kanji["vocabulary"].present? %>
-                    <div class="mb-2">
-                      <strong class="text-success"><i class="fas fa-language"></i> Từ vựng:</strong><br>
-                      <%= kanji["vocabulary"].gsub(/\R/, "<br>").html_safe %>
-                    </div>
-                  <% end %>
-
-                  <% if kanji["examples"].present? %>
-                    <div>
-                      <strong class="text-info"><i class="fas fa-quote-left"></i> Ví dụ:</strong><br>
-                      <%= kanji["examples"].gsub(/\R/, "<br>").html_safe %>
-                    </div>
-                  <% end %>
-                </div>
+                <div><strong>HV:</strong> <span class="text-uppercase text-dark font-weight-bold"><%= k["han_viet"] || k["translation"] %></span></div>
+                <div class="text-muted mt-1 small"><i class="fas fa-info-circle"></i> <%= truncate(k["meaning"], length: 60) %></div>
               </td>
 
               <td class="text-center align-middle">
-                <% if kanji["writing_image_url"].present? %>
-                  <img src="<%= kanji["writing_image_url"] %>" width="40" class="img-thumbnail shadow-sm">
-                <% else %>
-                  <i class="fas fa-image text-gray"></i>
-                <% end %>
+                <span class="badge badge-info px-2 py-1">N<%= k["jlpt"] %></span>
               </td>
 
               <td class="text-center align-middle">
-                <div class="btn-group shadow-sm">
-                  <%= link_to edit_admin_kanji_path(kanji["id"]), class: "btn btn-warning btn-sm" do %>
-                    <i class="fas fa-edit"></i>
+                <%
+                  status = k["status"].to_s.upcase
+                  is_active = k["is_active"]
+
+                  # Logic hiển thị Badge
+                  if status == 'PENDING'
+                    badge_class = 'badge-warning text-white'
+                    badge_text = 'Chờ duyệt'
+                  elsif status == 'APPROVED'
+                    badge_class = 'badge-info'
+                    badge_text = 'Đã duyệt (Lịch sử)'
+                  elsif status == 'REJECTED'
+                    badge_class = 'badge-danger'
+                    badge_text = 'Đã từ chối'
+                  elsif status == 'HIDDEN' || is_active == false || is_active.to_s == 'false'
+                    badge_class = 'badge-secondary'
+                    badge_text = 'Đã ẩn'
+                  else
+                    badge_class = 'badge-success'
+                    badge_text = 'Hoạt động'
+                  end
+                %>
+                <span class="badge <%= badge_class %> p-2 shadow-sm"><%= badge_text %></span>
+              </td>
+
+              <td class="text-center align-middle" style="white-space: nowrap;">
+                <div class="btn-group shadow-sm" role="group">
+                  <button type="button" class="btn btn-info btn-sm" onclick='showKanjiDetail(<%= k.to_json %>)' title="Xem chi tiết">
+                    <i class="fas fa-eye"></i>
+                  </button>
+
+                  <%
+                    # Xác định nhóm "Bài đóng góp"
+                    is_contribution = ['PENDING', 'REJECTED', 'APPROVED'].include?(status)
+                  %>
+
+                  <% if is_contribution %>
+                    <%= link_to admin_kanji_path(k["id"]), class: "btn btn-primary btn-sm px-3", title: "Vào trang duyệt/xem lại" do %>
+                      <% if status == 'PENDING' %>
+                        <i class="fas fa-clipboard-check"></i> DUYỆT
+                      <% else %>
+                        <i class="fas fa-history"></i> XEM LẠI
+                      <% end %>
+                    <% end %>
+
+                  <% else %>
+                    <%= link_to edit_admin_kanji_path(k["id"]), class: "btn btn-warning btn-sm", title: "Sửa" do %>
+                      <i class="fas fa-edit"></i>
+                    <% end %>
                   <% end %>
 
-                  <%= button_to admin_kanji_path(kanji["id"]),
-                                method: :delete,
-                                data: { confirm: "Xác nhận xóa???" },
-                                class: "btn btn-danger btn-sm" do %>
-                    <i class="fas fa-trash"></i>
+                  <% if status != 'PENDING' %>
+                    <%= button_to admin_kanji_path(k["id"]), method: :delete, class: "btn btn-danger btn-sm", form: {style: 'display:inline-block;'}, data: { confirm: "Xóa vĩnh viễn bản ghi này?" }, title: "Xóa" do %>
+                      <i class="fas fa-trash"></i>
+                    <% end %>
                   <% end %>
                 </div>
               </td>
             </tr>
           <% end %>
-          </tbody>
-        </table>
-      </div>
+        <% else %>
+          <tr><td colspan="6" class="text-center py-5 text-muted font-italic">Không tìm thấy dữ liệu phù hợp.</td></tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer clearfix bg-white">
+      <small class="text-muted float-right">Hiển thị tối đa 20 bản ghi.</small>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="kanjiDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white py-2">
+        <h5 class="modal-title"><i class="fas fa-book-open mr-2"></i>Chi tiết Kanji</h5>
+        <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4 text-center border-right">
+            <h1 class="display-1 font-weight-bold text-primary mb-0" id="m_kanji"></h1>
+            <h4 class="text-dark font-weight-bold text-uppercase" id="m_hanviet"></h4>
+            <div id="m_jlpt_badge" class="mt-2"></div>
+            <hr>
+            <div id="m_image_container"></div>
+
+            <div class="mt-3 text-left bg-light p-3 rounded shadow-sm">
+              <div class="mb-3">
+                <strong class="text-dark"><i class="fas fa-cube mr-1"></i> Bộ thủ:</strong>
+                <span id="m_radical" class="text-primary font-weight-bold ml-1" style="font-size: 1.1em;"></span>
+              </div>
+              <div class="mb-3 border-top pt-2">
+                <strong class="text-dark"><i class="fas fa-layer-group mr-1"></i> Bộ thành phần:</strong>
+                <div id="m_components" class="text-muted pl-3 mt-1" style="line-height: 1.5;"></div>
+              </div>
+              <div class="border-top pt-2">
+                <strong class="text-dark"><i class="fas fa-pen-fancy mr-1"></i> Số nét:</strong>
+                <span id="m_strokes" class="font-weight-bold ml-1"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div class="mb-3"><label class="font-weight-bold text-secondary">Ý nghĩa:</label><div id="m_meaning" class="p-2 bg-light rounded border font-weight-bold text-dark"></div></div>
+            <div class="row mb-3">
+              <div class="col-6"><label class="font-weight-bold text-danger">Âm On:</label><div id="m_onyomi" class="text-danger"></div></div>
+              <div class="col-6"><label class="font-weight-bold text-success">Âm Kun:</label><div id="m_kunyomi" class="text-success"></div></div>
+            </div>
+            <div class="mb-3"><label class="font-weight-bold text-info">Câu chuyện:</label><div id="m_story" class="font-italic text-dark pl-2" style="border-left: 3px solid #17a2b8;"></div></div>
+            <div class="row">
+              <div class="col-12 mb-3"><label class="font-weight-bold text-success">Từ vựng:</label><div id="m_vocabulary" class="p-2 border rounded bg-white small" style="max-height: 120px; overflow-y: auto;"></div></div>
+              <div class="col-12"><label class="font-weight-bold text-primary">Câu ví dụ:</label><div id="m_examples" class="p-2 border rounded bg-white small" style="max-height: 120px; overflow-y: auto;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer py-2"><button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button></div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function showKanjiDetail(k) {
+        document.getElementById('m_kanji').innerText = k.kanji || '';
+        document.getElementById('m_hanviet').innerText = k.han_viet || k.translation || '---';
+        document.getElementById('m_jlpt_badge').innerHTML = `<span class="badge badge-danger px-3">JLPT N${k.jlpt || '?'}</span>`;
+        document.getElementById('m_meaning').innerText = k.meaning || 'Chưa cập nhật';
+        document.getElementById('m_radical').innerText = k.radical || '---';
+        document.getElementById('m_strokes').innerText = k.num_strokes || k.stroke_count || 0;
+        document.getElementById('m_components').innerText = k.components || 'Chưa có thông tin';
+        document.getElementById('m_story').innerText = k.kanji_description || k.kanji_story || 'Chưa có câu chuyện.';
+
+        const fmtList = (t) => {
+            if(!t) return '<i class="text-muted">Chưa có</i>';
+            return t.toString().split(/\n/).map(x=>x.trim()).filter(x=>x).map(x=>"• "+x).join("<br>");
+        };
+        document.getElementById('m_vocabulary').innerHTML = fmtList(k.vocabulary);
+        document.getElementById('m_examples').innerHTML = fmtList(k.examples);
+
+        const fmtRead = (t) => t ? t.toString().split(/[|,\n]/).filter(x=>x.trim()).join("<br>") : "---";
+        document.getElementById('m_onyomi').innerHTML = fmtRead(k.on_pronunciation || k.onyomi);
+        document.getElementById('m_kunyomi').innerHTML = fmtRead(k.kun_pronunciation || k.kunyomi);
+
+        const imgDiv = document.getElementById('m_image_container');
+        imgDiv.innerHTML = k.writing_image_url ? `<img src="${k.writing_image_url}" class="img-thumbnail" style="width:100px">` : '<div class="text-muted border p-2">No Image</div>';
+
+        $('#kanjiDetailModal').modal('show');
+    }
+</script>

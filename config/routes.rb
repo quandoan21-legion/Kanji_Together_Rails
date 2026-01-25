@@ -1,24 +1,30 @@
 Rails.application.routes.draw do
   devise_for :admins, skip: [:registrations]
+
+  # Trang chủ Admin
   root "admin/kanjis#index"
 
   namespace :admin do
-    # 1. Quản lý Kanji hệ thống
-    resources :kanjis
+    resources :kanjis do
+      member do
+        put :approve
+        put :reject
+      end
+    end
 
-    # 2. Quản lý Duyệt Kanji (Dành cho bản ghi KanjiCharacters thô)
     resources :user_kanjis, only: [:index, :edit, :update, :destroy]
-    # Resources tự động tạo 7 routes chuẩn RESTful (index, new, create, show, edit, update, destroy)
     resources :questions
     resources :exams
+
     # 3. Quản lý Duyệt câu chuyện (Stories)
     resources :stories, only: [:index, :show, :destroy] do
       member do
-        # Sửa: Dùng cả patch và put cho reject để tránh lỗi lệch Method giữa View và Controller
+        # Hỗ trợ cả PUT và PATCH để tránh lỗi form
         patch :approve
         put :approve
         patch :reject
         put :reject
+        #ddddgit
       end
     end
   end
