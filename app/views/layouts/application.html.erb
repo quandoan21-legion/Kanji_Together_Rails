@@ -57,16 +57,6 @@
           </li>
 
           <li class="nav-item">
-            <%# Đổi admin_stories_path(status: 'pending') thành admin_stories_path để hiện tất cả %>
-            <%= link_to admin_stories_path, class: "nav-link #{'active' if controller_name == 'stories'}" do %>
-              <i class="nav-icon fas fa-clock"></i>
-              <p>
-                Duyệt Kanji (User)
-              </p>
-            <% end %>
-          </li>
-
-          <li class="nav-item">
             <%= link_to admin_questions_path, class: "nav-link #{'active' if controller_name == 'questions'}" do %>
               <i class="nav-icon fas fa-question-circle"></i>
               <p>Quản lý Câu Hỏi</p>
@@ -96,7 +86,6 @@
           </div>
         <% end %>
 
-        <%# Tìm đoạn hiển thị alert và sửa thành thế này %>
         <% if alert && alert != "You need to sign in or sign up before continuing." %>
           <div class="alert alert-danger alert-dismissible fade show">
             <button type="button" class="close" data-dismiss="alert">×</button>

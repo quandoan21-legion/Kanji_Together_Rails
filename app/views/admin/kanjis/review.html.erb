@@ -1,0 +1,283 @@
+<style>
+    /* Tùy chỉnh thanh cuộn cho gọn */
+    .custom-scroll {
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #cbd5e0 #f1f5f9;
+    }
+    .custom-scroll::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+        background-color: #cbd5e0;
+        border-radius: 4px;
+    }
+
+    /* Style cho Kanji Hero */
+    .kanji-hero {
+        font-size: 3.5rem;
+        line-height: 1;
+        color: #2d3748;
+    }
+
+    /* Label nhỏ */
+    .meta-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: #718096;
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+
+    /* Giá trị */
+    .meta-value {
+        font-weight: 600;
+        color: #2d3748;
+    }
+</style>
+
+<div class="container-fluid d-flex flex-column bg-light" style="height: calc(100vh - 60px);">
+
+  <div class="flex-shrink-0 py-2 border-bottom bg-white px-3 shadow-sm d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <%= link_to admin_kanjis_path(status: 'PENDING'), class: "btn btn-light btn-sm mr-3 border text-muted hover-shadow" do %>
+        <i class="fas fa-arrow-left"></i>
+      <% end %>
+      <h5 class="m-0 font-weight-bold text-dark">
+        Duyệt đóng góp: <span class="text-primary mx-1"><%= @pending_kanji['kanji'] %></span>
+      </h5>
+    </div>
+
+    <div>
+      <% if @lock_core_fields %>
+        <span class="badge badge-warning px-3 py-2"><i class="fas fa-lock mr-1"></i> BỔ SUNG DỮ LIỆU</span>
+      <% else %>
+        <span class="badge badge-success px-3 py-2"><i class="fas fa-plus-circle mr-1"></i> TẠO MỚI</span>
+      <% end %>
+    </div>
+  </div>
+
+  <%= form_with url: approve_admin_kanji_path(@pending_kanji['id']),
+                method: :put,
+                local: true,
+                html: { id: "review-form", class: "flex-grow-1 d-flex overflow-hidden" } do |f| %>
+
+    <div class="row w-100 m-0 h-100">
+
+      <div class="col-lg-4 h-100 p-0 border-right d-flex flex-column bg-white">
+
+        <div class="px-3 py-2 bg-secondary text-white small font-weight-bold d-flex justify-content-between align-items-center flex-shrink-0">
+          <span><i class="fas fa-user mr-1"></i> DỮ LIỆU NGƯỜI DÙNG</span>
+          <span class="badge badge-light text-dark">ID: #<%= @pending_kanji['id'] %></span>
+        </div>
+
+        <div class="flex-grow-1 custom-scroll p-3 d-flex flex-column">
+
+          <div class="d-flex align-items-center bg-light rounded p-3 mb-3 border">
+            <div class="kanji-hero font-weight-bold mr-4"><%= @pending_kanji['kanji'] %></div>
+
+            <div class="border-left pl-3 flex-grow-1">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <div class="meta-label">Hán Việt</div>
+                  <div class="h4 text-danger font-weight-bold m-0"><%= @pending_kanji['translation'] %></div>
+                </div>
+                <span class="badge badge-dark">N<%= @pending_kanji['jlpt'] %></span>
+              </div>
+              <div class="mt-2">
+                <div class="meta-label">Nghĩa chính</div>
+                <div class="font-weight-bold text-primary" style="font-size: 1.1rem;"><%= @pending_kanji['meaning'] %></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row small mb-3">
+            <div class="col-6 pr-1">
+              <div class="bg-light rounded p-2 h-100 border">
+                <div class="meta-label text-danger">Onyomi</div>
+                <div class="font-weight-bold"><%= @pending_kanji['on_pronunciation'] %></div>
+              </div>
+            </div>
+            <div class="col-6 pl-1">
+              <div class="bg-light rounded p-2 h-100 border">
+                <div class="meta-label text-success">Kunyomi</div>
+                <div class="font-weight-bold"><%= @pending_kanji['kun_pronunciation'] %></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row small mb-3">
+            <div class="col-4 pr-1">
+              <div class="border rounded p-2 text-center bg-white">
+                <div class="meta-label">Số nét</div>
+                <div><%= @pending_kanji['num_strokes'] %></div>
+              </div>
+            </div>
+            <div class="col-4 px-1">
+              <div class="border rounded p-2 text-center bg-white">
+                <div class="meta-label">Bộ thủ</div>
+                <div class="text-truncate" title="<%= @pending_kanji['radical'] %>"><%= @pending_kanji['radical'] %></div>
+              </div>
+            </div>
+            <div class="col-4 pl-1">
+              <div class="border rounded p-2 text-center bg-white">
+                <div class="meta-label">Thành phần</div>
+                <div class="text-truncate" title="<%= @pending_kanji['components'] %>"><%= @pending_kanji['components'] %></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex-grow-1 d-flex flex-column">
+            <div class="mb-3">
+              <div class="meta-label text-primary mb-1"><i class="fas fa-book-reader"></i> Câu chuyện</div>
+              <div class="p-3 bg-white border rounded font-italic text-dark shadow-sm" style="border-left: 4px solid #4e73df !important;">
+                "<%= @pending_kanji['kanji_description'] %>"
+              </div>
+            </div>
+
+            <div class="flex-grow-1 border rounded bg-white p-2" style="min-height: 150px;">
+              <div class="meta-label text-dark mb-1 ml-1"><i class="fas fa-list"></i> Từ vựng & Ví dụ</div>
+              <div class="small px-2" style="white-space: pre-line;">
+                <%= @pending_kanji['vocabulary'] %>
+                <hr class="my-2">
+                <%= @pending_kanji['examples'] %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="p-3 bg-light border-top flex-shrink-0">
+          <button type="submit" form="review-form" class="btn btn-success btn-block font-weight-bold py-2 shadow-sm mb-2" onclick="return confirm('Xác nhận xuất bản?');">
+            <i class="fas fa-check-circle mr-2"></i> DUYỆT BÀI
+          </button>
+          <button type="button" class="btn btn-outline-danger btn-block font-weight-bold shadow-sm" data-toggle="modal" data-target="#rejectModal">
+            <i class="fas fa-times mr-2"></i> TỪ CHỐI
+          </button>
+        </div>
+
+      </div>
+
+      <div class="col-lg-8 h-100 p-0 d-flex flex-column bg-light">
+
+        <div class="px-3 py-2 bg-primary text-white small font-weight-bold flex-shrink-0">
+          <i class="fas fa-edit mr-1"></i> NỘI DUNG BIÊN TẬP & XUẤT BẢN
+        </div>
+
+        <div class="flex-grow-1 custom-scroll p-4">
+
+          <% if @lock_core_fields %>
+            <div class="alert alert-warning shadow-sm border-left-warning mb-4">
+              <i class="fas fa-exclamation-triangle mr-2"></i>
+              Đang hiển thị dữ liệu gốc. Chỉ sửa thông tin bổ sung trừ khi cần thiết.
+            </div>
+          <% end %>
+
+          <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body">
+              <h6 class="text-primary font-weight-bold border-bottom pb-2 mb-3">1. Thông tin cốt lõi</h6>
+
+              <div class="form-row">
+                <div class="col-md-2 form-group">
+                  <label class="small font-weight-bold">Kanji</label>
+                  <%= f.text_field :kanji, value: @form_data['kanji'], class: "form-control font-weight-bold text-center", style: "font-size: 1.2rem;", readonly: @lock_core_fields %>
+                </div>
+                <div class="col-md-6 form-group">
+                  <label class="small font-weight-bold">Hán Việt</label>
+                  <%= f.text_field :translation, value: @form_data['translation'], class: "form-control font-weight-bold text-uppercase text-danger", readonly: @lock_core_fields %>
+                </div>
+                <div class="col-md-2 form-group">
+                  <label class="small font-weight-bold">JLPT</label>
+                  <% if @lock_core_fields %>
+                    <input type="text" class="form-control" value="N<%= @form_data['jlpt'] %>" readonly>
+                    <%= f.hidden_field :jlpt, value: @form_data['jlpt'] %>
+                  <% else %>
+                    <%= f.select :jlpt, options_for_select([5,4,3,2,1], @form_data['jlpt']), {}, class: "form-control" %>
+                  <% end %>
+                </div>
+                <div class="col-md-2 form-group">
+                  <label class="small font-weight-bold">Số nét</label>
+                  <%= f.number_field :num_strokes, value: @form_data['num_strokes'], class: "form-control", readonly: @lock_core_fields %>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="small font-weight-bold">Nghĩa tiếng Việt</label>
+                <%= f.text_field :meaning, value: @form_data['meaning'], class: "form-control font-weight-bold text-primary", readonly: @lock_core_fields %>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-6 form-group mb-0">
+                  <label class="small font-weight-bold">Onyomi (Katakana)</label>
+                  <%= f.text_area :on_pronunciation, value: @form_data['on_pronunciation'], rows: 2, class: "form-control", readonly: @lock_core_fields %>
+                </div>
+                <div class="col-md-6 form-group mb-0">
+                  <label class="small font-weight-bold">Kunyomi (Hiragana)</label>
+                  <%= f.text_area :kun_pronunciation, value: @form_data['kun_pronunciation'], rows: 2, class: "form-control", readonly: @lock_core_fields %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm border-left-success">
+            <div class="card-body">
+              <h6 class="text-success font-weight-bold border-bottom pb-2 mb-3">2. Thông tin bổ sung (Luôn sửa được)</h6>
+
+              <div class="form-row">
+                <div class="col-md-8 form-group">
+                  <label class="small font-weight-bold text-danger">Mẹo nhớ (Story) *</label>
+                  <%= f.text_area :kanji_description, value: @form_data['kanji_description'], rows: 2, class: "form-control font-italic", required: true %>
+                </div>
+                <div class="col-md-4 form-group">
+                  <label class="small font-weight-bold">Bộ thủ & Thành phần</label>
+                  <%= f.text_field :radical, value: @form_data['radical'], class: "form-control mb-2", placeholder: "Bộ thủ", readonly: @lock_core_fields %>
+                  <%= f.text_field :components, value: @form_data['components'], class: "form-control", placeholder: "Thành phần", readonly: @lock_core_fields %>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-6 form-group mb-0">
+                  <label class="small font-weight-bold">Từ vựng liên quan</label>
+                  <%= f.text_area :vocabulary, value: @form_data['vocabulary'], rows: 5, class: "form-control small" %>
+                </div>
+                <div class="col-md-6 form-group mb-0">
+                  <label class="small font-weight-bold">Câu ví dụ</label>
+                  <%= f.text_area :examples, value: @form_data['examples'], rows: 5, class: "form-control small" %>
+                </div>
+              </div>
+
+              <div class="form-group mt-3 mb-0">
+                <label class="small font-weight-bold">Link Ảnh cách viết</label>
+                <%= f.text_field :writing_image_url, value: @form_data['writing_image_url'], class: "form-control form-control-sm" %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title font-weight-bold">Từ chối đóng góp</h5>
+        <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
+      </div>
+      <%= form_tag reject_admin_kanji_path(@pending_kanji['id']), method: :put do %>
+        <div class="modal-body p-4">
+          <p class="font-weight-bold">Bạn chắc chắn muốn từ chối bài đóng góp này?</p>
+          <div class="form-group">
+            <textarea name="reason" class="form-control bg-light" rows="3" placeholder="Nhập lý do từ chối (Bắt buộc)..." required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-danger font-weight-bold px-4">XÁC NHẬN TỪ CHỐI</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
