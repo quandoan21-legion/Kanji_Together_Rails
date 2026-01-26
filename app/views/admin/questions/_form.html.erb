@@ -1,8 +1,9 @@
 <%= form_with url: url, method: method, local: true do |f| %>
 
   <div class="card-body">
+
     <div class="form-group">
-      <label>Loại Câu Hỏi <span class="text-danger">*</span></label>
+      <label class="font-weight-bold">Loại Câu Hỏi <span class="text-danger">*</span></label>
       <%= f.select :question_type,
                    options_for_select([
                                         ['Reading (Cách đọc Hiragana)', 'READING'],
@@ -11,32 +12,60 @@
                                         ['Context (Hoàn thành câu)', 'CONTEXT'],
                                         ['Odd One (Tìm chữ/nghĩa đúng)', 'ODD_ONE']
                                       ], question['question_type']),
-                   { include_blank: '-- Vui lòng chọn dạng câu hỏi --' },
-                   { class: "form-control font-weight-bold border-primary", id: "type-selector", required: true, onchange: "updateFormLayout()" } %>
+                   { include_blank: '-- Chọn loại câu hỏi --' },
+                   { class: "form-control border-primary shadow-sm", id: "type-selector", required: true, onchange: "updateFormLayout()" } %>
+      <small class="text-muted">Chọn loại câu hỏi để giao diện nhập liệu thay đổi tương ứng.</small>
     </div>
 
-    <div id="empty-state" class="text-center py-5 text-muted border rounded bg-light">
+    <div id="empty-state" class="text-center py-5 text-muted border rounded bg-light mt-3">
       <i class="fas fa-hand-point-up fa-3x mb-3 text-primary"></i><br>
       <h5 class="font-weight-normal">Vui lòng chọn <b>Loại câu hỏi</b> ở trên để bắt đầu nhập liệu</h5>
     </div>
 
-    <div id="input-area" class="d-none animate__animated animate__fadeIn">
+    <div id="input-area" class="d-none animate__animated animate__fadeIn mt-3">
 
-      <div class="form-group bg-warning p-2 rounded d-none mb-3" id="odd-one-options" style="background-color: #fff3cd !important;">
+      <div class="form-group bg-warning p-3 rounded d-none mb-3 shadow-sm" id="odd-one-options" style="background-color: #fff3cd !important;">
         <label class="text-dark d-block mb-2 font-weight-bold"><i class="fas fa-exchange-alt"></i> Chọn Chiều Câu Hỏi:</label>
-
         <div class="custom-control custom-radio custom-control-inline">
           <input type="radio" id="direction_vn_jp" name="direction" class="custom-control-input" value="vn_jp" checked onchange="updateFormLayout()">
-          <label class="custom-control-label" for="direction_vn_jp">Việt ➔ Nhật (Tìm chữ Kanji)</label>
+          <label class="custom-control-label font-weight-bold" for="direction_vn_jp">Việt ➔ Nhật (Tìm chữ Kanji)</label>
         </div>
-
         <div class="custom-control custom-radio custom-control-inline">
           <input type="radio" id="direction_jp_vn" name="direction" class="custom-control-input" value="jp_vn" onchange="updateFormLayout()">
-          <label class="custom-control-label" for="direction_jp_vn">Nhật ➔ Việt (Tìm nghĩa)</label>
+          <label class="custom-control-label font-weight-bold" for="direction_jp_vn">Nhật ➔ Việt (Tìm nghĩa)</label>
         </div>
       </div>
 
       <div class="form-group bg-white border p-3 rounded shadow-sm">
+        <label class="font-weight-bold text-dark">
+          <i class="fas fa-link text-info"></i> Liên kết Kanji (Câu hỏi này thuộc về chữ nào?) <span class="text-danger">*</span>
+        </label>
+
+        <%
+            # [CẬP NHẬT]: Sử dụng trường 'translation' như bạn đã tìm thấy
+            kanji_options = (@kanjis || []).map do |k|
+                # Lấy nghĩa từ trường translation (Hán Việt)
+                meaning = k['translation']
+
+                label = k['kanji']
+                # Chỉ thêm ngoặc nếu có nghĩa (để tránh lỗi ngoặc rỗng)
+                label += " (#{meaning})" if meaning.present?
+
+                [label, k['id']]
+            end
+        %>
+
+        <%= f.select :kanji_ids,
+                     options_for_select(kanji_options, question['kanji_ids']),
+                     {},
+                     { multiple: true, class: "form-control", id: "kanji-selector", style: "width: 100%;", required: true }
+        %>
+        <small class="text-muted mt-1 d-block">
+          <i class="fas fa-info-circle"></i> Bạn có thể gõ <b>nghĩa tiếng Việt</b> hoặc <b>chữ Hán</b> vào ô trên để tìm kiếm.
+        </small>
+      </div>
+
+      <div class="form-group bg-white border p-3 rounded shadow-sm mt-3">
         <label id="lbl-question" class="text-primary font-weight-bold">Nội Dung Câu Hỏi <span class="text-danger">*</span></label>
         <p id="hint-text" class="text-muted small mb-2"><i class="fas fa-info-circle"></i> Nhập thông tin câu hỏi.</p>
         <%= f.text_area :question_text, value: question['question_text'], class: "form-control", id: "input-question", rows: 3, required: true %>
@@ -56,7 +85,7 @@
         </div>
       </div>
 
-      <label class="text-danger font-weight-bold mt-2"><i class="fas fa-times-circle"></i> Các Đáp Án SAI (Gây nhiễu) <span class="text-danger">*</span></label>
+      <label class="text-danger font-weight-bold mt-3"><i class="fas fa-times-circle"></i> Các Đáp Án SAI (Gây nhiễu) <span class="text-danger">*</span></label>
       <div class="row">
         <% 1.upto(3) do |i| %>
           <div class="col-md-4">
@@ -66,11 +95,15 @@
           </div>
         <% end %>
       </div>
-    </div> </div>
 
-  <div class="card-footer text-right">
-    <%= link_to "Hủy", admin_questions_path, class: "btn btn-default mr-2" %>
-    <button type="submit" class="btn btn-primary px-4 font-weight-bold">LƯU DỮ LIỆU</button>
+    </div>
+  </div>
+
+  <div class="card-footer text-right bg-white border-top">
+    <%= link_to "Hủy bỏ", admin_questions_path, class: "btn btn-outline-secondary mr-2" %>
+    <button type="submit" class="btn btn-primary px-4 font-weight-bold shadow-sm">
+      <i class="fas fa-save mr-1"></i> LƯU DỮ LIỆU
+    </button>
   </div>
 <% end %>
 
@@ -80,21 +113,17 @@
         const inputArea = document.getElementById('input-area');
         const emptyState = document.getElementById('empty-state');
 
-
         if (!type) {
             inputArea.classList.add('d-none');
             emptyState.classList.remove('d-none');
             return;
         }
 
-
         inputArea.classList.remove('d-none');
         emptyState.classList.add('d-none');
 
-
         const oddOneOptions = document.getElementById('odd-one-options');
         const isVnToJp = document.getElementById('direction_vn_jp').checked;
-
         const lblQuestion = document.getElementById('lbl-question');
         const hintText = document.getElementById('hint-text');
         const inputQuestion = document.getElementById('input-question');
@@ -113,7 +142,6 @@
                 lblCorrect.innerText = "Cách đọc (Hiragana)";
                 lblAnswerHint.innerText = "Nhập cách đọc đúng (VD: がくせい).";
                 break;
-
             case 'COMPOUND':
                 lblQuestion.innerText = "Câu hỏi / Gợi ý";
                 hintText.innerHTML = "Ví dụ: Chữ nào ghép với <b>気</b> để thành nghĩa 'Thời tiết'?";
@@ -121,7 +149,6 @@
                 lblCorrect.innerText = "Chữ Kanji còn thiếu";
                 lblAnswerHint.innerText = "Nhập chữ Kanji đúng (VD: 天).";
                 break;
-
             case 'STORY':
                 lblQuestion.innerText = "Câu Chuyện (Mnemonic)";
                 hintText.innerHTML = "Ví dụ: <i>'Người (Nhân) đứng dựa vào gốc cây (Mộc)'</i>.";
@@ -129,7 +156,6 @@
                 lblCorrect.innerText = "Chữ Kanji tương ứng";
                 lblAnswerHint.innerText = "Nhập chữ Kanji đúng (VD: 休).";
                 break;
-
             case 'CONTEXT':
                 lblQuestion.innerText = "Câu Văn (Ngữ Cảnh)";
                 hintText.innerHTML = "Ví dụ: <b>私は[...]へ行きます。</b>";
@@ -137,20 +163,16 @@
                 lblCorrect.innerText = "Từ cần điền";
                 lblAnswerHint.innerText = "Nhập từ vựng phù hợp.";
                 break;
-
             case 'ODD_ONE':
                 oddOneOptions.classList.remove('d-none');
                 inputQuestion.setAttribute('rows', '1');
-
                 if (isVnToJp) {
-                    // Chiều: Việt -> Nhật
                     lblQuestion.innerText = "Nghĩa Tiếng Việt";
                     hintText.innerHTML = "Ví dụ: <b>Con Mèo</b>.";
                     inputQuestion.placeholder = "Nhập nghĩa tiếng Việt...";
                     lblCorrect.innerText = "Chữ Kanji ĐÚNG";
                     lblAnswerHint.innerText = "Nhập Kanji đúng (VD: 猫).";
                 } else {
-                    // Chiều: Nhật -> Việt
                     lblQuestion.innerText = "Chữ Kanji / Từ vựng";
                     hintText.innerHTML = "Ví dụ: <b>学生</b>.";
                     inputQuestion.placeholder = "Nhập Kanji...";
@@ -163,10 +185,63 @@
 
     document.addEventListener("DOMContentLoaded", function() {
         updateFormLayout();
+
+        if (typeof $ !== 'undefined' && $.fn.select2) {
+            $('#kanji-selector').select2({
+                placeholder: "Tìm kiếm chữ Kanji...",
+                allowClear: true,
+                width: '100%',
+                theme: "classic"
+            });
+        }
     });
 </script>
+
 <style>
-    #type-selector option[value=""] {
-        display: none;
+    /* Ẩn option rỗng ở select box Loại câu hỏi */
+    #type-selector option[value=""] { display: none; }
+
+    /* --- FIX LỖI VISUAL SELECT2 --- */
+    .select2-container--classic .select2-selection--multiple {
+        border: 1px solid #ced4da !important;
+        border-radius: 4px !important;
+        min-height: 38px !important;
+        padding: 4px 5px !important;
+        background-image: none !important;
+    }
+
+    .select2-container--classic.select2-container--open .select2-selection--multiple {
+        border-color: #80bdff !important;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .select2-container--classic .select2-selection--multiple .select2-selection__choice {
+        background-color: #007bff !important;
+        border: 1px solid #0069d9 !important;
+        color: white !important;
+        border-radius: 3px;
+        margin-top: 4px !important;
+        padding: 2px 8px !important;
+        background-image: none !important;
+        font-size: 0.9rem;
+    }
+
+    .select2-container--classic .select2-selection--multiple .select2-selection__choice__remove {
+        color: white !important;
+        margin-right: 8px !important;
+        font-weight: bold;
+        opacity: 0.8;
+    }
+    .select2-container--classic .select2-selection--multiple .select2-selection__choice__remove:hover {
+        color: #fff !important;
+        opacity: 1;
+        background: none !important;
+    }
+
+    .select2-search__field {
+        margin-top: 5px !important;
+        height: 24px !important;
+        line-height: 24px !important;
+        font-size: 1rem !important;
     }
 </style>

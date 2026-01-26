@@ -1,8 +1,10 @@
-<div class="card">
-  <div class="card-header">
-    <h3 class="card-title">Ngân Hàng Câu Hỏi</h3>
+<div class="card shadow-sm">
+  <div class="card-header bg-white py-3">
+    <h3 class="card-title font-weight-bold text-dark">
+      <i class="fas fa-list-ul mr-1 text-primary"></i> Ngân Hàng Câu Hỏi
+    </h3>
     <div class="card-tools">
-      <%= link_to new_admin_question_path(type: params[:type]), class: "btn btn-primary btn-sm" do %>
+      <%= link_to new_admin_question_path(type: params[:type]), class: "btn btn-primary btn-sm rounded-pill px-3 shadow-sm" do %>
         <i class="fas fa-plus"></i> Tạo Câu Hỏi Mới
       <% end %>
     </div>
@@ -12,112 +14,150 @@
     <div class="row mb-3">
       <div class="col-md-12">
         <%= form_with url: admin_questions_path, method: :get, local: true, class: "form-inline" do |f| %>
-
           <div class="input-group input-group-sm mr-2 mb-2">
             <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fas fa-filter"></i> Loại</span>
+              <span class="input-group-text font-weight-bold bg-light">Loại</span>
             </div>
-            <%= f.select :type,
-                         options_for_select([
-                                              ['-- Tất cả loại --', ''],
-                                              ['Reading (Cách đọc Hiragana)', 'READING'],
-                                              ['Compound (Ghép từ vựng)', 'COMPOUND'],
-                                              ['Story (Câu chuyện gợi nhớ)', 'STORY'],
-                                              ['Context (Hoàn thành câu)', 'CONTEXT'],
-                                              ['Odd One (Tìm chữ đúng nghĩa)', 'ODD_ONE']
-                                            ], params[:type]),
-                         {}, { class: "form-control", onchange: "this.form.submit()" } %>
+            <%= f.select :type, options_for_select([['-- Tất cả --', ''], ['Reading', 'READING'], ['Compound', 'COMPOUND'], ['Story', 'STORY'], ['Context', 'CONTEXT'], ['Odd One', 'ODD_ONE']], params[:type]), {}, { class: "form-control", onchange: "this.form.submit()" } %>
           </div>
-
           <div class="input-group input-group-sm mr-2 mb-2">
-            <div class="input-group-prepend">
-              <span class="input-group-text bg-info text-white"><i class="fas fa-search"></i> Kanji</span>
-            </div>
-            <%= text_field_tag :kanji, params[:kanji],
-                               class: "form-control",
-                               placeholder: "VD: 学 (Học)...",
-                               style: "width: 150px;" %>
+            <%= text_field_tag :kanji, params[:kanji], class: "form-control", placeholder: "Tìm kiếm..." %>
             <div class="input-group-append">
-              <button type="submit" class="btn btn-info">Tìm</button>
+              <button type="submit" class="btn btn-info px-3">Tìm</button>
             </div>
           </div>
-
           <% if params[:type].present? || params[:kanji].present? %>
-            <%= link_to admin_questions_path, class: "btn btn-sm btn-outline-secondary mb-2" do %>
-              <i class="fas fa-sync"></i> Xóa lọc
+            <%= link_to admin_questions_path, class: "btn btn-sm btn-outline-danger mb-2 ml-2 border-0" do %>
+              <i class="fas fa-times"></i> Xóa lọc
             <% end %>
           <% end %>
-
         <% end %>
       </div>
     </div>
 
     <div class="table-responsive">
-      <table class="table table-bordered table-hover">
-        <thead class="thead-light">
-        <tr>
-          <th style="width: 50px" class="text-center">ID</th>
-          <th style="width: 150px">Kanji Liên Quan</th> <th style="width: 150px">Loại Câu Hỏi</th>
-          <th>Nội dung</th>
-          <th>Đáp án đúng</th>
-          <th style="width: 120px" class="text-center">Thao tác</th>
+      <table class="table table-bordered table-hover m-0 custom-table">
+        <thead class="thead-light text-center"> <tr>
+          <th style="width: 70px" class="font-weight-bold">ID</th>
+          <th style="width: 140px" class="font-weight-bold">Loại</th>
+          <th class="font-weight-bold">Nội dung câu hỏi</th>
+          <th style="width: 220px" class="font-weight-bold">Đáp án đúng</th>
+          <th style="width: 160px" class="font-weight-bold">Thao tác</th>
         </tr>
         </thead>
         <tbody>
         <% if @questions && @questions.any? %>
           <% @questions.each do |q| %>
-            <tr>
-              <td class="text-center"><%= q['id'] %></td>
-
-              <td>
-                <% if q['related_kanjis'].present? %>
-                  <% q['related_kanjis'].each do |k| %>
-                    <span class="badge badge-light border mb-1" style="font-size: 14px;">
-                      <%= k['kanji'] %>
-                    </span>
-                  <% end %>
-                <% else %>
-                  <span class="text-muted small font-italic">-- Chung --</span>
-                <% end %>
+            <tr style="height: 70px;"> <td class="text-center font-weight-bold text-muted align-middle"><%= q['id'] %></td>
+              <td class="text-center align-middle">
+                <span class="badge badge-info p-2 shadow-xs" style="font-size: 0.9rem;"><%= q['question_type'] || q['questionType'] %></span>
               </td>
-
-              <td>
-                <% badge_class = case q['question_type']
-                                 when 'READING' then 'badge-info'
-                                 when 'COMPOUND' then 'badge-success'
-                                 when 'STORY' then 'badge-warning'
-                                 when 'CONTEXT' then 'badge-primary'
-                                 when 'ODD_ONE' then 'badge-secondary'
-                                 else 'badge-light'
-                                 end %>
-                <span class="badge <%= badge_class %>" style="font-size: 0.9em;">
-                  <%= q['question_type'] %>
-                </span>
+              <td class="align-middle px-3"><%= truncate(q['question_text'] || q['questionText'], length: 80) %></td>
+              <td class="text-success font-weight-bold align-middle px-3">
+                <i class="fas fa-check-circle mr-1"></i><%= q['correct_answer'] || q['correctAnswer'] %>
               </td>
-              <td><%= truncate(q['question_text'], length: 60) %></td>
-              <td class="text-success font-weight-bold"><%= q['correct_answer'] %></td>
-              <td class="text-center">
+              <td class="text-center align-middle">
                 <div class="btn-group">
-                  <%= link_to edit_admin_question_path(q['id']), class: "btn btn-sm btn-outline-primary", title: "Sửa" do %>
-                    <i class="fas fa-edit"></i>
-                  <% end %>
-
-                  <%= button_to admin_question_path(q['id']), method: :delete, form: {style: 'display:inline-block;'}, class: "btn btn-sm btn-outline-danger ml-1", onclick: "return confirm('Bạn chắc chắn muốn xóa câu hỏi này?');", title: "Xóa" do %>
-                    <i class="fas fa-trash"></i>
-                  <% end %>
+                  <%= link_to admin_question_path(q['id']), class: "btn btn-sm btn-info rounded-circle mr-2", title: "Xem" do %><i class="fas fa-eye"></i><% end %>
+                  <%= link_to edit_admin_question_path(q['id']), class: "btn btn-sm btn-outline-primary rounded-circle mr-2", title: "Sửa" do %><i class="fas fa-edit"></i><% end %>
+                  <%= button_to admin_question_path(q['id']), method: :delete, class: "btn btn-sm btn-outline-danger rounded-circle", onclick: "return confirm('Xóa câu hỏi này?')" do %><i class="fas fa-trash"></i><% end %>
                 </div>
               </td>
             </tr>
           <% end %>
+
+          <%# Logic bù dòng trống %>
+          <% (10 - @questions.size).times do %>
+            <tr style="height: 70px;">
+              <td colspan="5" style="background-color: #fdfdfd; border-color: #eee;">&nbsp;</td>
+            </tr>
+          <% end %>
         <% else %>
-          <tr>
-            <td colspan="6" class="text-center py-5 text-muted"> <i class="fas fa-inbox fa-3x mb-3"></i><br>
-              Không tìm thấy dữ liệu phù hợp
-            </td>
-          </tr>
+          <tr><td colspan="5" class="text-center py-5 text-muted">Không tìm thấy dữ liệu câu hỏi nào.</td></tr>
         <% end %>
         </tbody>
       </table>
     </div>
   </div>
+
+  <div class="card-footer bg-white py-4">
+    <div class="d-flex flex-column align-items-center">
+      <div class="mb-3">
+        <span class="badge badge-light border shadow-sm px-4 py-2 rounded-pill text-muted" style="font-size: 0.95rem;">
+          Trang <b class="text-primary"><%= @current_page %></b> / <%= @total_pages %>
+          <span class="mx-2 text-muted opacity-50">|</span>
+          Tổng cộng <b class="text-dark text-lg"><%= @total_elements %></b> câu hỏi
+        </span>
+      </div>
+
+      <% if @total_pages.to_i > 1 %>
+        <nav>
+          <ul class="pagination m-0 custom-pagination">
+            <li class="page-item mx-1 <%= 'disabled' if @current_page <= 1 %>">
+              <%= link_to admin_questions_path(page: @current_page - 1, type: params[:type], kanji: params[:kanji]), class: "page-link rounded-circle shadow-sm border-0" do %>
+                <i class="fas fa-chevron-left"></i>
+              <% end %>
+            </li>
+
+            <% (1..@total_pages).each do |p| %>
+              <% if p == 1 || p == @total_pages || (p - @current_page).abs <= 1 %>
+                <li class="page-item mx-1 <%= 'active' if p == @current_page %>">
+                  <%= link_to p, admin_questions_path(page: p, type: params[:type], kanji: params[:kanji]), class: "page-link rounded-circle shadow-sm border-0" %>
+                </li>
+              <% elsif (p - @current_page).abs == 2 %>
+                <li class="page-item mx-1 disabled"><span class="page-link border-0 bg-transparent">...</span></li>
+              <% end %>
+            <% end %>
+
+            <li class="page-item mx-1 <%= 'disabled' if @current_page >= @total_pages %>">
+              <%= link_to admin_questions_path(page: @current_page + 1, type: params[:type], kanji: params[:kanji]), class: "page-link rounded-circle shadow-sm border-0" do %>
+                <i class="fas fa-chevron-right"></i>
+              <% end %>
+            </li>
+          </ul>
+        </nav>
+      <% end %>
+    </div>
+  </div>
 </div>
+
+<style>
+    /* TĂNG FONT CHỮ TO TOÀN BẢNG */
+    .custom-table th, .custom-table td {
+        font-size: 1.05rem; /* Cỡ chữ to hơn một chút */
+        vertical-align: middle !important;
+    }
+
+    .custom-pagination .page-link {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        color: #5a5a5a;
+        transition: all 0.2s ease-in-out;
+        background-color: #fff;
+        font-size: 1rem;
+    }
+
+    .custom-pagination .page-link:hover {
+        background-color: #007bff;
+        color: #fff !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0,123,255,0.2) !important;
+    }
+
+    .custom-pagination .page-item.active .page-link {
+        background-color: #007bff !important;
+        color: #fff !important;
+        box-shadow: 0 4px 12px rgba(0,123,255,0.3) !important;
+    }
+
+    .custom-pagination .page-item.disabled .page-link {
+        background-color: #f8f9fa;
+        color: #ccc;
+    }
+
+    .shadow-xs { box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+</style>

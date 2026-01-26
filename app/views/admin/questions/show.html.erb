@@ -1,0 +1,180 @@
+<style>
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-in { animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .kanji-card { transition: all 0.3s ease; cursor: default; background: #fff; border: 1px solid #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .kanji-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-color: #007bff; }
+    @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); } 70% { box-shadow: 0 0 0 6px rgba(40, 167, 69, 0); } 100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); } }
+    .pulse-active { animation: pulse-green 2s infinite; }
+</style>
+
+<%
+  # --- LOGIC XỬ LÝ DỮ LIỆU THÔNG MINH (ĐÃ CẬP NHẬT) ---
+
+  # 1. Bắt Đáp án sai (Thêm trường hợp wrong_answer1 - không có gạch dưới trước số)
+  wa1 = @question['wrong_answer1'] || @question['wrong_answer_1'] || @question['wrongAnswer1']
+  wa2 = @question['wrong_answer2'] || @question['wrong_answer_2'] || @question['wrongAnswer2']
+  wa3 = @question['wrong_answer3'] || @question['wrong_answer_3'] || @question['wrongAnswer3']
+
+  # 2. Bắt Ngày sửa & Tạo
+  edit_time_raw = @question['edit_at'] || @question['editAt']
+  create_time_raw = @question['create_at'] || @question['createAt']
+
+  # 3. Bắt các trường khác
+  kanjis = @question['kanjiCharacters'] || @question['kanji_characters']
+  q_text = @question['question_text'] || @question['questionText']
+  c_answer = @question['correct_answer'] || @question['correctAnswer']
+  q_type = @question['question_type'] || @question['questionType']
+  c_by = @question['create_by'] || @question['createBy']
+%>
+
+<div class="card card-primary card-outline animate-fade-in">
+  <div class="card-header">
+    <h3 class="card-title font-weight-bold text-primary">
+      <i class="fas fa-info-circle mr-1"></i> Chi Tiết Câu Hỏi #<%= @question['id'] %>
+    </h3>
+    <div class="card-tools">
+      <%= link_to edit_admin_question_path(@question['id']), class: "btn btn-primary btn-sm shadow-sm" do %>
+        <i class="fas fa-edit"></i> Chỉnh Sửa
+      <% end %>
+      <%= link_to admin_questions_path, class: "btn btn-default btn-sm shadow-sm" do %>
+        <i class="fas fa-arrow-left"></i> Quay lại
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-8 animate-fade-in delay-100">
+
+        <div class="form-group">
+          <label class="text-uppercase text-secondary" style="font-size: 0.85rem; letter-spacing: 1px;">Nội dung câu hỏi</label>
+          <div class="p-4 bg-light border rounded shadow-sm" style="font-size: 1.4em; color: #2c3e50;">
+            <%= q_text %>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="card border-success mb-3 h-100 shadow-sm" style="border-left: 5px solid #28a745;">
+              <div class="card-body py-3">
+                <label class="text-success mb-1"><i class="fas fa-check-circle"></i> Đáp án đúng</label>
+                <div class="font-weight-bold text-success" style="font-size: 1.3em;">
+                  <%= c_answer %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card border-danger mb-3 h-100 shadow-sm" style="border-left: 5px solid #dc3545;">
+              <div class="card-body py-3">
+                <label class="text-danger mb-1"><i class="fas fa-times-circle"></i> Các phương án sai</label>
+                <ul class="list-unstyled mb-0 font-weight-bold text-secondary">
+                  <% if wa1.present? %>
+                    <li class="mb-2 border-bottom pb-1"><%= wa1 %></li>
+                  <% end %>
+                  <% if wa2.present? %>
+                    <li class="mb-2 border-bottom pb-1"><%= wa2 %></li>
+                  <% end %>
+                  <% if wa3.present? %>
+                    <li><%= wa3 %></li>
+                  <% end %>
+
+                  <% if wa1.blank? && wa2.blank? && wa3.blank? %>
+                    <li class="text-muted font-italic font-weight-normal small">Chưa có dữ liệu đáp án sai</li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mt-4 animate-fade-in delay-200">
+          <label class="text-uppercase text-secondary" style="font-size: 0.85rem; letter-spacing: 1px;">
+            <i class="fas fa-language mr-1"></i> Kanji Liên Quan
+          </label>
+          <div class="p-3 border rounded bg-white">
+            <% if kanjis.present? && kanjis.any? %>
+              <div class="d-flex flex-wrap">
+                <% kanjis.each do |k| %>
+                  <div class="kanji-card rounded mr-3 mb-3 p-3 text-center" style="min-width: 100px;">
+                    <div class="text-primary font-weight-bold mb-1" style="font-size: 2em; line-height: 1;">
+                      <%= k['kanji'] %>
+                    </div>
+                    <div class="text-dark font-weight-bold small text-truncate" style="max-width: 120px;">
+                      <%= k['translation'] || k['on_pronunciation'] || k['onPronunciation'] %>
+                    </div>
+                    <% if k['jlpt'].present? %>
+                      <div class="mt-2"><span class="badge badge-warning px-2 py-1">N<%= k['jlpt'] %></span></div>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="text-center py-4 text-muted">
+                <i class="fas fa-inbox fa-2x mb-2 opacity-50"></i>
+                <p class="font-italic mb-0">Không có Kanji nào được liên kết.</p>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 animate-fade-in delay-300">
+        <div class="card shadow-sm border-0 bg-light">
+          <div class="card-header bg-secondary text-white border-0">
+            <h5 class="card-title mb-0" style="font-size: 1rem;"><i class="fas fa-cog mr-1"></i> Thông tin hệ thống</h5>
+          </div>
+          <div class="card-body">
+            <dl class="row mb-0">
+              <dt class="col-sm-5 text-muted">Mã ID:</dt>
+              <dd class="col-sm-7 font-weight-bold"><%= @question['id'] %></dd>
+              <div class="w-100 border-top my-2 opacity-50"></div>
+
+              <dt class="col-sm-5 text-muted">Loại câu hỏi:</dt>
+              <dd class="col-sm-7">
+                <span class="badge badge-info shadow-sm px-2">
+                  <%= q_type %>
+                </span>
+              </dd>
+              <div class="w-100 border-top my-2 opacity-50"></div>
+
+              <dt class="col-sm-5 text-muted">Ngày tạo:</dt>
+              <dd class="col-sm-7 small">
+                <% if create_time_raw.present? %>
+                  <i class="far fa-clock mr-1"></i><%= Time.parse(create_time_raw).strftime("%H:%M %d/%m/%Y") %>
+                <% else %> - <% end %>
+              </dd>
+              <div class="w-100 border-top my-2 opacity-50"></div>
+
+              <dt class="col-sm-5 text-muted">Ngày sửa:</dt>
+              <dd class="col-sm-7 small text-primary font-weight-bold">
+                <% if edit_time_raw.present? %>
+                  <i class="fas fa-history mr-1"></i><%= Time.parse(edit_time_raw).strftime("%H:%M %d/%m/%Y") %>
+                <% else %>
+                  <span class="text-muted font-weight-normal font-italic">Chưa chỉnh sửa</span>
+                <% end %>
+              </dd>
+              <div class="w-100 border-top my-2 opacity-50"></div>
+
+              <dt class="col-sm-5 text-muted">Người tạo:</dt>
+              <dd class="col-sm-7 small">
+                <% if c_by %>
+                  <div class="d-flex align-items-center">
+                    <div class="bg-secondary rounded-circle text-white d-flex justify-content-center align-items-center mr-2" style="width: 24px; height: 24px; font-size: 10px;">ID</div>
+                    <span>User #<%= c_by %></span>
+                  </div>
+                <% else %>
+                  <span class="text-muted font-italic">Hệ thống</span>
+                <% end %>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
