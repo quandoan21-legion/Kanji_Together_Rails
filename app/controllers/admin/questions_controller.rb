@@ -4,68 +4,100 @@ require 'json'
 class Admin::QuestionsController < ApplicationController
   # URL API của Java
   JAVA_API_URL = "http://localhost:8080/api/v1/questions"
-  # MỚI: Thêm API lấy danh sách Kanji cho dropdown
   JAVA_KANJI_API_URL = "http://localhost:8080/api/v1/kanjis"
 
   layout 'application'
 
   # GET /admin/questions
   def index
+    # 1. Xác định trang hiện tại (Mặc định là 1 nếu không có)
+    @current_page = (params[:page] || 1).to_i
+
     uri = URI(JAVA_API_URL)
 
-    # MỚI: Chuẩn bị tham số lọc (Type) và tìm kiếm (Kanji)
+    # 2. Xây dựng tham số gửi đi (Gộp cả Lọc, Tìm kiếm và Phân trang)
     params_to_send = {}
     params_to_send[:type] = params[:type] if params[:type].present?
-    params_to_send[:kanji] = params[:kanji] if params[:kanji].present? # <--- Tìm theo Kanji
+    params_to_send[:keyword] = params[:kanji] if params[:kanji].present?
 
-    uri.query = URI.encode_www_form(params_to_send) if params_to_send.any?
+    # Spring Boot tính trang từ 0, Ruby tính từ 1 nên phải trừ 1
+    params_to_send[:page] = @current_page - 1
+    params_to_send[:size] = 10
+
+    uri.query = URI.encode_www_form(params_to_send)
 
     begin
       response = Net::HTTP.get(uri)
-      @questions = JSON.parse(response)
+      data = JSON.parse(response)
+
+      # 3. Bóc tách dữ liệu từ đối tượng Page của Spring Boot
+      if data.is_a?(Hash) && (data['content'] || data['content'].is_a?(Array))
+        # Lấy danh sách câu hỏi để hiển thị ra bảng
+        @questions = data['content']
+
+        # Lấy thông tin meta để hiển thị thanh phân trang
+        @total_pages = (data['totalPages'] || data['total_pages'] || 0).to_i
+        @total_elements = (data['totalElements'] || data['total_elements'] || 0).to_i
+      else
+        # Trường hợp API trả về mảng cũ hoặc lỗi cấu trúc
+        @questions = data.is_a?(Array) ? data : []
+        @total_pages = 0
+      end
+
     rescue StandardError => e
       @questions = []
+      @total_pages = 0
       flash.now[:alert] = "Không thể kết nối đến Java API: #{e.message}"
     end
   end
 
   # GET /admin/questions/new
   def new
-    # LOGIC TẠO MỚI:
     pre_selected_type = params[:type].present? ? params[:type] : ""
-
-    # MỚI: Lấy danh sách Kanji để đổ vào dropdown
     @kanjis = fetch_kanjis
-
-    # Khởi tạo object rỗng
     @question = {
       'question_type' => pre_selected_type,
-      'question_text' => '',
-      'correct_answer' => '',
-      'wrong_answer_1' => '',
-      'wrong_answer_2' => '',
-      'wrong_answer_3' => '',
-      'related_kanjis' => [] # Mảng rỗng cho Kanji liên quan
+      'kanji_ids' => []
     }
   end
+  # app/controllers/admin/questions_controller.rb
 
+  def show
+    # Gọi API Java lấy chi tiết câu hỏi theo ID
+    response = HTTParty.get("#{ENV['API_URL'] || 'http://localhost:8080'}/api/v1/questions/#{params[:id]}")
+
+    if response.success?
+      @question = JSON.parse(response.body)
+    else
+      flash[:alert] = "Không tìm thấy câu hỏi!"
+      redirect_to admin_questions_path
+    end
+  rescue StandardError => e
+    flash[:alert] = "Lỗi kết nối Java API: #{e.message}"
+    redirect_to admin_questions_path
+  end
   # GET /admin/questions/:id/edit
   def edit
     id = params[:id]
     uri = URI("#{JAVA_API_URL}/#{id}")
-
-    # MỚI: Lấy danh sách Kanji để đổ vào dropdown khi sửa
     @kanjis = fetch_kanjis
 
-    response = Net::HTTP.get(uri)
+    begin
+      response = Net::HTTP.get(uri)
+      if response.empty? || response == "null"
+        redirect_to admin_questions_path, alert: "Không tìm thấy câu hỏi!"
+      else
+        raw_data = JSON.parse(response)
 
-    if response.empty? || response == "null"
-      redirect_to admin_questions_path, alert: "Không tìm thấy câu hỏi!"
-    else
-      @question = JSON.parse(response)
+        # [DEBUG]: In dữ liệu Java trả về ra Terminal để kiểm tra nếu cần
+        puts ">> JAVA RESPONSE RAW: #{raw_data}"
+
+        # [FIX]: Dùng hàm chuẩn hóa dữ liệu thủ công
+        @question = normalize_question_data(raw_data)
+      end
+    rescue StandardError => e
+      redirect_to admin_questions_path, alert: "Lỗi kết nối Java: #{e.message}"
     end
-  rescue StandardError => e
-    redirect_to admin_questions_path, alert: "Lỗi kết nối Java: #{e.message}"
   end
 
   # POST /admin/questions
@@ -73,9 +105,7 @@ class Admin::QuestionsController < ApplicationController
     uri = URI(JAVA_API_URL)
     header = { 'Content-Type': 'application/json' }
 
-    # MỚI: Sử dụng hàm build_payload để xử lý dữ liệu (đặc biệt là mảng Kanji)
-    # Lưu ý: Form mới dùng scope :question nên phải lấy params[:question]
-    question_params = params[:question] || params # Fallback nếu chưa sửa view
+    question_params = params[:question] || params
     payload = build_payload(question_params)
 
     http = Net::HTTP.new(uri.host, uri.port)
@@ -84,12 +114,9 @@ class Admin::QuestionsController < ApplicationController
 
     begin
       response = http.request(request)
-
       if response.code.to_i == 200
-        # Thành công
         redirect_to admin_questions_path(type: question_params[:question_type]), notice: "Tạo câu hỏi thành công!"
       else
-        # Thất bại
         handle_error_response(response, payload)
         render :new
       end
@@ -107,8 +134,7 @@ class Admin::QuestionsController < ApplicationController
 
     question_params = params[:question] || params
     payload = build_payload(question_params)
-    # Đảm bảo có ID trong payload (dù Java lấy ID từ URL là chính)
-    payload[:id] = id
+    payload[:id] = id.to_i
 
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Put.new(uri.request_uri, header)
@@ -116,7 +142,6 @@ class Admin::QuestionsController < ApplicationController
 
     begin
       response = http.request(request)
-
       if response.code.to_i == 200
         redirect_to admin_questions_path, notice: "Cập nhật thành công!"
       else
@@ -133,7 +158,6 @@ class Admin::QuestionsController < ApplicationController
   def destroy
     id = params[:id]
     uri = URI("#{JAVA_API_URL}/#{id}")
-
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Delete.new(uri.request_uri)
 
@@ -142,7 +166,7 @@ class Admin::QuestionsController < ApplicationController
       if response.code.to_i == 200
         redirect_to admin_questions_path, notice: "Đã xóa câu hỏi."
       else
-        redirect_to admin_questions_path, alert: "Lỗi khi xóa: #{response.body.force_encoding('UTF-8')}"
+        redirect_to admin_questions_path, alert: "Lỗi khi xóa: #{response.body}"
       end
     rescue StandardError => e
       redirect_to admin_questions_path, alert: "Lỗi kết nối: #{e.message}"
@@ -151,19 +175,25 @@ class Admin::QuestionsController < ApplicationController
 
   private
 
-  # --- CÁC HÀM HỖ TRỢ (HELPER METHODS) ---
-
-  # 1. Gọi API lấy danh sách Kanji
   def fetch_kanjis
-    uri = URI(JAVA_KANJI_API_URL)
+    # Lấy thêm size lớn để hiện đủ danh sách trong lúc tạo câu hỏi
+    uri = URI("#{JAVA_KANJI_API_URL}?status=ACTIVE&size=100")
     response = Net::HTTP.get(uri)
-    JSON.parse(response)
-  rescue
-    [] # Trả về mảng rỗng nếu lỗi, để trang web không bị sập
+    json = JSON.parse(response)
+
+    # [SỬA TẠI ĐÂY]: Bóc tách đúng vào tầng 'data' -> 'content' của Java ApiResponse
+    if json.is_a?(Hash) && json['data'].is_a?(Hash)
+      json['data']['content'] || []
+    elsif json.is_a?(Hash) && json['data'].is_a?(Array)
+      json['data']
+    else
+      []
+    end
+  rescue StandardError => e
+    puts "Lỗi fetch_kanjis: #{e.message}"
+    []
   end
 
-  # 2. Xây dựng dữ liệu gửi đi (Payload Builder)
-  # Hàm này quan trọng: Nó chuyển đổi mảng ID ["1", "2"] thành mảng Object [{id:1}, {id:2}]
   def build_payload(p)
     data = {
       question_type: p[:question_type],
@@ -175,31 +205,57 @@ class Admin::QuestionsController < ApplicationController
       status: 1
     }
 
-    # XỬ LÝ KANJI IDS (Mảng nhiều - nhiều)
     if p[:kanji_ids].present?
-      # Loại bỏ giá trị rỗng và map sang object
-      data[:related_kanjis] = p[:kanji_ids].reject(&:blank?).map { |id| { id: id.to_i } }
+      data[:kanji_ids] = p[:kanji_ids].reject(&:blank?).map(&:to_i)
+    else
+      data[:kanji_ids] = []
     end
 
     data
   end
 
-  # 3. Xử lý lỗi trả về từ Java (để code gọn hơn)
+  # [QUAN TRỌNG NHẤT]: Hàm này sửa lỗi mất dữ liệu khi Edit
+  def normalize_question_data(data)
+    # Khởi tạo hash mới
+    q = {}
+
+    # Copy ID
+    q['id'] = data['id']
+
+    # Map từng trường một cách thủ công để chắc chắn 100%
+    # Bên trái là Key Form Ruby cần --- Bên phải là các trường hợp Java có thể trả về
+
+    q['question_type']  = data['questionType']  || data['question_type']
+    q['question_text']  = data['questionText']  || data['question_text']
+
+    # Đáp án đúng
+    q['correct_answer'] = data['correctAnswer'] || data['correct_answer']
+
+    # Đáp án sai (Đây là chỗ bạn bị lỗi, map kỹ cả 3 trường hợp)
+    q['wrong_answer_1'] = data['wrongAnswer1'] || data['wrong_answer1'] || data['wrong_answer_1']
+    q['wrong_answer_2'] = data['wrongAnswer2'] || data['wrong_answer2'] || data['wrong_answer_2']
+    q['wrong_answer_3'] = data['wrongAnswer3'] || data['wrong_answer3'] || data['wrong_answer_3']
+
+    # Kanji IDs
+    kanji_list = data['kanjiCharacters'] || data['kanji_characters'] || []
+    q['kanji_ids'] = kanji_list.map { |k| k['id'] }
+    q['kanjiCharacters'] = kanji_list # Giữ lại để debug view index nếu cần
+
+    q
+  end
+
   def handle_error_response(response, payload)
     @question = payload.stringify_keys
     @kanjis = fetch_kanjis
-
-    error_body = JSON.parse(response.body.force_encoding('UTF-8')) rescue { 'message' => response.body }
+    error_body = JSON.parse(response.body) rescue { 'message' => response.body }
     message = error_body['message'] || "Có lỗi xảy ra"
-    details = error_body['errors']&.values&.join(', ')
-
-    flash.now[:alert] = details ? "#{message}: #{details}" : message
+    details = error_body['errors']&.values&.join(', ') || ""
+    flash.now[:alert] = details.present? ? "#{message}: #{details}" : message
   end
 
-  # 4. Xử lý lỗi hệ thống/kết nối
   def handle_system_error(e, payload)
     @question = payload.stringify_keys
-    @kanjis = fetch_kanjis # Load lại dropdown
-    flash.now[:alert] = "Lỗi hệ thống: #{e.message}"
+    @kanjis = fetch_kanjis
+    flash.now[:alert] = "Lỗi hệ thống Ruby: #{e.message}"
   end
 end

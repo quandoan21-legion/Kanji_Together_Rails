@@ -41,7 +41,6 @@ class Admin::ExamsController < ApplicationController
       if response.code.to_i == 200
         redirect_to admin_exams_path, notice: "Tạo đề thi thành công!"
       else
-        # --- FIX LỖI ENCODING TẠI ĐÂY ---
         handle_error_response(response, payload)
         @questions = fetch_all_questions
         render :new
@@ -68,7 +67,6 @@ class Admin::ExamsController < ApplicationController
       if response.code.to_i == 200
         redirect_to admin_exams_path, notice: "Cập nhật thành công!"
       else
-        # --- FIX LỖI ENCODING TẠI ĐÂY ---
         handle_error_response(response, payload)
         @questions = fetch_all_questions
         render :edit
@@ -132,7 +130,6 @@ class Admin::ExamsController < ApplicationController
       details = error_data['errors']&.values&.join(', ')
       flash.now[:alert] = details ? "#{message}: #{details}" : message
     rescue
-      # Nếu body không phải JSON (VD: Lỗi Tomcat)
       flash.now[:alert] = "Lỗi hệ thống: #{raw_body}"
     end
   end

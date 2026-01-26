@@ -55,14 +55,9 @@ class Admin::KanjisController < ApplicationController
       # =================================================================================
       # NHÓM 1: CHẾ ĐỘ DUYỆT BÀI (REVIEW) - Dành cho PENDING, REJECTED
       # =================================================================================
-      # Logic: Nếu là bài đóng góp, cần tìm xem đã có bản gốc (Master) chưa để đổ dữ liệu
       if ['PENDING', 'REJECTED', 'APPROVED'].include?(@kanji['status']) && @kanji['is_active'] == false
 
-        # Đặt tên biến rõ ràng cho View dễ dùng
         @pending_kanji = @kanji
-
-        # Tìm kiếm xem chữ này đã tồn tại trong hệ thống chưa?
-        # Gọi API Search theo ký tự Kanji
         check_res = HTTParty.get(BASE_URL,
                                  query: { kanji: @pending_kanji['kanji'] },
                                  headers: API_HEADERS, verify: false)
