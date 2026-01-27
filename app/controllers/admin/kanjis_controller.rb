@@ -33,7 +33,8 @@ class Admin::KanjisController < ApplicationController
       response = HTTParty.get(BASE_URL, query: java_params, headers: API_HEADERS, verify: false)
       if response.success?
         data = JSON.parse(response.body)
-        @kanjis = data["data"] || data || []
+        # Hỗ trợ cả Pageable (content) và List (data)
+        @kanjis = data["content"] || data["data"] || data || []
       else
         @kanjis = []
         flash.now[:alert] = "Lỗi tải dữ liệu: #{response.code}"
@@ -44,81 +45,77 @@ class Admin::KanjisController < ApplicationController
     end
   end
 
-  # ================= SHOW =================
+  # ================= SHOW (REVIEW & DETAIL) =================
   def show
-    # 1. GỌI API LẤY CHI TIẾT BẢN GHI HIỆN TẠI (Dựa vào ID trên URL)
     response = HTTParty.get("#{BASE_URL}/#{params[:id]}", headers: API_HEADERS, verify: false)
 
     if response.success?
       @kanji = JSON.parse(response.body)["data"] || {}
 
-      # =================================================================================
-      # NHÓM 1: CHẾ ĐỘ DUYỆT BÀI (REVIEW) - Dành cho PENDING, REJECTED
-      # =================================================================================
-      if ['PENDING', 'REJECTED', 'APPROVED'].include?(@kanji['status']) && @kanji['is_active'] == false
-
+      # -------------------------------------------------------------------------
+      # CHẾ ĐỘ DUYỆT BÀI (REVIEW) - Dành cho các bài PENDING của User
+      # -------------------------------------------------------------------------
+      if ['PENDING', 'REJECTED', 'APPROVED'].include?(@kanji['status'])
         @pending_kanji = @kanji
-        check_res = HTTParty.get(BASE_URL,
-                                 query: { kanji: @pending_kanji['kanji'] },
-                                 headers: API_HEADERS, verify: false)
 
-        existing_list = check_res.success? ? (JSON.parse(check_res.body)["data"] || []) : []
+        # Tìm bản Master trong DB (Không phân biệt Active/Hidden/Deleted)
+        check_res = HTTParty.get(BASE_URL, query: { kanji: @pending_kanji['kanji'] }, headers: API_HEADERS, verify: false)
+        res_body = JSON.parse(check_res.body)
+        existing_list = res_body["content"] || res_body["data"] || []
 
-        # Tìm bản ghi đang là Master (ACTIVE hoặc HIDDEN)
-        @master_kanji = existing_list.find { |k| ['ACTIVE', 'HIDDEN'].include?(k['status']) }
+        @master_kanji = existing_list.find { |k| ['ACTIVE', 'HIDDEN', 'DELETED'].include?(k['status']) }
 
-        # --- [QUAN TRỌNG] LOGIC QUYẾT ĐỊNH DỮ LIỆU ĐỔ VÀO FORM ---
         if @master_kanji.present?
-          # CASE A: Đã có bản gốc -> Form bên phải lấy dữ liệu GỐC
           @form_data = @master_kanji
-          @lock_core_fields = true # Có thể dùng biến này để hiện cảnh báo
-          flash.now[:warning] = "Chữ này đã tồn tại (#{@master_kanji['status']}). Form bên phải đang hiển thị dữ liệu GỐC để bạn chỉnh sửa."
+          # QUY TẮC: Chỉ khóa nếu Master đang ACTIVE. Nếu HIDDEN/DELETED thì MỞ (false)
+          @lock_core_fields = (@master_kanji['status'] == 'ACTIVE')
+
+          if @lock_core_fields
+            flash.now[:warning] = "Chữ này đang HOẠT ĐỘNG. Bạn chỉ được phép sửa thông tin bổ sung."
+          else
+            flash.now[:info] = "Chữ này đã có trong DB nhưng đang ở trạng thái #{@master_kanji['status']}. Bạn được phép sửa toàn bộ."
+          end
         else
-          # CASE B: Chưa có -> Form bên phải lấy dữ liệu USER GỬI
+          # Chữ mới hoàn toàn
           @form_data = @pending_kanji
           @lock_core_fields = false
-          flash.now[:info] = "Chữ này mới hoàn toàn. Form bên phải hiển thị dữ liệu ĐÓNG GÓP."
+          flash.now[:info] = "Chữ mới hoàn toàn. Bạn có quyền biên tập tất cả các trường."
         end
 
         render :review
 
-        # =================================================================================
-        # NHÓM 2: CHẾ ĐỘ XEM CHI TIẾT (SHOW) - Dành cho bản Gốc (ACTIVE/HIDDEN)
-        # =================================================================================
+        # -------------------------------------------------------------------------
+        # CHẾ ĐỘ XEM CHI TIẾT (SHOW MASTER)
+        # -------------------------------------------------------------------------
       else
-        # Lấy lịch sử đóng góp của chữ này
-        contrib_res = HTTParty.get("#{BASE_URL}/contributions",
-                                   query: { kanji: @kanji['kanji'] },
-                                   headers: API_HEADERS, verify: false)
-
+        contrib_res = HTTParty.get("#{BASE_URL}/contributions", query: { kanji: @kanji['kanji'] }, headers: API_HEADERS, verify: false)
         @contributions = contrib_res.success? ? (JSON.parse(contrib_res.body)["data"] || []) : []
-
         render :show
       end
-
     else
-      redirect_to admin_kanjis_path, alert: "Không tìm thấy dữ liệu (API Error)."
+      redirect_to admin_kanjis_path, alert: "API Error: Không tìm thấy ID #{params[:id]}"
     end
   rescue => e
-    redirect_to admin_kanjis_path, alert: "Lỗi kết nối: #{e.message}"
+    redirect_to admin_kanjis_path, alert: "Lỗi hệ thống: #{e.message}"
   end
-  # ================= NEW =================
+
+  # ================= NEW / CREATE =================
   def new
     @kanji = {}
     @errors = {}
     @form_mode = :new
   end
 
-  # ================= CREATE =================
   def create
     payload = map_to_java_dto(get_safe_params)
+    # Admin tạo luôn để status là ACTIVE
     payload["status"] = "ACTIVE"
     payload["is_active"] = true
 
     response = HTTParty.post(BASE_URL, body: payload.to_json, headers: API_HEADERS, verify: false)
 
     if response.success?
-      redirect_to admin_kanjis_path, notice: "Tạo Kanji thành công!"
+      redirect_to admin_kanjis_path, notice: "Tạo mới Kanji thành công!"
     else
       parsed = JSON.parse(response.body) rescue {}
       @errors = parsed['errors'] || {}
@@ -126,29 +123,23 @@ class Admin::KanjisController < ApplicationController
       @kanji = payload
       render :new
     end
-  rescue => e
-    redirect_to admin_kanjis_path, alert: "Lỗi kết nối: #{e.message}"
   end
 
-  # ================= EDIT =================
+  # ================= EDIT / UPDATE =================
   def edit
     response = HTTParty.get("#{BASE_URL}/#{params[:id]}", headers: API_HEADERS, verify: false)
-
     if response.success?
-      data = JSON.parse(response.body)["data"]
-      @kanji = data || {}
+      @kanji = JSON.parse(response.body)["data"] || {}
+      # Áp dụng quy tắc khóa tương tự như Show
+      @lock_core_fields = (@kanji['status'] == 'ACTIVE')
       @form_mode = :edit
     else
-      redirect_to admin_kanjis_path, alert: "Không lấy được dữ liệu Kanji ID: #{params[:id]}"
+      redirect_to admin_kanjis_path, alert: "Lỗi lấy dữ liệu Edit"
     end
-  rescue => e
-    redirect_to admin_kanjis_path, alert: "Lỗi kết nối: #{e.message}"
   end
 
-  # ================= UPDATE =================
   def update
     payload = map_to_java_dto(get_safe_params)
-
     response = HTTParty.put("#{BASE_URL}/#{params[:id]}", body: payload.to_json, headers: API_HEADERS, verify: false)
 
     if response.success?
@@ -156,70 +147,54 @@ class Admin::KanjisController < ApplicationController
     else
       parsed = JSON.parse(response.body) rescue {}
       @errors = parsed['errors'] || {}
-      flash.now[:alert] = parsed['message'] || "Cập nhật thất bại"
+      flash.now[:alert] = "Cập nhật thất bại!"
       @kanji = payload
       @kanji['id'] = params[:id]
       render :edit
     end
   end
 
-  # ================= DESTROY =================
-  def destroy
-    response = HTTParty.delete("#{BASE_URL}/#{params[:id]}", headers: API_HEADERS, verify: false)
-
-    if response.success?
-      redirect_to admin_kanjis_path, notice: "Đã xóa Kanji thành công!", status: :see_other
-    else
-      error_msg = JSON.parse(response.body)["message"] rescue response.code
-      redirect_to admin_kanjis_path, alert: "Không thể xóa: #{error_msg}"
-    end
-  rescue => e
-    redirect_to admin_kanjis_path, alert: "Lỗi hệ thống: #{e.message}"
-  end
-
-  # ================= APPROVE (DUYỆT BÀI) =================
-
+  # ================= APPROVE / REJECT =================
   def approve
     payload = map_to_java_dto(get_safe_params)
-
-    # 2. Ép buộc trạng thái thành ACTIVE
     payload["status"] = "ACTIVE"
     payload["is_active"] = true
 
-    # 3. Gửi Request kèm Body (payload)
-    response = HTTParty.put("#{BASE_URL}/#{params[:id]}/approve",
-                            body: payload.to_json,
-                            headers: API_HEADERS,
-                            verify: false)
+    response = HTTParty.put("#{BASE_URL}/#{params[:id]}/approve", body: payload.to_json, headers: API_HEADERS, verify: false)
 
     if response.success?
-      redirect_to admin_kanjis_path(status: 'PENDING'), notice: "Đã duyệt và xuất bản Kanji thành công!"
+      redirect_to admin_kanjis_path(status: 'PENDING'), notice: "Đã duyệt và cập nhật bản Master thành công!"
     else
       parsed = JSON.parse(response.body) rescue {}
-      flash.now[:alert] = "Lỗi khi duyệt: #{parsed['message'] || 'Dữ liệu không hợp lệ'}"
+      flash.now[:alert] = "Duyệt thất bại: #{parsed['message']}"
       @errors = parsed['errors'] || {}
-
       @kanji = payload.transform_keys(&:to_s)
       @kanji['id'] = params[:id]
 
+      # Load lại dữ liệu so sánh để render lại trang review khi có lỗi validate
       load_comparison_data(@kanji)
       render :review
     end
   end
 
-  # ================= REJECT (TỪ CHỐI BÀI) =================
-  # [QUAN TRỌNG] Hàm này phải là PUBLIC (nằm trên từ khóa private)
   def reject
     reason = params[:reason].to_s.strip
-
-    response = HTTParty.put("#{BASE_URL}/#{params[:id]}/reject",
-                            query: { reason: reason },
-                            headers: API_HEADERS, verify: false)
+    response = HTTParty.put("#{BASE_URL}/#{params[:id]}/reject", query: { reason: reason }, headers: API_HEADERS, verify: false)
 
     if response.success?
       redirect_to admin_kanjis_path(status: 'PENDING'), notice: "Đã từ chối bài đóng góp."
     else
-      redirect_to admin_kanji_path(params[:id]), alert: "Lỗi Server: #{response.code}"
+      redirect_to admin_kanji_path(params[:id]), alert: "Lỗi Server khi từ chối."
+    end
+  end
+
+  # ================= DESTROY =================
+  def destroy
+    response = HTTParty.delete("#{BASE_URL}/#{params[:id]}", headers: API_HEADERS, verify: false)
+    if response.success?
+      redirect_to admin_kanjis_path, notice: "Xóa thành công!", status: :see_other
+    else
+      redirect_to admin_kanjis_path, alert: "Không thể xóa."
     end
   end
 
@@ -234,36 +209,35 @@ class Admin::KanjisController < ApplicationController
 
   def map_to_java_dto(p)
     p = p.to_h.with_indifferent_access
-    current_status = p[:status].presence || "ACTIVE"
-    is_active_bool = (current_status == "ACTIVE")
-
+    # Giữ nguyên cấu trúc key để khớp với KanjiCharacterDTO bên Java
     {
       "kanji"              => p[:kanji],
       "translation"        => p[:translation]&.upcase,
       "meaning"            => p[:meaning],
-      "jlpt"               => safe_integer(p[:jlpt] || p[:jlpt_level]),
-      "num_strokes"        => safe_integer(p[:num_strokes] || p[:stroke_count]),
-      "on_pronunciation"   => p[:on_pronunciation] || p[:onyomi],
-      "kun_pronunciation"  => p[:kun_pronunciation] || p[:kunyomi],
+      "jlpt"               => safe_integer(p[:jlpt]),
+      "num_strokes"        => safe_integer(p[:num_strokes] || p[:num_strokes]),
+      "on_pronunciation"   => p[:on_pronunciation],
+      "kun_pronunciation"  => p[:kun_pronunciation],
       "writing_image_url"  => p[:writing_image_url],
       "radical"            => p[:radical],
       "components"         => p[:components],
-      "kanji_description"  => p[:kanji_description] || p[:kanji_story],
+      "kanji_description"  => p[:kanji_description] || p[:kanji_description],
       "vocabulary"         => p[:vocabulary],
       "examples"           => p[:examples],
-      "status"             => current_status,
-      "is_active"          => is_active_bool
+      "status"             => p[:status] || "ACTIVE",
+      "is_active"          => p[:is_active].nil? ? true : p[:is_active]
     }
   end
 
   def safe_integer(val); val.present? ? val.to_i : nil; end
 
-  # Đưa hàm này xuống dưới private
   def load_comparison_data(kanji_data)
     return unless kanji_data['kanji'].present?
-    check_res = HTTParty.get(BASE_URL, query: { kanji: kanji_data['kanji'], status: 'ACTIVE' }, headers: API_HEADERS, verify: false)
-    existing_list = check_res.success? ? (JSON.parse(check_res.body)["data"] || []) : []
-    @active_conflict = existing_list.find { |k| k["id"].to_s != kanji_data["id"].to_s && k["is_active"] == true }
-    @lock_core_fields = @active_conflict.present?
+    # Tìm kiếm Master bất kể trạng thái để quyết định lock trường khi render lại form lỗi
+    check_res = HTTParty.get(BASE_URL, query: { kanji: kanji_data['kanji'] }, headers: API_HEADERS, verify: false)
+    res_body = JSON.parse(check_res.body)
+    existing_list = res_body["content"] || res_body["data"] || []
+    @master_kanji = existing_list.find { |k| ['ACTIVE', 'HIDDEN', 'DELETED'].include?(k['status']) }
+    @lock_core_fields = @master_kanji.present? && @master_kanji['status'] == 'ACTIVE'
   end
 end
