@@ -1,0 +1,25 @@
+<%= form_with(model: [:admin, user], local: true, class: "card shadow-sm border-0") do |f| %>
+  <div class="card-body p-4">
+    <div class="form-group">
+      <label class="small font-weight-bold">HỌ VÀ TÊN</label>
+      <%= f.text_field :name, class: "form-control", required: true %>
+    </div>
+    <div class="form-group">
+      <label class="small font-weight-bold">EMAIL</label>
+      <%= f.email_field :email, class: "form-control", required: true %>
+    </div>
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label class="small font-weight-bold">PHÂN HẠNG</label>
+        <%= f.select :rank, options_for_select(['BRONZE', 'SILVER', 'GOLD', 'DIAMOND'], user['rank']), {}, class: "form-control" %>
+      </div>
+      <div class="col-md-6 form-group">
+        <label class="small font-weight-bold">TRẠNG THÁI</label>
+        <%= f.select :isActive, options_for_select([['Hoạt động', true], ['Bị khóa', false]], user['isActive']), {}, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer bg-white text-right">
+    <%= f.submit 'LƯU DỮ LIỆU', class: "btn btn-primary px-4 shadow-sm" %>
+  </div>
+<% end %>

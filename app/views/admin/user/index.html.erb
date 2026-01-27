@@ -1,0 +1,76 @@
+<div class="card shadow-sm border-0">
+  <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+    <h5 class="m-0 font-weight-bold text-primary"><i class="fas fa-users mr-2"></i>QUẢN LÝ USER</h5>
+    <%= link_to 'THÊM MỚI', new_admin_user_path, class: "btn btn-success btn-sm rounded-pill px-4 shadow-sm" %>
+  </div>
+
+  <div class="card-body p-0">
+    <%# --- TÌM KIẾM --- %>
+    <div class="p-3 bg-light border-bottom">
+      <%= form_with url: admin_users_path, method: :get, local: true, class: "form-inline" do |f| %>
+        <%= f.text_field :keyword, value: params[:keyword], class: "form-control form-control-sm mr-2", placeholder: "Tên hoặc Email..." %>
+        <%= f.select :status, options_for_select([['-- Trạng thái --', ''], ['Hoạt động', 'ACTIVE'], ['Bị khóa', 'BANNED']], params[:status]), {}, class: "form-control form-control-sm mr-2" %>
+        <button type="submit" class="btn btn-primary btn-sm px-3">TÌM KIẾM</button>
+      <% end %>
+    </div>
+
+    <%# --- BẢNG DỮ LIỆU --- %>
+    <table class="table table-hover m-0 custom-kanji-table">
+      <thead class="bg-light small font-weight-bold text-uppercase">
+      <tr>
+        <th width="40" class="text-center"><input type="checkbox" id="checkAllUser"></th>
+        <th width="70" class="text-center">ID</th>
+        <th>Họ tên & Email</th>
+        <th width="120" class="text-center">Rank</th>
+        <th width="120" class="text-center">Trạng thái</th>
+        <th width="150" class="text-center">Thao tác</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @users.each do |u| %>
+        <tr class="user-row">
+          <td class="text-center"><input type="checkbox" class="user-checkbox"></td>
+          <td class="text-center font-weight-bold text-muted">#<%= u['id'] %></td>
+          <td>
+            <div class="font-weight-bold text-dark"><%= u['name'] %></div>
+            <div class="small text-muted"><%= u['email'] %></div>
+          </td>
+          <td class="text-center">
+            <span class="rank-badge rank-<%= u['rank'].to_s.downcase %>"><%= u['rank'] || 'BRONZE' %></span>
+          </td>
+          <td class="text-center">
+              <span class="badge badge-pill <%= u['isActive'] ? 'badge-success' : 'badge-secondary' %> px-3 py-2">
+                <%= u['isActive'] ? 'Hoạt động' : 'Bị khóa' %>
+              </span>
+          </td>
+          <td class="text-center">
+            <%= link_to admin_user_path(u['id']), class: "btn btn-info btn-circle btn-sm shadow-sm" do %><i class="fas fa-eye"></i><% end %>
+            <%= link_to edit_admin_user_path(u['id']), class: "btn btn-primary btn-circle btn-sm shadow-sm" do %><i class="fas fa-edit"></i><% end %>
+            <%= button_to admin_user_path(u['id']), method: :delete, class: "btn btn-danger btn-circle btn-sm shadow-sm", data: { confirm: 'Bạn có chắc chắn muốn khóa người dùng này?' } do %><i class="fas fa-ban"></i><% end %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%# --- PHÂN TRANG --- %>
+  <div class="card-footer bg-white border-top py-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="small text-muted">Trang <b><%= @current_page %></b> / <b><%= @total_pages %></b></div>
+      <nav>
+        <ul class="pagination pagination-sm m-0">
+          <li class="page-item <%= 'disabled' if @current_page <= 1 %>">
+            <%= link_to 'Trước', admin_users_path(page: @current_page - 1, keyword: params[:keyword]), class: "page-link" %>
+          </li>
+          <% (1..@total_pages).each do |p| %>
+            <li class="page-item <%= 'active' if p == @current_page %>"><%= link_to p, admin_users_path(page: p, keyword: params[:keyword]), class: "page-link" %></li>
+          <% end %>
+          <li class="page-item <%= 'disabled' if @current_page >= @total_pages %>">
+            <%= link_to 'Sau', admin_users_path(page: @current_page + 1, keyword: params[:keyword]), class: "page-link" %>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
