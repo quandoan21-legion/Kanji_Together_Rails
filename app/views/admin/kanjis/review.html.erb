@@ -29,10 +29,24 @@
         margin-bottom: 2px;
     }
 
-    /* Giá trị */
-    .meta-value {
+    /* Tab Navigation */
+    .nav-tabs .nav-link {
+        color: #495057;
         font-weight: 600;
-        color: #2d3748;
+        border: none;
+        border-bottom: 3px solid transparent;
+        padding: 0.75rem 1.25rem;
+    }
+    .nav-tabs .nav-link.active {
+        color: #4e73df;
+        border-bottom: 3px solid #4e73df;
+        background: transparent;
+    }
+    .nav-tabs .nav-link:hover {
+        border-color: transparent transparent #d1d3e2;
+    }
+    .tab-content {
+        padding-top: 1.5rem;
     }
 </style>
 
@@ -65,17 +79,14 @@
     <div class="row w-100 m-0 h-100">
 
       <div class="col-lg-4 h-100 p-0 border-right d-flex flex-column bg-white">
-
         <div class="px-3 py-2 bg-secondary text-white small font-weight-bold d-flex justify-content-between align-items-center flex-shrink-0">
-          <span><i class="fas fa-user mr-1"></i> DỮ LIỆU NGƯỜI DÙNG</span>
+          <span><i class="fas fa-user mr-1"></i> DỮ LIỆU ĐÓNG GÓP</span>
           <span class="badge badge-light text-dark">ID: #<%= @pending_kanji['id'] %></span>
         </div>
 
         <div class="flex-grow-1 custom-scroll p-3 d-flex flex-column">
-
           <div class="d-flex align-items-center bg-light rounded p-3 mb-3 border">
             <div class="kanji-hero font-weight-bold mr-4"><%= @pending_kanji['kanji'] %></div>
-
             <div class="border-left pl-3 flex-grow-1">
               <div class="d-flex justify-content-between align-items-start">
                 <div>
@@ -106,27 +117,6 @@
             </div>
           </div>
 
-          <div class="row small mb-3">
-            <div class="col-4 pr-1">
-              <div class="border rounded p-2 text-center bg-white">
-                <div class="meta-label">Số nét</div>
-                <div><%= @pending_kanji['num_strokes'] %></div>
-              </div>
-            </div>
-            <div class="col-4 px-1">
-              <div class="border rounded p-2 text-center bg-white">
-                <div class="meta-label">Bộ thủ</div>
-                <div class="text-truncate" title="<%= @pending_kanji['radical'] %>"><%= @pending_kanji['radical'] %></div>
-              </div>
-            </div>
-            <div class="col-4 pl-1">
-              <div class="border rounded p-2 text-center bg-white">
-                <div class="meta-label">Thành phần</div>
-                <div class="text-truncate" title="<%= @pending_kanji['components'] %>"><%= @pending_kanji['components'] %></div>
-              </div>
-            </div>
-          </div>
-
           <div class="flex-grow-1 d-flex flex-column">
             <div class="mb-3">
               <div class="meta-label text-primary mb-1"><i class="fas fa-book-reader"></i> Câu chuyện</div>
@@ -144,7 +134,6 @@
               </div>
             </div>
           </div>
-
         </div>
 
         <div class="p-3 bg-light border-top flex-shrink-0">
@@ -155,13 +144,11 @@
             <i class="fas fa-times mr-2"></i> TỪ CHỐI
           </button>
         </div>
-
       </div>
 
       <div class="col-lg-8 h-100 p-0 d-flex flex-column bg-light">
-
         <div class="px-3 py-2 bg-primary text-white small font-weight-bold flex-shrink-0">
-          <i class="fas fa-edit mr-1"></i> NỘI DUNG BIÊN TẬP & XUẤT BẢN
+          <i class="fas fa-edit mr-1"></i> BIÊN TẬP & XUẤT BẢN
         </div>
 
         <div class="flex-grow-1 custom-scroll p-4">
@@ -169,91 +156,110 @@
           <% if @lock_core_fields %>
             <div class="alert alert-warning shadow-sm border-left-warning mb-4">
               <i class="fas fa-exclamation-triangle mr-2"></i>
-              Đang hiển thị dữ liệu gốc. Chỉ sửa thông tin bổ sung trừ khi cần thiết.
+              Trạng thái dữ liệu gốc đang công khai hoặc ẩn."Thông tin cơ bản" đã bị khóa.
             </div>
           <% end %>
 
-          <div class="card border-0 shadow-sm mb-4">
-            <div class="card-body">
-              <h6 class="text-primary font-weight-bold border-bottom pb-2 mb-3">1. Thông tin cốt lõi</h6>
+          <ul class="nav nav-tabs border-bottom-0" id="kanjiTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="basic-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">
+                <i class="fas fa-info-circle mr-1"></i> Thông tin cơ bản
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="extra-tab" data-toggle="tab" href="#extraInfo" role="tab" aria-controls="extraInfo" aria-selected="false">
+                <i class="fas fa-book-open mr-1"></i> Thông tin bổ sung
+              </a>
+            </li>
+          </ul>
+
+          <div class="tab-content bg-white p-4 border rounded-bottom shadow-sm" id="kanjiTabContent" style="border-top-right-radius: 0.25rem;">
+
+            <div class="tab-pane fade show active" id="basicInfo" role="tabpanel" aria-labelledby="basic-tab">
 
               <div class="form-row">
-                <div class="col-md-2 form-group">
-                  <label class="small font-weight-bold">Kanji</label>
-                  <%= f.text_field :kanji, value: @form_data['kanji'], class: "form-control font-weight-bold text-center", style: "font-size: 1.2rem;", readonly: @lock_core_fields %>
+                <div class="col-md-3 form-group">
+                  <label class="small font-weight-bold">Kanji (Gốc)</label>
+                  <%= f.text_field :kanji, value: @form_data['kanji'], class: "form-control font-weight-bold text-center text-primary", style: "font-size: 1.5rem;", readonly: @lock_core_fields %>
                 </div>
-                <div class="col-md-6 form-group">
+                <div class="col-md-9 form-group">
                   <label class="small font-weight-bold">Hán Việt</label>
-                  <%= f.text_field :translation, value: @form_data['translation'], class: "form-control font-weight-bold text-uppercase text-danger", readonly: @lock_core_fields %>
-                </div>
-                <div class="col-md-2 form-group">
-                  <label class="small font-weight-bold">JLPT</label>
-                  <% if @lock_core_fields %>
-                    <input type="text" class="form-control" value="N<%= @form_data['jlpt'] %>" readonly>
-                    <%= f.hidden_field :jlpt, value: @form_data['jlpt'] %>
-                  <% else %>
-                    <%= f.select :jlpt, options_for_select([5,4,3,2,1], @form_data['jlpt']), {}, class: "form-control" %>
-                  <% end %>
-                </div>
-                <div class="col-md-2 form-group">
-                  <label class="small font-weight-bold">Số nét</label>
-                  <%= f.number_field :num_strokes, value: @form_data['num_strokes'], class: "form-control", readonly: @lock_core_fields %>
+                  <%= f.text_field :translation, value: @form_data['translation'], class: "form-control font-weight-bold text-uppercase text-danger h-auto py-2", style: "font-size: 1.2rem;", readonly: @lock_core_fields %>
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="small font-weight-bold">Nghĩa tiếng Việt</label>
-                <%= f.text_field :meaning, value: @form_data['meaning'], class: "form-control font-weight-bold text-primary", readonly: @lock_core_fields %>
+                <%= f.text_field :meaning, value: @form_data['meaning'], class: "form-control font-weight-bold", readonly: @lock_core_fields %>
               </div>
 
               <div class="form-row">
-                <div class="col-md-6 form-group mb-0">
+                <div class="col-md-6 form-group">
                   <label class="small font-weight-bold">Onyomi (Katakana)</label>
-                  <%= f.text_area :on_pronunciation, value: @form_data['on_pronunciation'], rows: 2, class: "form-control", readonly: @lock_core_fields %>
+                  <%= f.text_area :on_pronunciation, value: @form_data['on_pronunciation'], class: "form-control", readonly: @lock_core_fields %>
                 </div>
-                <div class="col-md-6 form-group mb-0">
+                <div class="col-md-6 form-group">
                   <label class="small font-weight-bold">Kunyomi (Hiragana)</label>
-                  <%= f.text_area :kun_pronunciation, value: @form_data['kun_pronunciation'], rows: 2, class: "form-control", readonly: @lock_core_fields %>
+                  <%= f.text_area :kun_pronunciation, value: @form_data['kun_pronunciation'], class: "form-control", readonly: @lock_core_fields %>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div class="card border-0 shadow-sm border-left-success">
-            <div class="card-body">
-              <h6 class="text-success font-weight-bold border-bottom pb-2 mb-3">2. Thông tin bổ sung (Luôn sửa được)</h6>
+              <hr class="my-3">
+              <h6 class="text-muted font-weight-bold small mb-3">THÔNG SỐ KỸ THUẬT</h6>
 
               <div class="form-row">
-                <div class="col-md-8 form-group">
-                  <label class="small font-weight-bold text-danger">Mẹo nhớ (Story) *</label>
-                  <%= f.text_area :kanji_description, value: @form_data['kanji_description'], rows: 2, class: "form-control font-italic", required: true %>
+                <div class="col-md-4 form-group">
+                  <label class="small font-weight-bold">Bộ thủ (Radical)</label>
+                  <%= f.text_field :radical, value: @form_data['radical'], class: "form-control", placeholder: "VD: 亻 NHÂN", readonly: @lock_core_fields %>
                 </div>
                 <div class="col-md-4 form-group">
-                  <label class="small font-weight-bold">Bộ thủ & Thành phần</label>
-                  <%= f.text_field :radical, value: @form_data['radical'], class: "form-control mb-2", placeholder: "Bộ thủ", readonly: @lock_core_fields %>
-                  <%= f.text_field :components, value: @form_data['components'], class: "form-control", placeholder: "Thành phần", readonly: @lock_core_fields %>
+                  <label class="small font-weight-bold">Thành phần (Components)</label>
+                  <%= f.text_field :components, value: @form_data['components'], class: "form-control", placeholder: "VD: 木, 目", readonly: @lock_core_fields %>
+                </div>
+                <div class="col-md-2 form-group">
+                  <label class="small font-weight-bold">Cấp độ JLPT</label>
+                  <% if @lock_core_fields %>
+                    <input type="text" class="form-control text-center font-weight-bold" value="N<%= @form_data['jlpt'] %>" readonly>
+                    <%= f.hidden_field :jlpt, value: @form_data['jlpt'] %>
+                  <% else %>
+                    <%= f.select :jlpt, options_for_select([5,4,3,2,1], @form_data['jlpt']), {}, class: "form-control text-center" %>
+                  <% end %>
+                </div>
+                <div class="col-md-2 form-group">
+                  <label class="small font-weight-bold">Số nét</label>
+                  <%= f.number_field :num_strokes, value: @form_data['num_strokes'], class: "form-control text-center", readonly: @lock_core_fields %>
                 </div>
               </div>
 
+            </div>
+
+            <div class="tab-pane fade" id="extraInfo" role="tabpanel" aria-labelledby="extra-tab">
+
+              <div class="form-group">
+                <label class="small font-weight-bold text-danger">Mẹo nhớ (Story) *</label>
+                <%= f.text_area :kanji_description, value: @form_data['kanji_description'], rows: 3, class: "form-control font-italic border-left-primary", required: true, placeholder: "Nhập câu chuyện giúp ghi nhớ Kanji..." %>
+                <small class="form-text text-muted">Câu chuyện hay sẽ giúp người học ghi nhớ lâu hơn.</small>
+              </div>
+
               <div class="form-row">
-                <div class="col-md-6 form-group mb-0">
+                <div class="col-md-6 form-group">
                   <label class="small font-weight-bold">Từ vựng liên quan</label>
-                  <%= f.text_area :vocabulary, value: @form_data['vocabulary'], rows: 5, class: "form-control small" %>
+                  <%= f.text_area :vocabulary, value: @form_data['vocabulary'], rows: 6, class: "form-control small", placeholder: "Kanji - Hiragana - Nghĩa" %>
                 </div>
-                <div class="col-md-6 form-group mb-0">
+                <div class="col-md-6 form-group">
                   <label class="small font-weight-bold">Câu ví dụ</label>
-                  <%= f.text_area :examples, value: @form_data['examples'], rows: 5, class: "form-control small" %>
+                  <%= f.text_area :examples, value: @form_data['examples'], rows: 6, class: "form-control small", placeholder: "Câu Nhật - Câu Việt" %>
                 </div>
               </div>
 
               <div class="form-group mt-3 mb-0">
-                <label class="small font-weight-bold">Link Ảnh cách viết</label>
-                <%= f.text_field :writing_image_url, value: @form_data['writing_image_url'], class: "form-control form-control-sm" %>
+                <label class="small font-weight-bold">Link Ảnh cách viết (GIF/SVG)</label>
+                <%= f.text_field :writing_image_url, value: @form_data['writing_image_url'], class: "form-control form-control-sm", placeholder: "https://..." %>
               </div>
-            </div>
-          </div>
 
-        </div>
+            </div>
+
+          </div> </div>
       </div>
     </div>
   <% end %>

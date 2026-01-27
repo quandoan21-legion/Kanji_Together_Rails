@@ -1,136 +1,116 @@
-require 'net/http'
-require 'json'
-
 class Admin::ExamsController < ApplicationController
-  JAVA_EXAMS_URL = "http://localhost:8080/api/v1/exams"
-  JAVA_QUESTIONS_URL = "http://localhost:8080/api/v1/questions"
+  # Định nghĩa URL của API Java
+  API_URL = "http://localhost:8080/api/v1/exams"
+  QUESTIONS_API_URL = "http://localhost:8080/api/v1/questions"
 
-  layout 'application'
-
+  # 1. DANH SÁCH EXAM
   def index
-    uri = URI(JAVA_EXAMS_URL)
-    response = Net::HTTP.get(uri)
-    @exams = JSON.parse(response) rescue []
+    # Lấy tham số từ URL để lọc
+    page = params[:page] || 0
+    keyword = params[:keyword]
+    type = params[:type]
+
+    # Gọi API Java (kèm tham số lọc)
+    response = HTTParty.get(API_URL, query: { page: page, size: 10, keyword: keyword, type: type })
+
+    if response.success?
+      data = JSON.parse(response.body)
+      @exams = data['content']
+      @total_pages = data['totalPages']
+      @current_page = data['number']
+    else
+      @exams = []
+      flash[:alert] = "Không thể kết nối đến Server Java"
+    end
   end
 
+  # 2. TRANG TẠO MỚI
   def new
-    @exam = { 'duration' => 45, 'passScore' => 50, 'targetRank' => 'UNRANKED' }
-    @questions = fetch_all_questions
+    @exam = {} # Khởi tạo rỗng
+    fetch_questions_for_selection # Lấy list câu hỏi để hiện checkbox
   end
 
-  def edit
-    uri = URI("#{JAVA_EXAMS_URL}/#{params[:id]}")
-    response = Net::HTTP.get(uri)
-    @exam = JSON.parse(response)
-    @questions = fetch_all_questions
-  rescue
-    redirect_to admin_exams_path, alert: "Không tìm thấy đề thi"
-  end
-
+  # 3. XỬ LÝ TẠO MỚI (POST)
   def create
-    uri = URI(JAVA_EXAMS_URL)
-    header = { 'Content-Type': 'application/json' }
-    payload = build_payload(params[:exam])
+    payload = build_payload # Đóng gói dữ liệu
 
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Post.new(uri.request_uri, header)
-    request.body = payload.to_json
+    response = HTTParty.post(API_URL,
+                             body: payload.to_json,
+                             headers: { 'Content-Type' => 'application/json' })
 
-    begin
-      response = http.request(request)
-      if response.code.to_i == 200
-        redirect_to admin_exams_path, notice: "Tạo đề thi thành công!"
-      else
-        handle_error_response(response, payload)
-        @questions = fetch_all_questions
-        render :new
-      end
-    rescue StandardError => e
-      flash.now[:alert] = "Lỗi kết nối: #{e.message}"
-      @questions = fetch_all_questions
-      @exam = payload.stringify_keys
+    if response.success?
+      redirect_to admin_exams_path, notice: "Tạo đề thi thành công!"
+    else
+      flash[:alert] = "Lỗi khi tạo: #{response.body}"
+      fetch_questions_for_selection
       render :new
     end
   end
 
+  # 4. TRANG CHỈNH SỬA
+  def edit
+    # Gọi API lấy chi tiết Exam (để điền sẵn vào form)
+    response = HTTParty.get("#{API_URL}/#{params[:id]}")
+
+    if response.success?
+      @exam = JSON.parse(response.body)
+      fetch_questions_for_selection
+    else
+      redirect_to admin_exams_path, alert: "Không tìm thấy đề thi."
+    end
+  end
+
+  # 5. XỬ LÝ CẬP NHẬT (POST/PUT)
   def update
-    uri = URI("#{JAVA_EXAMS_URL}/#{params[:id]}")
-    header = { 'Content-Type': 'application/json' }
-    payload = build_payload(params[:exam])
+    payload = build_payload
+    payload[:id] = params[:id].to_i # Thêm ID để Java biết là Update
 
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Put.new(uri.request_uri, header)
-    request.body = payload.to_json
+    response = HTTParty.post(API_URL,
+                             body: payload.to_json,
+                             headers: { 'Content-Type' => 'application/json' })
 
-    begin
-      response = http.request(request)
-      if response.code.to_i == 200
-        redirect_to admin_exams_path, notice: "Cập nhật thành công!"
-      else
-        handle_error_response(response, payload)
-        @questions = fetch_all_questions
-        render :edit
-      end
-    rescue StandardError => e
-      flash.now[:alert] = "Lỗi hệ thống: #{e.message}"
-      @questions = fetch_all_questions
-      @exam = payload.stringify_keys
+    if response.success?
+      redirect_to admin_exams_path, notice: "Cập nhật thành công!"
+    else
+      flash[:alert] = "Lỗi cập nhật: #{response.body}"
+      fetch_questions_for_selection
+      # Giữ lại dữ liệu vừa nhập để không bị mất
+      @exam = params[:exam].to_unsafe_h
+      @exam['question_ids'] = params[:question_ids]&.map(&:to_i)
       render :edit
     end
   end
 
+  # 6. XÓA
   def destroy
-    uri = URI("#{JAVA_EXAMS_URL}/#{params[:id]}")
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Delete.new(uri.request_uri)
-    http.request(request)
-    redirect_to admin_exams_path, notice: "Đã xóa đề thi."
+    response = HTTParty.delete("#{API_URL}/#{params[:id]}")
+    if response.success?
+      redirect_to admin_exams_path, notice: "Đã xóa đề thi."
+    else
+      redirect_to admin_exams_path, alert: "Lỗi khi xóa."
+    end
   end
 
   private
 
-  def fetch_all_questions
-    uri = URI(JAVA_QUESTIONS_URL)
-    response = Net::HTTP.get(uri)
-    JSON.parse(response) rescue []
+  # Lấy danh sách câu hỏi để hiển thị checkbox (Lấy 1000 câu để chọn cho thoải mái)
+  def fetch_questions_for_selection
+    response = HTTParty.get(QUESTIONS_API_URL, query: { size: 1000 })
+    @all_questions = response.success? ? JSON.parse(response.body)['content'] : []
   end
 
-  def build_payload(p)
-    data = {
-      name: p[:name],
-      examType: p[:exam_type],
-      targetRank: p[:target_rank],
-      duration: p[:duration].to_i,
-      passScore: p[:pass_score].to_i,
-      status: 1,
-      totalQuestions: 0
+  # [QUAN TRỌNG] Hàm đóng gói JSON gửi sang Java
+  def build_payload
+    {
+      name: params[:name],
+      type: params[:type],
+      duration: params[:duration].to_i,
+      pass_score: params[:pass_score].to_i,
+      status: params[:status].to_i,
+      target_rank: params[:target_rank],
+
+      # Lấy mảng ID câu hỏi từ checkbox, ép kiểu sang số nguyên
+      question_ids: params[:question_ids]&.map(&:to_i) || []
     }
-
-    if p[:question_ids].present?
-      selected_ids = p[:question_ids].reject(&:blank?)
-      # Java cần mảng object: [{id: 1}, {id: 2}]
-      data[:questions] = selected_ids.map { |id| { id: id.to_i } }
-      data[:totalQuestions] = selected_ids.size
-    end
-
-    data
-  end
-
-  # Hàm xử lý lỗi tập trung để tránh lỗi Incompatible Character Encodings
-  def handle_error_response(response, payload)
-    @exam = payload.stringify_keys
-
-    # Ép kiểu dữ liệu trả về từ Java sang UTF-8
-    raw_body = response.body.to_s.force_encoding("UTF-8")
-
-    begin
-      error_data = JSON.parse(raw_body)
-      message = error_data['message'] || "Có lỗi xảy ra từ phía server"
-      # Nếu Java trả về list lỗi chi tiết (Validation)
-      details = error_data['errors']&.values&.join(', ')
-      flash.now[:alert] = details ? "#{message}: #{details}" : message
-    rescue
-      flash.now[:alert] = "Lỗi hệ thống: #{raw_body}"
-    end
   end
 end

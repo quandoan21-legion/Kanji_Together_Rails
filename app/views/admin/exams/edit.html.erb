@@ -1,4 +1,2 @@
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h2 class="h4">Chỉnh Sửa Đề Thi #<%= @exam['id'] %></h2>
-</div>
-<%= render 'form', url: admin_exam_path(@exam['id']), method: :put %>
+<h1 class="h3 mb-4 text-gray-800">Chỉnh Sửa Đề Thi #<%= @exam['id'] %></h1>
+<%= render 'form' %>
