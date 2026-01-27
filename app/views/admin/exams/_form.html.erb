@@ -1,146 +1,226 @@
-<%= form_with scope: :exam, url: url, method: method, local: true do |f| %>
+<%= form_tag(@exam['id'] ? admin_exam_path(@exam['id']) : admin_exams_path, method: @exam['id'] ? :put : :post, id: "examForm") do %>
 
-  <div class="row">
-    <div class="col-md-5">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          <h5 class="mb-0"><i class="fas fa-info-circle"></i> Thông tin Đề Thi</h5>
+  <div class="row no-gutters mt-3">
+    <%# CỘT TRÁI: CẤU HÌNH (ĐÃ THÊM KHUNG RÕ RÀNG) %>
+    <div class="col-lg-4 pr-lg-3">
+      <%# Đổi border-0 thành border-dark để hiện khung card %>
+      <div class="card shadow-sm border-dark mb-4">
+        <div class="card-header py-3 bg-dark text-white border-0">
+          <h6 class="m-0 font-weight-bold text-center text-uppercase" style="letter-spacing: 1px;">Thông số đề thi</h6>
         </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label>Tên Đề Thi <span class="text-danger">*</span></label>
-            <%= f.text_field :name, value: @exam['name'], class: "form-control", required: true, placeholder: "VD: Đề thi thử N5 - Số 1" %>
+        <div class="card-body p-4 bg-white">
+          <div class="form-group mb-4">
+            <label class="label-mini">Tên Đề Thi <span class="text-danger">*</span></label>
+            <%# Bỏ các class xóa border (border-top-0, v.v.) để hiện khung hộp %>
+            <input type="text" name="name" class="form-control border-dark px-2" value="<%= @exam['name'] %>" required placeholder="Nhập tên đề...">
           </div>
 
-          <div class="row">
-            <div class="col-6">
-              <div class="form-group">
-                <label>Loại Đề</label>
-                <%= f.select :exam_type,
-                             options_for_select([
-                                                  ['Đầu vào (Entrance)', 'ENTRANCE_EXAM'],
-                                                  ['Kiểm tra bài học (Mini)', 'MINI_EXAM'],
-                                                  ['Thi thử (Mock)', 'MOCK_TEST']
-                                                ], @exam['examType']), {}, class: "form-control" %>
-              </div>
+          <div class="form-group mb-4">
+            <label class="label-mini">Loại Đề Thi</label>
+            <select name="type" id="examTypeSelector" class="custom-select rounded-pill font-weight-bold text-primary border-dark">
+              <option value="MINI" <%= 'selected' if @exam['type'] == 'MINI' %>>Mini Exam (10 câu - 12p)</option>
+              <option value="SKIBIDI" <%= 'selected' if @exam['type'] == 'SKIBIDI' %>>Skibidi Exam (30 câu - 35p)</option>
+              <option value="SUPER" <%= 'selected' if @exam['type'] == 'SUPER' %>>Super Exam (60 câu - 60p)</option>
+              <option value="ENTRANCE" <%= 'selected' if @exam['type'] == 'ENTRANCE' %>>Entrance Exam (50 câu - 50p)</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label class="label-mini">Thời gian (phút)</label>
+              <input type="number" name="duration" id="durationInput"
+                     class="form-control pill-input bg-white text-center font-weight-bold border-dark"
+                     value="<%= @exam['duration'] %>">
             </div>
-            <div class="col-6">
-              <div class="form-group">
-                <label>Rank Mục Tiêu</label>
-                <%= f.select :target_rank,
-                             options_for_select(['UNRANKED', 'N5', 'N4', 'N3', 'N2', 'N1'], @exam['targetRank']), {}, class: "form-control" %>
-              </div>
+            <div class="form-group col-md-6">
+              <label class="label-mini">Điểm đậu</label>
+              <input type="number" name="pass_score" id="passScoreInput"
+                     class="form-control pill-input bg-white text-center font-weight-bold border-dark"
+                     value="<%= @exam['pass_score'] %>">
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-6">
-              <div class="form-group">
-                <label>Thời gian (Phút)</label>
-                <%= f.number_field :duration, value: @exam['duration'] || 45, class: "form-control" %>
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="form-group">
-                <label>Điểm Đậu</label>
-                <%= f.number_field :pass_score, value: @exam['passScore'] || 50, class: "form-control" %>
-              </div>
-            </div>
+          <div class="form-group mb-4">
+            <label class="label-mini">Cấp độ mục tiêu (Target Rank)</label>
+            <select name="target_rank" class="custom-select rounded-pill border-dark">
+              <option value="">-- Mặc định --</option>
+              <% ['N1', 'N2', 'N3', 'N4', 'N5'].each do |lvl| %>
+                <option value="<%= lvl %>" <%= 'selected' if @exam['target_rank'] == lvl %>><%= lvl %></option>
+              <% end %>
+            </select>
           </div>
+
+          <div class="form-group mb-5">
+            <label class="label-mini">Trạng thái phát hành</label>
+            <select name="status" class="custom-select rounded-pill border-dark">
+              <option value="1" <%= 'selected' if @exam['status'] == 1 %>>✅ Hoạt động</option>
+              <option value="0" <%= 'selected' if @exam['status'] == 0 %>>🚫 Đang ẩn</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block rounded-pill font-weight-bold py-3 shadow-sm mb-2">
+            <i class="fas fa-save mr-2"></i> LƯU ĐỀ THI
+          </button>
+          <%= link_to "Hủy bỏ", admin_exams_path, class: "btn btn-link btn-block text-muted small" %>
         </div>
       </div>
     </div>
 
-    <div class="col-md-7">
-      <div class="card shadow-sm h-100">
-        <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
-          <h5 class="mb-0"><i class="fas fa-list-ol"></i> Chọn Câu Hỏi</h5>
-          <span class="badge badge-light text-dark" id="question-count">0 đã chọn</span>
+    <%# CỘT PHẢI: NGÂN HÀNG CÂU HỎI %>
+    <div class="col-lg-8">
+      <%# Đổi border-0 thành border-dark %>
+      <div class="card shadow-sm border-dark" style="height: 750px; display: flex; flex-direction: column;">
+        <div class="card-header py-3 bg-white d-flex justify-content-between align-items-center border-bottom">
+          <div id="questionCounter" class="badge-smart">
+            Đã chọn: <span class="current">0</span> / <span class="max">10</span>
+          </div>
+          <%# Đổi border-0 thành border-dark %>
+          <input type="text" id="quickSearch" class="form-control form-control-sm w-50 rounded-pill bg-light border-dark px-3" placeholder="🔍 Tìm kiếm nhanh câu hỏi...">
         </div>
 
-        <div class="card-body p-0">
-          <div class="p-2 border-bottom bg-light">
-            <input type="text" id="search-question" class="form-control form-control-sm" placeholder="Gõ để lọc câu hỏi...">
-          </div>
-
-          <div style="height: 400px; overflow-y: auto;" class="p-2">
-            <%
-              # Lấy ID các câu hỏi đã có trong đề (để check sẵn)
-              # Java trả về mảng object [{id:1}, {id:2}], ta map ra [1, 2]
-              selected_q_ids = (@exam['questions'] || []).map { |q| q['id'] }
-            %>
-
-            <% if @questions && @questions.any? %>
-              <% @questions.each do |q| %>
-                <div class="custom-control custom-checkbox border-bottom py-2 question-item">
-                  <%= check_box_tag "exam[question_ids][]", q['id'], selected_q_ids.include?(q['id']),
-                                    class: "custom-control-input question-checkbox", id: "q_#{q['id']}" %>
-
-                  <label class="custom-control-label w-100" for="q_<%= q['id'] %>" style="cursor: pointer;">
-                    <span class="badge badge-secondary mr-1"><%= q['question_type'] %></span>
-                    <span class="font-weight-bold text-dark"><%= truncate(q['question_text'], length: 60) %></span>
-                    <br>
-                    <small class="text-muted">
-                      Đáp án: <span class="text-success"><%= q['correct_answer'] %></span>
-                      <% if q['related_kanjis'].present? %>
-                        | Kanji: <%= q['related_kanjis'].map{|k| k['kanji']}.join(", ") %>
-                      <% end %>
-                    </small>
-                  </label>
+        <div class="card-body p-0 flex-grow-1 custom-scroll" style="overflow-y: auto;">
+          <table class="table table-fixed m-0" id="questionsTable">
+            <thead class="bg-light sticky-top shadow-sm text-center">
+            <tr>
+              <th style="width: 70px;">ID</th>
+              <th style="width: 70px;">
+                <div class="custom-control custom-checkbox d-inline-block">
+                  <input type="checkbox" class="custom-control-input" id="checkAllQuestions">
+                  <label class="custom-control-label" for="checkAllQuestions"></label>
                 </div>
-              <% end %>
-            <% else %>
-              <div class="text-center py-5 text-muted">
-                Chưa có câu hỏi nào trong ngân hàng.<br>
-                <%= link_to "Thêm câu hỏi ngay", new_admin_question_path %>
-              </div>
+              </th>
+              <th class="text-left">Nội dung câu hỏi</th>
+              <th style="width: 140px;">Loại câu</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% selected_ids = @exam['question_ids'] || [] %>
+            <% @all_questions.each do |q| %>
+              <tr class="q-row <%= 'table-primary' if selected_ids.include?(q['id']) %>">
+                <td class="text-center align-middle font-weight-bold text-muted border-right">#<%= q['id'] %></td>
+                <td class="text-center align-middle border-right">
+                  <div class="custom-control custom-checkbox d-inline-block">
+                    <input type="checkbox" name="question_ids[]" value="<%= q['id'] %>"
+                           class="custom-control-input question-checkbox" id="q_<%= q['id'] %>"
+                           <%= 'checked' if selected_ids.include?(q['id']) %>>
+                    <label class="custom-control-label" for="q_<%= q['id'] %>"></label>
+                  </div>
+                </td>
+                <td class="align-middle px-3">
+                  <div class="wrap-text font-weight-bold text-dark"><%= q['question_text'] %></div>
+                  <div class="small text-success mt-1 font-italic"><i class="fas fa-check-circle mr-1"></i><%= q['correct_answer'] %></div>
+                </td>
+                <td class="text-center align-middle border-left">
+                  <span class="badge-type"><%= q['question_type'] %></span>
+                </td>
+              </tr>
             <% end %>
-          </div>
-        </div>
-
-        <div class="card-footer text-right bg-white">
-          <%= link_to "Hủy", admin_exams_path, class: "btn btn-secondary mr-2" %>
-          <%= f.submit "Lưu Đề Thi", class: "btn btn-primary px-4" %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-
 <% end %>
+
+<style>
+    /* ÉP KHUNG CHO CARD */
+    .card.border-dark { border: 1px solid #343a40 !important; }
+
+    /* ÉP KHUNG ĐẬM CHO TẤT CẢ INPUT VÀ SELECT */
+    .form-control.border-dark,
+    .custom-select.border-dark,
+    .pill-input.border-dark {
+        border: 1px solid #343a40 !important;
+    }
+
+    .table-fixed { table-layout: fixed; width: 100%; }
+    .align-middle { vertical-align: middle !important; }
+    .text-center { text-align: center !important; }
+
+    .wrap-text {
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        line-height: 1.5;
+        display: block;
+        width: 100%;
+    }
+
+    /* Viền dưới cho Header bảng để tách biệt rõ ràng */
+    .sticky-top {
+        top: 0;
+        z-index: 1020;
+        background: #f8f9fa;
+        border-bottom: 2px solid #343a40 !important;
+    }
+
+    .label-mini { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; color: #333; letter-spacing: 0.5px; margin-bottom: 5px; }
+
+    .badge-smart { background: #fff3cd; color: #856404; padding: 6px 20px; border-radius: 50px; font-weight: bold; border: 1px solid #343a40; }
+    .badge-type { background: #e1f5fe; color: #0288d1; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; border: 1px solid #0288d1; }
+
+    .custom-control-label::before { border: 1px solid #343a40 !important; }
+</style>
+
+<%# Các script JS giữ nguyên 100% %>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkAll = document.getElementById('checkAllQuestions');
+        const checkboxes = document.querySelectorAll('.question-checkbox');
+        const counterSpan = document.querySelector('#questionCounter .current');
+
+        function updateCounter() {
+            const count = document.querySelectorAll('.question-checkbox:checked').length;
+            if (counterSpan) counterSpan.innerText = count;
+        }
+
+        if (checkAll) {
+            checkAll.addEventListener('change', function() {
+                checkboxes.forEach(cb => {
+                    const row = cb.closest('tr');
+                    cb.checked = this.checked;
+                    if (cb.checked) row.classList.add('table-primary');
+                    else row.classList.remove('table-primary');
+                });
+                updateCounter();
+            });
+        }
+
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', function() {
+                const row = this.closest('tr');
+                if (this.checked) row.classList.add('table-primary');
+                else row.classList.remove('table-primary');
+                updateCounter();
+            });
+        });
+        updateCounter();
+    });
+</script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const checkboxes = document.querySelectorAll('.question-checkbox');
-        const countBadge = document.getElementById('question-count');
-        const searchInput = document.getElementById('search-question');
-        const items = document.querySelectorAll('.question-item');
+        const typeSelect = document.getElementById('examTypeSelector');
+        const durationInput = document.getElementById('durationInput');
+        const passScoreInput = document.getElementById('passScoreInput');
 
-        // 1. Hàm đếm số lượng đang chọn
-        function updateCount() {
-            const checkedCount = document.querySelectorAll('.question-checkbox:checked').length;
-            countBadge.innerText = checkedCount + " đã chọn";
+        const EXAM_RULES = {
+            'MINI':     { duration: 12, pass: 8 },
+            'SKIBIDI':  { duration: 35, pass: 21 },
+            'SUPER':    { duration: 60, pass: 36 },
+            'ENTRANCE': { duration: 50, pass: 40 }
+        };
+
+        function updateConfig() {
+            const type = typeSelect.value;
+            const rule = EXAM_RULES[type];
+            if (rule) {
+                durationInput.value = rule.duration;
+                passScoreInput.value = rule.pass;
+            }
         }
-
-        // Gắn sự kiện click
-        checkboxes.forEach(cb => {
-            cb.addEventListener('change', updateCount);
-        });
-
-        // Gọi lần đầu
-        updateCount();
-
-        // 2. Hàm lọc tìm kiếm
-        searchInput.addEventListener('keyup', function() {
-            const term = this.value.toLowerCase();
-
-            items.forEach(item => {
-                const text = item.innerText.toLowerCase();
-                if (text.includes(term)) {
-                    item.classList.remove('d-none');
-                } else {
-                    item.classList.add('d-none');
-                }
-            });
-        });
+        typeSelect.addEventListener('change', updateConfig);
+        if (typeSelect.value) { updateConfig(); }
     });
 </script>

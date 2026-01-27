@@ -176,21 +176,18 @@ class Admin::QuestionsController < ApplicationController
   private
 
   def fetch_kanjis
-    # Lấy thêm size lớn để hiện đủ danh sách trong lúc tạo câu hỏi
-    uri = URI("#{JAVA_KANJI_API_URL}?status=ACTIVE&size=100")
+    # Gửi size lớn để lấy đủ danh sách chọn cho đề thi N1
+    uri = URI("#{JAVA_KANJI_API_URL}?status=ACTIVE&is_active=true&size=1000")
     response = Net::HTTP.get(uri)
     json = JSON.parse(response)
-
-    # [SỬA TẠI ĐÂY]: Bóc tách đúng vào tầng 'data' -> 'content' của Java ApiResponse
+    # [SỬA TẠI ĐÂY]: Log báo là 'data', bên trong là 'kanjis'
     if json.is_a?(Hash) && json['data'].is_a?(Hash)
-      json['data']['content'] || []
-    elsif json.is_a?(Hash) && json['data'].is_a?(Array)
-      json['data']
+      json['data']['kanjis'] || []
     else
       []
     end
   rescue StandardError => e
-    puts "Lỗi fetch_kanjis: #{e.message}"
+    puts "Lỗi fetch_kanjis trên Ubuntu: #{e.message}"
     []
   end
 
