@@ -1,54 +1,28 @@
 <style>
-    /* 1. XÓA BỎ KHOẢNG TRẮNG CỦA TEMPLATE (QUAN TRỌNG NHẤT) */
-    /* Triệt tiêu padding của vùng chứa chính trong template */
-    .content-wrapper,
-    .main-content,
-    .content {
-        padding-top: 0 !important;
-        margin-top: 0 !important;
-    }
-
-    /* Nếu template có phần header trống, ẩn nó đi */
-    .content-header {
-        display: none !important;
-    }
-
-    /* 2. CĂN CHỈNH CONTAINER-FLUID */
+    /* 1. CĂN CHỈNH CONTAINER */
+    .content-wrapper, .main-content, .content { padding-top: 0 !important; margin-top: 0 !important; }
+    .content-header { display: none !important; }
     .container-fluid {
-        padding-top: 10px !important; /* Chỉ để lại 10px cho thoáng đầu trang */
+        padding-top: 10px !important;
         margin-top: 0 !important;
-        padding-bottom: 80px !important; /* Chừa chỗ cho phân trang ở dưới */
+        padding-bottom: 20px !important; /* Giảm padding dưới vì ko còn footer bay */
     }
 
-    /* 3. ĐIỀU CHỈNH TIÊU ĐỀ "QUẢN LÝ KANJI" */
-    .container-fluid > .row.mb-4 {
-        margin-top: 0 !important;
-        margin-bottom: 15px !important;
-    }
-
-    .container-fluid h3.font-weight-bold {
-        margin: 0 !important;
-        line-height: 1.2;
-    }
-
-    /* 4. THANH TÌM KIẾM (SEARCH CONTAINER) */
+    /* 2. THANH TÌM KIẾM */
     .search-container {
         background: #f8f9fa;
         padding: 12px 15px;
         border-radius: 8px;
         border: 1px solid #dee2e6;
-        margin-top: 0 !important;
         margin-bottom: 20px !important;
         box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
 
-    /* 5. BẢNG DỮ LIỆU */
-    .custom-kanji-table th,
-    .custom-kanji-table td {
+    /* 3. BẢNG DỮ LIỆU */
+    .custom-kanji-table th, .custom-kanji-table td {
         font-size: 1.05rem;
         vertical-align: middle !important;
     }
-
     .kanji-display {
         font-size: 2.3rem;
         line-height: 1;
@@ -56,31 +30,18 @@
         color: #007bff;
     }
 
-    /* 6. NÚT BẤM TRÒN */
+    /* 4. NÚT TRÒN */
     .btn-circle {
-        width: 34px;
-        height: 34px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        transition: all 0.2s;
+        width: 34px; height: 34px; border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 0; transition: all 0.2s;
     }
 
-    /* 7. PHÂN TRANG CỐ ĐỊNH Ở ĐÁY */
-    .pagination-fixed-footer {
-        position: fixed;
-        bottom: 0;
-        left: 250px; /* Khớp với chiều rộng sidebar trong ảnh của bạn */
-        right: 0;
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
-        padding: 12px 0;
-        border-top: 1px solid #dee2e6;
-        z-index: 1030;
+    /* 5. PHÂN TRANG (ĐÃ SỬA: KHÔNG CÒN FIX CỐ ĐỊNH NỮA) */
+    .pagination-wrapper {
         display: flex;
         justify-content: center;
+        width: 100%;
     }
 
     .custom-pagination-bar {
@@ -88,29 +49,15 @@
         gap: 6px;
         background: #fff;
         border-radius: 999px;
-        padding: 8px 15px;
-        box-shadow: 0 4px 15px rgba(0,123,255,0.1);
-        border: 1px solid #007bff40;
+        padding: 8px 15px; /* Giữ nguyên style đẹp */
+        border: 1px solid #dee2e6; /* Viền nhẹ nhàng hơn */
     }
 
-    .custom-pagination-bar a,
-    .custom-pagination-bar span {
-        min-width: 36px;
-        height: 36px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+    .custom-pagination-bar a, .custom-pagination-bar span {
+        min-width: 36px; height: 36px;
+        display: inline-flex; align-items: center; justify-content: center;
         border-radius: 50%;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-decoration: none;
-    }
-
-    /* Responsive cho mobile khi sidebar ẩn */
-    @media (max-width: 991px) {
-        .pagination-fixed-footer {
-            left: 0;
-        }
+        font-size: 0.9rem; font-weight: 600; text-decoration: none;
     }
 </style>
 
@@ -135,19 +82,9 @@
           <label class="input-group-text bg-white border-right-0 font-weight-bold text-muted">Loại</label>
         </div>
         <%= f.select :status,
-                     options_for_select([
-                                          ['-- Tất cả --', ''],
-                                          ['Hoạt động', 'ACTIVE'],
-                                          ['Chờ duyệt', 'PENDING'],
-                                          ['Đã ẩn', 'HIDDEN'],
-                                          ['Đã duyệt', 'APPROVED'],
-                                          ['Đã từ chối', 'REJECTED']
-                                        ], params[:status]),
-                     {},
-                     { class: "form-control border-left-0 custom-select", onchange: "this.form.submit()" }
-        %>
+                     options_for_select([['-- Tất cả --', ''], ['Hoạt động', 'ACTIVE'], ['Chờ duyệt', 'PENDING'], ['Đã ẩn', 'HIDDEN'], ['Đã duyệt', 'APPROVED'], ['Đã từ chối', 'REJECTED']], params[:status]),
+                     {}, { class: "form-control border-left-0 custom-select", onchange: "this.form.submit()" } %>
       </div>
-
       <div class="input-group input-group-sm flex-grow-1" style="max-width: 400px;">
         <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "Tìm kiếm Kanji, nghĩa, Hán việt..." %>
         <div class="input-group-append">
@@ -163,6 +100,7 @@
         <i class="fas fa-list-ul mr-1 text-primary"></i> Danh sách Kanji
       </h5>
     </div>
+
     <div class="card-body table-responsive p-0">
       <table class="table table-hover table-bordered mb-0 custom-kanji-table">
         <thead class="bg-light text-center text-uppercase small font-weight-bold">
@@ -185,64 +123,39 @@
             %>
             <tr>
               <td class="text-center text-muted font-weight-bold">#<%= k["id"] %></td>
-
-              <td class="text-center <%= 'click-detail' unless is_contribution %>"
-                  style="<%= 'cursor: pointer;' unless is_contribution %>"
-                  onclick="<%= "showKanjiDetail(#{k.to_json})" unless is_contribution %>">
+              <td class="text-center <%= 'click-detail' unless is_contribution %>" style="<%= 'cursor: pointer;' unless is_contribution %>" onclick="<%= "showKanjiDetail(#{k.to_json})" unless is_contribution %>">
                 <span class="kanji-display"><%= k["kanji"] %></span>
               </td>
-
               <td class="px-3">
                 <div class="font-weight-bold">Hán Việt: <span class="text-danger text-uppercase"><%= k["han_viet"] || k["translation"] %></span></div>
                 <div class="text-muted small mt-1"><%= truncate(k["meaning"], length: 65) %></div>
               </td>
-
-              <td class="text-center">
-                <span class="badge badge-info px-2 py-1 shadow-xs">N<%= k["jlpt"] %></span>
-              </td>
-
+              <td class="text-center"><span class="badge badge-info px-2 py-1 shadow-xs">N<%= k["jlpt"] %></span></td>
               <td class="text-center">
                 <%
-                  if status == 'PENDING'
-                    badge_class, badge_text = 'badge-warning text-white', 'Chờ duyệt'
-                  elsif status == 'APPROVED'
-                    badge_class, badge_text = 'badge-info', 'Đã duyệt'
-                  elsif status == 'REJECTED'
-                    badge_class, badge_text = 'badge-danger', 'Đã từ chối'
-                  elsif status == 'HIDDEN' || is_active == false || is_active.to_s == 'false'
-                    badge_class, badge_text = 'badge-secondary', 'Đã ẩn'
-                  else
-                    badge_class, badge_text = 'badge-success', 'Hoạt động'
+                  if status == 'PENDING' then badge_class, badge_text = 'badge-warning text-white', 'Chờ duyệt'
+                  elsif status == 'APPROVED' then badge_class, badge_text = 'badge-info', 'Đã duyệt'
+                  elsif status == 'REJECTED' then badge_class, badge_text = 'badge-danger', 'Đã từ chối'
+                  elsif status == 'HIDDEN' || is_active == false || is_active.to_s == 'false' then badge_class, badge_text = 'badge-secondary', 'Đã ẩn'
+                  else badge_class, badge_text = 'badge-success', 'Hoạt động'
                   end
                 %>
                 <span class="badge <%= badge_class %> p-2 shadow-sm" style="min-width: 90px;"><%= badge_text %></span>
               </td>
-
               <td class="text-center">
                 <div class="d-flex justify-content-center align-items-center">
-                  <%# Nút Xem chi tiết hình tròn %>
                   <% unless is_contribution %>
-                    <button type="button" class="btn btn-info btn-circle mr-2" onclick='showKanjiDetail(<%= k.to_json %>)' title="Xem chi tiết">
-                      <i class="fas fa-eye"></i>
-                    </button>
+                    <button type="button" class="btn btn-info btn-circle mr-2" onclick='showKanjiDetail(<%= k.to_json %>)' title="Xem chi tiết"><i class="fas fa-eye"></i></button>
                   <% end %>
-
-                  <%# Nút Duyệt/Sửa hình tròn/bo tròn %>
                   <% if is_contribution %>
                     <%= link_to admin_kanji_path(k["id"]), class: "btn btn-primary btn-sm rounded-pill px-3 mr-2 font-weight-bold shadow-xs", title: "Duyệt" do %>
                       <i class="fas <%= status == 'PENDING' ? 'fa-clipboard-check' : 'fa-history' %>"></i> <%= status == 'PENDING' ? 'Duyệt' : 'Xem' %>
                     <% end %>
                   <% else %>
-                    <%= link_to edit_admin_kanji_path(k["id"]), class: "btn btn-primary btn-circle mr-2", title: "Sửa" do %>
-                      <i class="fas fa-edit"></i>
-                    <% end %>
+                    <%= link_to edit_admin_kanji_path(k["id"]), class: "btn btn-primary btn-circle mr-2", title: "Sửa" do %> <i class="fas fa-edit"></i> <% end %>
                   <% end %>
-
-                  <%# Nút Xóa hình tròn %>
                   <% if status != 'PENDING' %>
-                    <%= button_to admin_kanji_path(k["id"]), method: :delete, class: "btn btn-danger btn-circle shadow-xs", data: { confirm: "Xóa vĩnh viễn Kanji này?" }, title: "Xóa" do %>
-                      <i class="fas fa-trash"></i>
-                    <% end %>
+                    <%= button_to admin_kanji_path(k["id"]), method: :delete, class: "btn btn-danger btn-circle shadow-xs", data: { confirm: "Xóa vĩnh viễn Kanji này?" }, title: "Xóa" do %> <i class="fas fa-trash"></i> <% end %>
                   <% end %>
                 </div>
               </td>
@@ -255,11 +168,48 @@
       </table>
     </div>
 
-  </div>
+    <div class="card-footer bg-white border-top py-3">
+      <div class="pagination-wrapper">
+        <div class="custom-pagination-bar">
+          <%# ===== PREV ===== %>
+          <% if @current_page > 1 %>
+            <%= link_to admin_kanjis_path(page: @current_page - 1, keyword: params[:keyword], status: params[:status]), class: "nav-arrow mr-2" do %>&laquo;<% end %>
+          <% end %>
 
-</div>
+          <%# ===== PAGE NUMBERS ===== %>
+          <%
+            window = 2
+            start_page = [@current_page - window, 1].max
+            end_page   = [@current_page + window, @total_pages].min
+          %>
 
-<div class="modal fade" id="kanjiDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <% if start_page > 1 %>
+            <%= link_to "1", admin_kanjis_path(page: 1, keyword: params[:keyword], status: params[:status]), class: "mx-1" %>
+            <% if start_page > 2 %><span class="mx-1 text-muted">…</span><% end %>
+          <% end %>
+
+          <% (start_page..end_page).each do |p| %>
+            <% if p == @current_page %>
+              <span class="mx-1 font-weight-bold text-white bg-primary px-3 py-1 rounded-pill"><%= p %></span>
+            <% else %>
+              <%= link_to p, admin_kanjis_path(page: p, keyword: params[:keyword], status: params[:status]), class: "mx-1 px-3 py-1 rounded-pill text-primary" %>
+            <% end %>
+          <% end %>
+
+          <% if end_page < @total_pages %>
+            <% if end_page < @total_pages - 1 %><span class="mx-1 text-muted">…</span><% end %>
+            <%= link_to @total_pages, admin_kanjis_path(page: @total_pages, keyword: params[:keyword], status: params[:status]), class: "mx-1" %>
+          <% end %>
+
+          <%# ===== NEXT ===== %>
+          <% if @current_page < @total_pages %>
+            <%= link_to admin_kanjis_path(page: @current_page + 1, keyword: params[:keyword], status: params[:status]), class: "nav-arrow ml-2" do %>&raquo;<% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div> </div> <div class="modal fade" id="kanjiDetailModal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content border-0 shadow-lg">
       <div class="modal-header bg-info text-white py-2">
@@ -274,7 +224,6 @@
             <div id="m_jlpt_badge" class="mt-2"></div>
             <hr>
             <div id="m_image_container"></div>
-
             <div class="mt-3 text-left bg-light p-3 rounded">
               <div class="mb-3"><strong class="text-muted small">BỘ THỦ:</strong> <span id="m_radical" class="text-primary font-weight-bold ml-1"></span></div>
               <div class="mb-3 border-top pt-2"><strong class="text-muted small">THÀNH PHẦN:</strong> <div id="m_components" class="text-dark mt-1"></div></div>
@@ -301,68 +250,8 @@
     </div>
   </div>
 </div>
-<%# Di chuyển toàn bộ khối này xuống cuối file, ngoài các thẻ div của card %>
-<div class="pagination-fixed-footer">
-  <div class="custom-pagination-bar shadow-sm">
-
-    <%# ===== PREV ===== %>
-    <% if @current_page > 1 %>
-      <%= link_to admin_kanjis_path(page: @current_page - 1, keyword: params[:keyword], status: params[:status]),
-                  class: "nav-arrow mr-2" do %>
-        &laquo;
-      <% end %>
-    <% end %>
-
-    <%# ===== PAGE NUMBERS ===== %>
-    <%
-      window = 2
-      start_page = [@current_page - window, 1].max
-      end_page   = [@current_page + window, @total_pages].min
-    %>
-
-    <% if start_page > 1 %>
-      <%= link_to "1",
-                  admin_kanjis_path(page: 1, keyword: params[:keyword], status: params[:status]),
-                  class: "mx-1" %>
-      <% if start_page > 2 %>
-        <span class="mx-1 text-muted">…</span>
-      <% end %>
-    <% end %>
-
-    <% (start_page..end_page).each do |p| %>
-      <% if p == @current_page %>
-        <span class="mx-1 font-weight-bold text-white bg-primary px-3 py-1 rounded-pill">
-          <%= p %>
-        </span>
-      <% else %>
-        <%= link_to p,
-                    admin_kanjis_path(page: p, keyword: params[:keyword], status: params[:status]),
-                    class: "mx-1 px-3 py-1 rounded-pill text-primary" %>
-      <% end %>
-    <% end %>
-
-    <% if end_page < @total_pages %>
-      <% if end_page < @total_pages - 1 %>
-        <span class="mx-1 text-muted">…</span>
-      <% end %>
-      <%= link_to @total_pages,
-                  admin_kanjis_path(page: @total_pages, keyword: params[:keyword], status: params[:status]),
-                  class: "mx-1" %>
-    <% end %>
-
-    <%# ===== NEXT ===== %>
-    <% if @current_page < @total_pages %>
-      <%= link_to admin_kanjis_path(page: @current_page + 1, keyword: params[:keyword], status: params[:status]),
-                  class: "nav-arrow ml-2" do %>
-        &raquo;
-      <% end %>
-    <% end %>
-
-  </div>
-</div>
 
 <script>
-    // Logic JS giữ nguyên 100% để đảm bảo hoạt động như cũ
     function showKanjiDetail(k) {
         document.getElementById('m_kanji').innerText = k.kanji || '';
         document.getElementById('m_hanviet').innerText = k.han_viet || k.translation || '---';
@@ -372,21 +261,14 @@
         document.getElementById('m_strokes').innerText = k.num_strokes || k.stroke_count || 0;
         document.getElementById('m_components').innerText = k.components || 'Chưa có thông tin';
         document.getElementById('m_story').innerText = k.kanji_description || k.kanji_story || 'Chưa có câu chuyện.';
-
-        const fmtList = (t) => {
-            if(!t) return '<i class="text-muted">Chưa có</i>';
-            return t.toString().split(/\n/).map(x=>x.trim()).filter(x=>x).map(x=>"• "+x).join("<br>");
-        };
+        const fmtList = (t) => { if(!t) return '<i class="text-muted">Chưa có</i>'; return t.toString().split(/\n/).map(x=>x.trim()).filter(x=>x).map(x=>"• "+x).join("<br>"); };
         document.getElementById('m_vocabulary').innerHTML = fmtList(k.vocabulary);
         document.getElementById('m_examples').innerHTML = fmtList(k.examples);
-
         const fmtRead = (t) => t ? t.toString().split(/[|,\n]/).filter(x=>x.trim()).join("<br>") : "---";
         document.getElementById('m_onyomi').innerHTML = fmtRead(k.on_pronunciation || k.onyomi);
         document.getElementById('m_kunyomi').innerHTML = fmtRead(k.kun_pronunciation || k.kunyomi);
-
         const imgDiv = document.getElementById('m_image_container');
         imgDiv.innerHTML = k.writing_image_url ? `<img src="${k.writing_image_url}" class="img-thumbnail shadow-xs" style="width:100px">` : '<div class="text-muted border p-2 small">No Image</div>';
-
         $('#kanjiDetailModal').modal('show');
     }
 </script>
