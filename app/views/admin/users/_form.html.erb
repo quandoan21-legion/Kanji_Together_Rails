@@ -1,0 +1,73 @@
+<%= form_with model: [:admin, @user], local: true, class: "card shadow-sm border-0" do |f| %>
+
+  <div class="card-body p-4">
+    <% if @user.errors.any? %>
+      <div class="alert alert-danger">
+        <ul class="mb-0">
+          <% @user.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= f.label :name, "HỌ VÀ TÊN", class: "small font-weight-bold text-muted" %>
+        <%= f.text_field :name, class: "form-control", required: true %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= f.label :username, "TÊN ĐĂNG NHẬP", class: "small font-weight-bold text-muted" %>
+        <%= f.text_field :username, class: "form-control", required: true %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <%= f.label :email, "EMAIL", class: "small font-weight-bold text-muted" %>
+        <%= f.email_field :email, class: "form-control", required: true %>
+      </div>
+      <div class="col-md-6 mb-3">
+        <%= f.label :phone_number, "SỐ ĐIỆN THOẠI", class: "small font-weight-bold text-muted" %>
+        <%= f.text_field :phone_number, class: "form-control", required: true %>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <%= f.label :avatar_url, "LINK ẢNH ĐẠI DIỆN (AVATAR URL)", class: "small font-weight-bold text-muted" %>
+      <%= f.text_field :avatar_url, class: "form-control", placeholder: "https://example.com/image.png" %>
+      <small class="text-muted">Nếu để trống sẽ dùng ảnh mặc định.</small>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <%= f.label :rank, "HẠNG THÀNH VIÊN", class: "small font-weight-bold text-muted" %>
+        <%= f.select :rank, ['BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'DIAMOND'], { prompt: "Chọn hạng" }, class: "form-control" %>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <%= f.label :role, "PHÂN QUYỀN", class: "small font-weight-bold text-muted" %>
+        <%= f.select :role, [['Thành viên (Member)', 0], ['Quản trị viên (Admin)', 1]], {}, class: "form-control" %>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <%= f.label :is_active, "TRẠNG THÁI", class: "small font-weight-bold text-muted" %>
+        <%= f.select :is_active,
+                     options_for_select([
+                                          ['Hoạt động (Active)', true],
+                                          ['Bị khóa (Banned)', false]
+                                        ], @user.is_active),
+                     {},
+                     class: "form-control"
+        %>
+      </div>
+
+
+    </div>
+
+    <%= f.hidden_field :display_name, value: @user.display_name.presence || "New User" %>
+  </div>
+
+  <div class="card-footer bg-white text-end py-3">
+    <%= link_to "QUAY LẠI", admin_users_path, class: "btn btn-light border mr-2" %>
+    <%= f.submit "LƯU DỮ LIỆU", class: "btn btn-primary px-4 shadow-sm" %>
+  </div>
+<% end %>

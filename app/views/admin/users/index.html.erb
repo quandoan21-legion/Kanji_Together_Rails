@@ -1,0 +1,198 @@
+<style>
+    /* --- COPY STYLE TỪ TRANG KANJI SANG --- */
+    .content-wrapper, .main-content, .content { padding-top: 0 !important; margin-top: 0 !important; }
+    .content-header { display: none !important; }
+    .container-fluid { padding-top: 10px !important; padding-bottom: 20px !important; }
+
+    /* SEARCH */
+    .search-container {
+        background: #f8f9fa; padding: 12px 15px; border-radius: 8px;
+        border: 1px solid #dee2e6; margin-bottom: 20px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* TABLE */
+    .custom-table th, .custom-table td { font-size: 1rem; vertical-align: middle !important; }
+    .user-avatar { width: 40px; height: 40px; object-fit: cover; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+    /* BUTTONS */
+    .btn-circle {
+        width: 34px; height: 34px; border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 0; transition: all 0.2s;
+    }
+    .btn-circle:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+    /* PAGINATION */
+    .pagination-wrapper { display: flex; justify-content: center; width: 100%; }
+    .custom-pagination-bar {
+        display: inline-flex; gap: 6px; background: #fff;
+        border-radius: 999px; padding: 8px 15px; border: 1px solid #dee2e6;
+    }
+    .custom-pagination-bar a, .custom-pagination-bar span {
+        min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 50%; font-size: 0.9rem; font-weight: 600; text-decoration: none;
+    }
+</style>
+
+<div class="container-fluid">
+  <%# --- HEADER --- %>
+  <div class="row mb-4 align-items-center">
+    <div class="col-sm-6">
+      <h3 class="m-0 text-dark font-weight-bold">
+        <i class="fas fa-users text-primary mr-2"></i>Quản lý User
+      </h3>
+    </div>
+    <div class="col-sm-6 text-right">
+      <%= link_to new_admin_user_path, class: "btn btn-success shadow-sm rounded-pill px-4 font-weight-bold" do %>
+        <i class="fas fa-plus-circle mr-1"></i> Thêm thành viên
+      <% end %>
+    </div>
+  </div>
+
+  <%# --- SEARCH BAR --- %>
+  <div class="search-container shadow-sm mb-4">
+    <%= form_with url: admin_users_path, method: :get, local: true, class: "form-inline" do |f| %>
+      <div class="input-group input-group-sm mr-2">
+        <div class="input-group-prepend">
+          <label class="input-group-text bg-white border-right-0 font-weight-bold text-muted">Lọc</label>
+        </div>
+        <%# Dropdown này khớp với Controller (ACTIVE/BANNED) %>
+        <%= f.select :status,
+                     options_for_select([['-- Tất cả --', ''], ['Đang hoạt động', 'ACTIVE'], ['Đã bị khóa', 'BANNED']], params[:status]),
+                     {}, { class: "form-control border-left-0 custom-select", onchange: "this.form.submit()" } %>
+      </div>
+      <div class="input-group input-group-sm flex-grow-1" style="max-width: 400px;">
+        <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "Tìm tên, email, sđt..." %>
+        <div class="input-group-append">
+          <button class="btn btn-primary px-3 font-weight-bold" type="submit">Tìm</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# --- MAIN CARD --- %>
+  <div class="card shadow-sm border-0">
+    <div class="card-body table-responsive p-0">
+      <table class="table table-hover table-bordered mb-0 custom-table">
+        <thead class="bg-light text-center text-uppercase small font-weight-bold text-muted">
+        <tr>
+          <th width="50">ID</th>
+          <th class="text-left pl-4">Thành viên</th>
+          <th>Email</th>
+          <th width="100">Vai trò</th>
+          <th width="150">Trạng thái</th>
+          <th width="180">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @users.present? %>
+          <% @users.each do |u| %>
+            <%
+              # LOGIC XỬ LÝ TRẠNG THÁI (Active / Verified)
+              raw_active = u['is_active'].to_s
+              is_active = (raw_active == 'true' || raw_active == '1')
+
+              raw_verified = u['is_verified'].to_s
+              is_verified = (raw_verified == 'true' || raw_verified == '1')
+            %>
+            <tr>
+              <td class="text-center font-weight-bold text-muted">#<%= u['id'] %></td>
+              <td class="text-left pl-3">
+                <div class="d-flex align-items-center">
+                  <img src="<%= u['avatar_url'] %>" class="user-avatar mr-3"
+                       onerror="this.src='https://ui-avatars.com/api/?name=<%= u['name'] %>&background=random'">
+                  <div>
+                    <div class="font-weight-bold text-dark"><%= u['name'] %></div>
+                    <div class="small text-muted">@<%= u['username'] %></div>
+                  </div>
+                </div>
+              </td>
+              <td class="text-muted"><%= u['email'] %></td>
+              <td class="text-center">
+                <% if u['role'] == 1 %>
+                  <span class="badge badge-primary px-2">Admin</span>
+                <% else %>
+                  <span class="badge badge-light border px-2">Member</span>
+                <% end %>
+              </td>
+
+              <%# --- BADGE TRẠNG THÁI 3 MÀU --- %>
+              <td class="text-center">
+                <% if !is_active %>
+                  <span class="badge badge-danger p-2 shadow-sm" style="min-width: 100px;">Bị khóa</span>
+                <% elsif !is_verified %>
+                  <span class="badge badge-warning text-white p-2 shadow-sm" style="min-width: 100px;">Chưa xác thực</span>
+                <% else %>
+                  <span class="badge badge-success p-2 shadow-sm" style="min-width: 100px;">Hoạt động</span>
+                <% end %>
+              </td>
+
+              <td class="text-center">
+                <div class="d-flex justify-content-center align-items-center">
+                  <%# 1. Nút XEM %>
+                  <%= link_to admin_user_path(u['id']), class: "btn btn-info btn-circle mr-2 text-white shadow-sm", title: "Chi tiết" do %>
+                    <i class="fas fa-eye"></i>
+                  <% end %>
+
+                  <%# 2. Nút SỬA %>
+                  <%= link_to edit_admin_user_path(u['id']), class: "btn btn-primary btn-circle mr-2 shadow-sm", title: "Sửa" do %>
+                    <i class="fas fa-edit"></i>
+                  <% end %>
+
+
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr><td colspan="6" class="text-center py-5 text-muted font-italic">Không tìm thấy dữ liệu phù hợp.</td></tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%# --- PHÂN TRANG CUSTOM --- %>
+    <div class="card-footer bg-white border-top py-3">
+      <div class="pagination-wrapper">
+        <div class="custom-pagination-bar">
+          <%# PREV %>
+          <% if @current_page > 1 %>
+            <%= link_to admin_users_path(page: @current_page - 1, keyword: params[:keyword], status: params[:status]), class: "nav-arrow mr-2" do %>&laquo;<% end %>
+          <% end %>
+
+          <%# PAGE NUMBERS %>
+          <%
+            window = 2
+            start_page = [@current_page - window, 1].max
+            end_page   = [@current_page + window, @total_pages].min
+          %>
+
+          <% if start_page > 1 %>
+            <%= link_to "1", admin_users_path(page: 1, keyword: params[:keyword], status: params[:status]), class: "mx-1 text-dark" %>
+            <% if start_page > 2 %><span class="mx-1 text-muted">…</span><% end %>
+          <% end %>
+
+          <% (start_page..end_page).each do |p| %>
+            <% if p == @current_page %>
+              <span class="mx-1 font-weight-bold text-white bg-primary px-3 py-1 rounded-pill"><%= p %></span>
+            <% else %>
+              <%= link_to p, admin_users_path(page: p, keyword: params[:keyword], status: params[:status]), class: "mx-1 px-3 py-1 rounded-pill text-primary" %>
+            <% end %>
+          <% end %>
+
+          <% if end_page < @total_pages %>
+            <% if end_page < @total_pages - 1 %><span class="mx-1 text-muted">…</span><% end %>
+            <%= link_to @total_pages, admin_users_path(page: @total_pages, keyword: params[:keyword], status: params[:status]), class: "mx-1 text-dark" %>
+          <% end %>
+
+          <%# NEXT %>
+          <% if @current_page < @total_pages %>
+            <%= link_to admin_users_path(page: @current_page + 1, keyword: params[:keyword], status: params[:status]), class: "nav-arrow ml-2" do %>&raquo;<% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

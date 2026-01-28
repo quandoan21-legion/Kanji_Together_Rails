@@ -71,6 +71,12 @@
               <p>Quản lý Đề Thi</p>
             <% end %>
           </li>
+          <li class="nav-item">
+            <%= link_to admin_users_path, class: "nav-link #{'active' if controller_name == 'users'}" do %>
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>Quản lý Người dùng</p>
+            <% end %>
+          </li>
         </ul>
       </nav>
     </div>
