@@ -1,0 +1,208 @@
+<%# app/views/admin/lessons/index.html.erb %>
+
+<style>
+    /* Style khung tìm kiếm */
+    .search-container { background: #f8f9fa; padding: 12px 15px; border-radius: 8px; border: 1px solid #dee2e6; margin-bottom: 20px; }
+
+    /* Style nút tròn */
+    .btn-circle { width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; padding: 0; transition: all 0.2s; }
+    .btn-circle:hover { transform: translateY(-2px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+    /* Style phân trang */
+    .pagination-wrapper { display: flex; justify-content: center; width: 100%; }
+    .custom-pagination-bar { display: inline-flex; gap: 6px; background: #fff; border-radius: 999px; padding: 8px 15px; border: 1px solid #dee2e6; }
+    .custom-pagination-bar a, .custom-pagination-bar span { min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; font-weight: 600; }
+
+    /* Style tên bài học */
+    .lesson-name { font-weight: 700; color: #2c3e50; font-size: 1.1rem; }
+    a.text-decoration-none:hover .lesson-name { color: #3b82f6; text-decoration: underline; }
+
+    /* Ẩn trước các dòng để làm hiệu ứng hiện ra từ từ */
+    tbody tr { opacity: 0; transform: translateY(20px); transition: all 0.4s ease-out; }
+    tbody tr.show-row { opacity: 1; transform: translateY(0); }
+</style>
+
+<div class="container-fluid pt-3">
+
+  <%# --- HEADER --- %>
+  <div class="row mb-4 align-items-center">
+    <div class="col-sm-6">
+      <h3 class="m-0 text-dark font-weight-bold">
+        <i class="fas fa-book-reader text-success mr-2"></i>Quản lý Bài học
+      </h3>
+    </div>
+    <div class="col-sm-6 text-right">
+      <%= link_to new_admin_lesson_path, class: "btn btn-success shadow-sm rounded-pill px-4 font-weight-bold" do %>
+        <i class="fas fa-plus-circle mr-1"></i> Tạo Bài Mới
+      <% end %>
+    </div>
+  </div>
+
+  <%# --- THANH TÌM KIẾM --- %>
+  <div class="search-container shadow-sm mb-4">
+    <%= form_with url: admin_lessons_path, method: :get, local: true, class: "form-inline", id: "lesson-search-form" do |f| %>
+
+      <div class="input-group input-group-sm mr-2 mb-2">
+        <div class="input-group-prepend"><label class="input-group-text font-weight-bold">JLPT</label></div>
+        <%= f.select :jlpt, options_for_select([['-- Tất cả --', ''], ['N5', 5], ['N4', 4], ['N3', 3], ['N2', 2], ['N1', 1]], params[:jlpt]), {}, { class: "form-control custom-select", onchange: "this.form.submit()" } %>
+      </div>
+
+      <div class="input-group input-group-sm mr-2 mb-2">
+        <div class="input-group-prepend"><label class="input-group-text font-weight-bold">Trạng thái</label></div>
+        <%= f.select :status, options_for_select([['-- Tất cả --', ''], ['Hoạt động', 'ACTIVE'], ['Đã ẩn', 'HIDDEN']], params[:status]), {}, { class: "form-control custom-select", onchange: "this.form.submit()" } %>
+      </div>
+
+      <div class="input-group input-group-sm mr-2 mb-2">
+        <div class="input-group-prepend"><label class="input-group-text font-weight-bold"><i class="far fa-calendar-alt mr-1"></i> Ngày</label></div>
+        <%= f.date_field :created_at, value: params[:created_at], class: "form-control", onchange: "this.form.submit()" %>
+      </div>
+
+      <div class="input-group input-group-sm flex-grow-1 mb-2">
+        <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "Tìm tên bài học, mô tả..." %>
+        <div class="input-group-append">
+          <button class="btn btn-primary px-3 font-weight-bold" type="submit" id="btn-search">
+            <i class="fas fa-search mr-1"></i> Tìm
+          </button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <%# --- BẢNG DỮ LIỆU --- %>
+  <div class="card shadow-sm border-0">
+    <div class="card-body table-responsive p-0">
+      <table class="table table-hover table-bordered mb-0" id="lessons-table">
+        <thead class="bg-light text-center text-uppercase small font-weight-bold">
+        <tr>
+          <th width="60px">ID</th>
+          <th>Tên Bài Học</th>
+          <th width="100px">JLPT</th>
+          <th width="150px">Trạng thái</th>
+          <th width="180px">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @lessons.any? %>
+          <% @lessons.each do |lesson| %>
+            <tr>
+              <td class="text-center text-muted align-middle">#<%= lesson["id"] %></td>
+
+              <td class="align-middle">
+                <%= link_to admin_lesson_path(lesson["id"]), class: "text-decoration-none" do %>
+                  <span class="lesson-name text-dark"><%= lesson["kanji"] %></span>
+                <% end %>
+                <% if lesson["lessonDescription"].present? %>
+                  <div class="text-muted small mt-1">
+                    <i class="fas fa-info-circle mr-1"></i><%= truncate(lesson["lessonDescription"], length: 50) %>
+                  </div>
+                <% end %>
+              </td>
+
+              <td class="text-center align-middle">
+                <span class="badge badge-info px-2 py-1">N<%= lesson["jlpt"] %></span>
+              </td>
+
+              <td class="text-center align-middle">
+                <% if lesson["status"] == 'ACTIVE' %>
+                  <span class="badge badge-success p-2">Hoạt động</span>
+                <% else %>
+                  <span class="badge badge-secondary p-2">Đã ẩn</span>
+                <% end %>
+              </td>
+
+              <td class="text-center align-middle">
+                <%= link_to admin_lesson_path(lesson["id"]), class: "btn btn-info btn-circle mr-1", title: "Xem chi tiết" do %>
+                  <i class="fas fa-eye"></i>
+                <% end %>
+
+                <%= link_to edit_admin_lesson_path(lesson["id"]), class: "btn btn-primary btn-circle mr-1", title: "Sửa" do %>
+                  <i class="fas fa-edit"></i>
+                <% end %>
+
+                <%= button_to admin_lesson_path(lesson["id"]), method: :delete, class: "btn btn-danger btn-circle", form: {style: 'display:inline-block;'}, data: { confirm: "Bạn chắc chắn muốn xóa bài học này?" }, title: "Xóa" do %>
+                  <i class="fas fa-trash"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr><td colspan="5" class="text-center py-5 text-muted">Không tìm thấy bài học nào.</td></tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <%# --- PHÂN TRANG --- %>
+    <div class="card-footer bg-white border-top py-3">
+      <div class="pagination-wrapper">
+        <div class="custom-pagination-bar">
+          <% if @current_page > 1 %>
+            <%= link_to admin_lessons_path(page: @current_page - 1, keyword: params[:keyword], jlpt: params[:jlpt], status: params[:status], created_at: params[:created_at]) do %>&laquo;<% end %>
+          <% end %>
+
+          <span class="mx-2 font-weight-bold text-primary">Trang <%= @current_page %> / <%= @total_pages %></span>
+
+          <% if @current_page < @total_pages %>
+            <%= link_to admin_lessons_path(page: @current_page + 1, keyword: params[:keyword], jlpt: params[:jlpt], status: params[:status], created_at: params[:created_at]) do %>&raquo;<% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        // --- 1. HIỆU ỨNG THÔNG BÁO (Toast) ---
+        // Kiểm tra nếu Rails có gửi flash notice/alert thì hiện popup
+        <% if flash[:notice] %>
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: '<%= j flash[:notice] %>',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+        <% end %>
+
+        <% if flash[:alert] %>
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'error',
+            title: '<%= j flash[:alert] %>',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+        <% end %>
+
+        // --- 2. HIỆU ỨNG BẢNG HIỆN RA TỪ TỪ (Waterfall) ---
+        const rows = document.querySelectorAll('#lessons-table tbody tr');
+        rows.forEach((row, index) => {
+            setTimeout(() => {
+                row.classList.add('show-row');
+            }, index * 80); // Mỗi dòng trễ 80ms
+        });
+
+        // --- 3. HIỆU ỨNG LOADING KHI TÌM KIẾM ---
+        const searchForm = document.getElementById('lesson-search-form');
+        if (searchForm) {
+            searchForm.addEventListener('submit', function() {
+                const btn = document.getElementById('btn-search');
+                if (btn) {
+                    const originalContent = btn.innerHTML;
+                    // Đổi nút thành trạng thái loading
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Đang tìm...';
+                    btn.style.opacity = '0.7';
+                    btn.style.pointerEvents = 'none'; // Chặn click liên tục
+                }
+            });
+        }
+    });
+</script>

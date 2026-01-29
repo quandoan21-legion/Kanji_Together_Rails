@@ -1,0 +1,4 @@
+<div class="container-fluid pt-3">
+  <h3 class="mb-4 text-dark font-weight-bold">Chỉnh sửa Bài học #<%= @lesson["id"] %></h3>
+  <%= render 'form', url: admin_lesson_path(@lesson["id"]), method: :put %>
+</div>

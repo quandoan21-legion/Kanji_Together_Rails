@@ -1,0 +1,193 @@
+<%# 1. CSS CỐ ĐỊNH CHIỀU CAO VÀ HIỆU ỨNG %>
+<style>
+    .kanji-scroll-box {
+        height: 400px;
+        overflow-y: auto;
+        border: 1px solid #ced4da;
+        background: #f4f6f9;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    /* Thẻ Kanji */
+    .kanji-card-label {
+        display: block;
+        cursor: pointer;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 8px;
+        transition: all 0.2s;
+        position: relative;
+        margin-bottom: 0; /* Bootstrap override */
+    }
+
+    /* Khi di chuột vào */
+    .kanji-card-label:hover {
+        border-color: #007bff;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* Khi Checkbox được chọn: đổi màu nền */
+    .kanji-checkbox:checked + .kanji-card-content {
+        background-color: #e6f3ff;
+        border-color: #007bff;
+    }
+
+    /* Phần nội dung thẻ */
+    .kanji-card-content {
+        display: flex;
+        align-items: center;
+        border-radius: 6px;
+        padding: 5px;
+    }
+</style>
+
+<%= form_with url: url, method: method, local: true do |f| %>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h6 class="m-0 font-weight-bold">Thông tin chính</h6>
+        </div>
+        <div class="card-body">
+
+          <div class="form-group">
+            <label>Tên bài học <span class="text-danger">*</span></label>
+            <%= f.text_field :kanji, value: @lesson["kanji"], class: "form-control form-control-lg", required: true, placeholder: "Ví dụ: Bài 1" %>
+          </div>
+
+          <div class="form-group">
+            <div class="d-flex justify-content-between align-items-end mb-2">
+              <label class="font-weight-bold text-success mb-0">
+                <i class="fas fa-search mr-1"></i>Chọn Kanji
+              </label>
+              <span class="badge badge-info" id="selected-count">0 đã chọn</span>
+            </div>
+
+            <input type="text" id="searchBox" class="form-control mb-2"
+                   onkeyup="filterKanji()"
+                   placeholder="Gõ tìm kiếm: N5, Sơn, Thủy...">
+
+            <div class="kanji-scroll-box">
+              <div class="row" id="kanjiGrid">
+                <% if @active_kanjis.present? %>
+                  <%
+                    current_ids = @lesson["kanjiIds"]&.map(&:to_i) || []
+                  %>
+
+                  <% @active_kanjis.each do |k| %>
+                    <% is_checked = current_ids.include?(k["id"].to_i) %>
+
+                    <div class="col-sm-6 mb-2 kanji-item"
+                         data-search="<%= k["kanji"].downcase %> <%= k["translation"]&.downcase %> <%= k["hanViet"]&.downcase %> n<%= k["jlpt"] %>">
+
+                      <label class="kanji-card-label">
+                        <input type="checkbox"
+                               class="kanji-checkbox mr-2"
+                               name="kanji_ids[]"
+                               value="<%= k["id"] %>"
+                               onchange="updateColor(this)"
+                               <%= 'checked' if is_checked %>>
+
+                        <span class="kanji-card-content <%= 'bg-light-blue' if is_checked %>">
+                          <span class="font-weight-bold text-success mr-2" style="font-size: 1.5rem;">
+                            <%= k["kanji"] %>
+                          </span>
+                          <span class="d-flex flex-column" style="line-height: 1.2;">
+                            <span class="font-weight-bold text-dark"><%= k["translation"] || k["hanViet"] %></span>
+                            <span class="small text-muted">
+                              N<%= k["jlpt"] %> - <%= k["mean"] %>
+                            </span>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mô tả nội dung</label>
+            <%= f.text_area :lesson_description, value: @lesson["lessonDescription"], rows: 4, class: "form-control" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h6 class="m-0 font-weight-bold">Cài đặt</h6>
+        </div>
+        <div class="card-body">
+          <div class="form-group">
+            <label>Trình độ JLPT</label>
+            <%= f.select :jlpt, options_for_select([['N5', 5], ['N4', 4], ['N3', 3], ['N2', 2], ['N1', 1]], @lesson["jlpt"]), {}, { class: "form-control custom-select" } %>
+          </div>
+          <div class="form-group">
+            <label>Trạng thái</label>
+            <%= f.select :status, options_for_select([['Hoạt động', 'ACTIVE'], ['Ẩn bài', 'HIDDEN']], @lesson["status"] || 'ACTIVE'), {}, { class: "form-control custom-select" } %>
+          </div>
+          <hr>
+          <button type="submit" class="btn btn-primary btn-block font-weight-bold">
+            <i class="fas fa-save mr-2"></i>Lưu lại
+          </button>
+          <%= link_to "Hủy bỏ", admin_lessons_path, class: "btn btn-secondary btn-block" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<% end %>
+
+<script>
+    // 1. Hàm đếm số lượng
+    function countSelected() {
+        var count = document.querySelectorAll('.kanji-checkbox:checked').length;
+        document.getElementById('selected-count').innerText = count + " đã chọn";
+    }
+
+    // 2. Hàm đổi màu khi tick
+    function updateColor(checkbox) {
+        // Tìm thẻ span nội dung bên cạnh
+        var content = checkbox.nextElementSibling;
+        if (checkbox.checked) {
+            content.style.backgroundColor = "#e6f3ff"; // Xanh nhạt
+            content.style.borderColor = "#007bff";
+        } else {
+            content.style.backgroundColor = "transparent";
+            content.style.borderColor = "transparent";
+        }
+        countSelected();
+    }
+
+    // 3. Hàm tìm kiếm (Chạy ngay khi gõ)
+    function filterKanji() {
+        var input = document.getElementById('searchBox');
+        var filter = input.value.toLowerCase().trim();
+        var items = document.getElementsByClassName('kanji-item');
+
+        for (var i = 0; i < items.length; i++) {
+            // Lấy data-search đã nhúng sẵn trong HTML
+            var searchData = items[i].getAttribute('data-search');
+            if (searchData.indexOf(filter) > -1) {
+                items[i].style.display = ""; // Hiện
+            } else {
+                items[i].style.display = "none"; // Ẩn
+            }
+        }
+    }
+
+    // Chạy 1 lần lúc đầu để tô màu những cái đã có sẵn
+    var allCheckboxes = document.querySelectorAll('.kanji-checkbox');
+    allCheckboxes.forEach(function(box) {
+        if(box.checked) {
+            updateColor(box);
+        }
+    });
+    countSelected();
+</script>
