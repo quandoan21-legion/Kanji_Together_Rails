@@ -31,7 +31,9 @@ class Admin::KanjisController < ApplicationController
       # Tự động map is_active để Java lọc chính xác bản gốc hoặc bản nháp
       java_params[:is_active] = (params[:status] == 'ACTIVE') if ['ACTIVE', 'HIDDEN'].include?(params[:status])
     end
-
+    if params[:created_at].present?
+      java_params[:created_at] = params[:created_at]
+    end
     begin
       response = HTTParty.get(BASE_URL, query: java_params, headers: API_HEADERS, verify: false)
 

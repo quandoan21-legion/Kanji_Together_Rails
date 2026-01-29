@@ -5,7 +5,7 @@
     .container-fluid {
         padding-top: 10px !important;
         margin-top: 0 !important;
-        padding-bottom: 20px !important; /* Giảm padding dưới vì ko còn footer bay */
+        padding-bottom: 20px !important;
     }
 
     /* 2. THANH TÌM KIẾM */
@@ -37,27 +37,17 @@
         padding: 0; transition: all 0.2s;
     }
 
-    /* 5. PHÂN TRANG (ĐÃ SỬA: KHÔNG CÒN FIX CỐ ĐỊNH NỮA) */
+    /* 5. PHÂN TRANG */
     .pagination-wrapper {
-        display: flex;
-        justify-content: center;
-        width: 100%;
+        display: flex; justify-content: center; width: 100%;
     }
-
     .custom-pagination-bar {
-        display: inline-flex;
-        gap: 6px;
-        background: #fff;
-        border-radius: 999px;
-        padding: 8px 15px; /* Giữ nguyên style đẹp */
-        border: 1px solid #dee2e6; /* Viền nhẹ nhàng hơn */
+        display: inline-flex; gap: 6px; background: #fff; border-radius: 999px;
+        padding: 8px 15px; border: 1px solid #dee2e6;
     }
-
     .custom-pagination-bar a, .custom-pagination-bar span {
-        min-width: 36px; height: 36px;
-        display: inline-flex; align-items: center; justify-content: center;
-        border-radius: 50%;
-        font-size: 0.9rem; font-weight: 600; text-decoration: none;
+        min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 50%; font-size: 0.9rem; font-weight: 600; text-decoration: none;
     }
 </style>
 
@@ -75,9 +65,12 @@
     </div>
   </div>
 
+  <%# --- THANH TÌM KIẾM --- %>
   <div class="search-container shadow-sm mb-4">
     <%= form_with url: admin_kanjis_path, method: :get, local: true, class: "form-inline" do |f| %>
-      <div class="input-group input-group-sm mr-2">
+
+      <%# 1. LỌC TRẠNG THÁI %>
+      <div class="input-group input-group-sm mr-2 mb-2 mb-sm-0">
         <div class="input-group-prepend">
           <label class="input-group-text bg-white border-right-0 font-weight-bold text-muted">Loại</label>
         </div>
@@ -85,6 +78,19 @@
                      options_for_select([['-- Tất cả --', ''], ['Hoạt động', 'ACTIVE'], ['Chờ duyệt', 'PENDING'], ['Đã ẩn', 'HIDDEN'], ['Đã duyệt', 'APPROVED'], ['Đã từ chối', 'REJECTED']], params[:status]),
                      {}, { class: "form-control border-left-0 custom-select", onchange: "this.form.submit()" } %>
       </div>
+
+      <%# 2. LỌC NGÀY THÁNG (MỚI THÊM) %>
+      <div class="input-group input-group-sm mr-2 mb-2 mb-sm-0">
+        <div class="input-group-prepend">
+          <label class="input-group-text bg-white border-right-0 font-weight-bold text-muted">
+            <i class="far fa-calendar-alt mr-1"></i> Ngày
+          </label>
+        </div>
+        <%# date_field sẽ hiện lịch khi bấm vào %>
+        <%= f.date_field :created_at, value: params[:created_at], class: "form-control border-left-0", style: "max-width: 160px;", onchange: "this.form.submit()" %>
+      </div>
+
+      <%# 3. TÌM KIẾM TỪ KHÓA %>
       <div class="input-group input-group-sm flex-grow-1" style="max-width: 400px;">
         <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "Tìm kiếm Kanji, nghĩa, Hán việt..." %>
         <div class="input-group-append">
@@ -173,7 +179,7 @@
         <div class="custom-pagination-bar">
           <%# ===== PREV ===== %>
           <% if @current_page > 1 %>
-            <%= link_to admin_kanjis_path(page: @current_page - 1, keyword: params[:keyword], status: params[:status]), class: "nav-arrow mr-2" do %>&laquo;<% end %>
+            <%= link_to admin_kanjis_path(page: @current_page - 1, keyword: params[:keyword], status: params[:status], created_at: params[:created_at]), class: "nav-arrow mr-2" do %>&laquo;<% end %>
           <% end %>
 
           <%# ===== PAGE NUMBERS ===== %>
@@ -184,7 +190,7 @@
           %>
 
           <% if start_page > 1 %>
-            <%= link_to "1", admin_kanjis_path(page: 1, keyword: params[:keyword], status: params[:status]), class: "mx-1" %>
+            <%= link_to "1", admin_kanjis_path(page: 1, keyword: params[:keyword], status: params[:status], created_at: params[:created_at]), class: "mx-1" %>
             <% if start_page > 2 %><span class="mx-1 text-muted">…</span><% end %>
           <% end %>
 
@@ -192,18 +198,18 @@
             <% if p == @current_page %>
               <span class="mx-1 font-weight-bold text-white bg-primary px-3 py-1 rounded-pill"><%= p %></span>
             <% else %>
-              <%= link_to p, admin_kanjis_path(page: p, keyword: params[:keyword], status: params[:status]), class: "mx-1 px-3 py-1 rounded-pill text-primary" %>
+              <%= link_to p, admin_kanjis_path(page: p, keyword: params[:keyword], status: params[:status], created_at: params[:created_at]), class: "mx-1 px-3 py-1 rounded-pill text-primary" %>
             <% end %>
           <% end %>
 
           <% if end_page < @total_pages %>
             <% if end_page < @total_pages - 1 %><span class="mx-1 text-muted">…</span><% end %>
-            <%= link_to @total_pages, admin_kanjis_path(page: @total_pages, keyword: params[:keyword], status: params[:status]), class: "mx-1" %>
+            <%= link_to @total_pages, admin_kanjis_path(page: @total_pages, keyword: params[:keyword], status: params[:status], created_at: params[:created_at]), class: "mx-1" %>
           <% end %>
 
           <%# ===== NEXT ===== %>
           <% if @current_page < @total_pages %>
-            <%= link_to admin_kanjis_path(page: @current_page + 1, keyword: params[:keyword], status: params[:status]), class: "nav-arrow ml-2" do %>&raquo;<% end %>
+            <%= link_to admin_kanjis_path(page: @current_page + 1, keyword: params[:keyword], status: params[:status], created_at: params[:created_at]), class: "nav-arrow ml-2" do %>&raquo;<% end %>
           <% end %>
         </div>
       </div>

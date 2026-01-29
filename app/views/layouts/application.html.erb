@@ -64,6 +64,12 @@
               <p>Quản lý Câu Hỏi</p>
             <% end %>
           </li>
+          <li class="nav-item">
+            <%= link_to admin_lessons_path, class: "nav-link #{'active' if controller_name == 'lessons'}" do %>
+              <i class="nav-icon fas fa-book-open"></i>
+              <p>Quản lý Bài học</p>
+            <% end %>
+          </li>
 
           <li class="nav-item">
             <%= link_to admin_exams_path, class: "nav-link #{'active' if controller_name == 'exams'}" do %>
@@ -77,6 +83,7 @@
               <p>Quản lý Người dùng</p>
             <% end %>
           </li>
+
         </ul>
       </nav>
     </div>

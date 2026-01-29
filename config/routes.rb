@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users
+    resources :lessons
     resources :kanjis do
       member do
         put :approve

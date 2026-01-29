@@ -149,6 +149,39 @@
 <div class="main-wrapper">
   <div class="auth-card">
     <div class="brand">Kanji<span>Together</span></div>
+
+    <%# --- BẮT ĐẦU: Code hiển thị thông báo --- %>
+    <% flash.each do |key, value| %>
+      <%# --- THÊM DÒNG NÀY ĐỂ ẨN THÔNG BÁO THỪA --- %>
+      <% next if value == "Bạn cần đăng nhập hoặc đăng ký trước khi tiếp tục." %>
+
+      <%
+        # 1. Chọn màu sắc (Xanh/Đỏ) dựa trên loại thông báo
+        alert_type = case key.to_s
+                     when 'notice', 'success' then 'success' # Màu xanh
+                     when 'alert', 'error', 'danger' then 'danger' # Màu đỏ
+                     else 'info'
+                     end
+
+        # 2. Chọn icon tương ứng
+        icon = alert_type == 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'
+      %>
+
+      <div class="alert alert-<%= alert_type %> alert-dismissible fade show shadow-sm" role="alert"
+           style="border-radius: 15px; border: none; font-size: 0.9rem; margin-bottom: 25px; padding: 12px 20px; display: flex; align-items: center;">
+
+        <%# Icon và Nội dung %>
+        <i class="fas <%= icon %> mr-2"></i>
+        <span style="flex: 1;"><%= value %></span>
+
+        <%# Nút tắt (x) %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="outline: none;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end %>
+    <%# --- KẾT THÚC --- %>
+
     <%= yield %>
   </div>
 </div>
