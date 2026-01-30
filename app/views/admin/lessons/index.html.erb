@@ -20,6 +20,9 @@
     /* Ẩn trước các dòng để làm hiệu ứng hiện ra từ từ */
     tbody tr { opacity: 0; transform: translateY(20px); transition: all 0.4s ease-out; }
     tbody tr.show-row { opacity: 1; transform: translateY(0); }
+
+    /* FALLBACK: Nếu trình duyệt tắt JS hoặc lỗi, hiện luôn dòng ra */
+    noscript tbody tr { opacity: 1 !important; transform: none !important; }
 </style>
 
 <div class="container-fluid pt-3">
@@ -89,8 +92,11 @@
 
               <td class="align-middle">
                 <%= link_to admin_lesson_path(lesson["id"]), class: "text-decoration-none" do %>
-                  <span class="lesson-name text-dark"><%= lesson["kanji"] %></span>
+                  <%# --- QUAN TRỌNG: Sửa key "name" thành "kanji" để hiện tên --- %>
+                  <span class="lesson-name text-dark"><%= lesson["kanji"] || "---" %></span>
                 <% end %>
+
+                <%# Kiểm tra mô tả có tồn tại không %>
                 <% if lesson["lessonDescription"].present? %>
                   <div class="text-muted small mt-1">
                     <i class="fas fa-info-circle mr-1"></i><%= truncate(lesson["lessonDescription"], length: 50) %>
@@ -154,55 +160,73 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    // Hàm khởi tạo hiệu ứng - Dùng chung cho cả load lần đầu và Turbo navigate
+    function initLessonEffects() {
 
-        // --- 1. HIỆU ỨNG THÔNG BÁO (Toast) ---
-        // Kiểm tra nếu Rails có gửi flash notice/alert thì hiện popup
-        <% if flash[:notice] %>
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'success',
-            title: '<%= j flash[:notice] %>',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
-        });
-        <% end %>
+        // 1. HIỆU ỨNG THÔNG BÁO (Toast)
+        // Chỉ chạy nếu có biến Swal
+        if (typeof Swal !== 'undefined') {
+            <% if flash[:notice] %>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: '<%= j flash[:notice] %>',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+            <% end %>
 
-        <% if flash[:alert] %>
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'error',
-            title: '<%= j flash[:alert] %>',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
-        });
-        <% end %>
+            <% if flash[:alert] %>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: '<%= j flash[:alert] %>',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+            <% end %>
+        }
 
-        // --- 2. HIỆU ỨNG BẢNG HIỆN RA TỪ TỪ (Waterfall) ---
+        // 2. HIỆU ỨNG WATERFALL (Hiện dòng từ từ)
         const rows = document.querySelectorAll('#lessons-table tbody tr');
-        rows.forEach((row, index) => {
-            setTimeout(() => {
-                row.classList.add('show-row');
-            }, index * 80); // Mỗi dòng trễ 80ms
-        });
+        if (rows.length > 0) {
+            rows.forEach((row, index) => {
+                // Reset lại class để hiệu ứng chạy lại khi chuyển trang
+                row.classList.remove('show-row');
 
-        // --- 3. HIỆU ỨNG LOADING KHI TÌM KIẾM ---
+                setTimeout(() => {
+                    row.classList.add('show-row');
+                }, index * 50); // Delay 50ms mỗi dòng
+            });
+        }
+
+        // 3. HIỆU ỨNG LOADING KHI TÌM KIẾM
         const searchForm = document.getElementById('lesson-search-form');
-        if (searchForm) {
+        // Kiểm tra dataset để tránh gán sự kiện nhiều lần (tránh lỗi double submit)
+        if (searchForm && !searchForm.dataset.listenerAttached) {
             searchForm.addEventListener('submit', function() {
                 const btn = document.getElementById('btn-search');
                 if (btn) {
-                    const originalContent = btn.innerHTML;
-                    // Đổi nút thành trạng thái loading
                     btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Đang tìm...';
                     btn.style.opacity = '0.7';
-                    btn.style.pointerEvents = 'none'; // Chặn click liên tục
+                    btn.style.pointerEvents = 'none';
                 }
             });
+            searchForm.dataset.listenerAttached = "true";
         }
-    });
+    }
+
+    // --- QUAN TRỌNG: HỖ TRỢ RAILS TURBO ---
+    // Chạy khi tải trang lần đầu
+    document.addEventListener("DOMContentLoaded", initLessonEffects);
+
+    // Chạy khi chuyển trang bằng Turbo (Rails 7+)
+    document.addEventListener("turbo:load", initLessonEffects);
+
+    // Fallback cho Rails cũ (Turbolinks)
+    document.addEventListener("turbolinks:load", initLessonEffects);
 </script>

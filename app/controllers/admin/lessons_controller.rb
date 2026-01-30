@@ -98,19 +98,17 @@ class Admin::LessonsController < ApplicationController
 
   # POST /admin/lessons
   def create
-    # Lấy ID kanji từ params, chấp nhận cả params[:kanji_ids] hoặc params[:lesson][:kanji_ids]
     raw_kanji_ids = params[:kanji_ids] || (params[:lesson] && params[:lesson][:kanji_ids])
-
     payload = {
       kanji: params[:kanji] || params.dig(:lesson, :kanji),
       jlpt: params[:jlpt] || params.dig(:lesson, :jlpt),
-      lessonDescription: params[:lesson_description] || params.dig(:lesson, :lesson_description),
+      lesson_description: params[:lesson_description] || params.dig(:lesson, :lesson_description),
       status: params[:status] || params.dig(:lesson, :status) || "ACTIVE",
       # Ép kiểu chặt chẽ sang số nguyên
-      kanjiIds: raw_kanji_ids.present? ? raw_kanji_ids.reject(&:blank?).map(&:to_i) : []
+      kanji_ids: raw_kanji_ids.present? ? raw_kanji_ids.reject(&:blank?).map(&:to_i) : []
     }
 
-    # Debug ra màn hình terminal của Rails để bạn xem tận mắt dữ liệu trước khi gửi đi
+
     puts ">>>>>> DỮ LIỆU GỬI SANG JAVA: #{payload.to_json}"
 
     begin
@@ -133,7 +131,6 @@ class Admin::LessonsController < ApplicationController
       render :new
     end
   end
-  # GET /admin/lessons/:id/edit
   def edit
     begin
       response = HTTParty.get("#{API_URL}/#{params[:id]}", headers: API_HEADERS)
@@ -157,9 +154,9 @@ class Admin::LessonsController < ApplicationController
     payload = {
       kanji: params[:kanji] || params.dig(:lesson, :kanji),
       jlpt: params[:jlpt] || params.dig(:lesson, :jlpt),
-      lessonDescription: params[:lesson_description] || params.dig(:lesson, :lesson_description),
+      lesson_description: params[:lesson_description] || params.dig(:lesson, :lesson_description),
       status: params[:status] || params.dig(:lesson, :status),
-      kanjiIds: raw_kanji_ids.present? ? raw_kanji_ids.reject(&:blank?).map(&:to_i) : []
+      kanji_ids: raw_kanji_ids.present? ? raw_kanji_ids.reject(&:blank?).map(&:to_i) : []
     }
 
     begin
