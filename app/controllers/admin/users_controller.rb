@@ -3,7 +3,7 @@ require 'httparty'
 
 class Admin::UsersController < ApplicationController
   # Cấu hình API
-  BASE_URL = "http://localhost:8080/api/v1/users"
+  BASE_URL = "#{Rails.configuration.x.api_base_url}/api/v1/users"
   HEADERS = { "Content-Type" => "application/json" }
 
   # --- 1. INDEX ---

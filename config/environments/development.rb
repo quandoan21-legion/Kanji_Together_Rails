@@ -1,6 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.hosts.clear
   # 1. Cấu hình Mailer cơ bản
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   config.action_mailer.perform_deliveries = true

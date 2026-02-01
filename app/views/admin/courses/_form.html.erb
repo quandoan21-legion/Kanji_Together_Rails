@@ -1,0 +1,244 @@
+<style>
+  .lesson-scroll-box { max-height: 420px; overflow-y: auto; border: 1px solid #e3e6f0; border-radius: 12px; padding: 15px; background: #f8f9fc; }
+  .lesson-card-label { display: block; cursor: pointer; }
+  .lesson-checkbox { display: none; }
+  .lesson-card-content { display: flex; align-items: center; padding: 12px; border-radius: 10px; background: #fff; border: 1px solid #e3e6f0; transition: all 0.2s; }
+  .lesson-card-content:hover { box-shadow: 0 4px 8px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .lesson-checkbox:checked + .lesson-card-content { border-color: #36b9cc; background: #e6f7fb; }
+  .lesson-checkbox:checked + .lesson-card-content .check-icon { display: inline-block; }
+  .lesson-checkbox:checked + .lesson-card-content .lesson-title { color: #36b9cc; }
+</style>
+
+<div class="card shadow-sm border-0">
+  <div class="card-body">
+    <%= form_with url: form_url, method: form_method, scope: :course, local: true do |f| %>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <%= f.label :name, "Tên khóa học" %>
+          <%= f.text_field :name, value: @course["name"], class: "form-control", required: true %>
+        </div>
+        <div class="form-group col-md-6">
+          <%= f.label :category, "Danh mục" %>
+          <%= f.select :category,
+                       options_for_select([["GENERAL", "GENERAL"], ["GRAMMAR", "GRAMMAR"], ["JLPT", "JLPT"], ["KANJI", "KANJI"], ["VOCAB", "VOCAB"]], @course["category"]),
+                       { include_blank: "-- Chọn --" },
+                       class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :description, "Mô tả" %>
+        <%= f.text_area :description, value: @course["description"], class: "form-control", rows: 4 %>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <%= f.label :thumbnail_url, "Thumbnail URL" %>
+          <%= f.text_field :thumbnail_url, value: @course["thumbnail_url"], class: "form-control" %>
+        </div>
+        <div class="form-group col-md-6">
+          <%= f.label :cover_image_url, "Cover Image URL" %>
+          <%= f.text_field :cover_image_url, value: @course["cover_image_url"], class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <%= f.label :time_to_finish, "Thời gian hoàn thành" %>
+          <%= f.text_field :time_to_finish, value: @course["time_to_finish"], class: "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <label class="font-weight-bold text-info mb-0"><i class="fas fa-layer-group mr-1"></i>Chọn Bài học</label>
+          <span class="badge badge-info px-3 py-2" id="lesson-count-badge">0 bài</span>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text bg-light border-0"><i class="fas fa-search text-gray-500"></i></span>
+          </div>
+          <input type="text" id="lesson-quick-search" class="form-control bg-light border-0 small" placeholder="Tìm bài học theo tên, JLPT..." aria-label="Search">
+        </div>
+
+        <div id="selected-lessons-inputs">
+          <% Array(@selected_lessons).each do |lesson| %>
+            <input type="hidden" name="course[lesson_ids][]" value="<%= lesson["id"] %>">
+          <% end %>
+        </div>
+
+        <div class="lesson-scroll-box">
+          <div class="row" id="lesson-grid" data-search-url="<%= search_admin_lessons_path %>">
+            <% if Array(@selected_lessons).any? %>
+              <% Array(@selected_lessons).each do |lesson| %>
+                <% title = lesson["kanji"] || lesson["name"] || "Bài học" %>
+                <div class="col-md-6 mb-3 lesson-item" data-lesson-id="<%= lesson["id"] %>">
+                  <label class="lesson-card-label">
+                    <input type="checkbox" class="lesson-checkbox" data-lesson-id="<%= lesson["id"] %>" checked>
+                    <div class="lesson-card-content">
+                      <div class="mr-3">
+                        <span class="lesson-title font-weight-bold text-secondary" style="font-size: 1.4rem;"><%= title %></span>
+                      </div>
+                      <div class="flex-grow-1" style="line-height: 1.2;">
+                        <% if lesson["lessonDescription"].present? %>
+                          <div class="font-weight-bold text-dark"><%= truncate(lesson["lessonDescription"], length: 40) %></div>
+                        <% else %>
+                          <div class="font-weight-bold text-dark">Bài học #<%= lesson["id"] %></div>
+                        <% end %>
+                        <div class="small text-muted mt-1">
+                          <% if lesson["jlpt"].present? %>
+                            <span class="badge badge-light border">N<%= lesson["jlpt"] %></span>
+                          <% end %>
+                          ID: <%= lesson["id"] %>
+                        </div>
+                      </div>
+                      <div class="check-icon text-info ml-2" style="display: none;">
+                        <i class="fas fa-check-circle fa-lg"></i>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="col-12 text-center text-muted py-5" id="lesson-empty-hint">
+                <i class="fas fa-search fa-2x mb-2 text-gray-300"></i><br>
+                Nhập từ khóa để tìm bài học.
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <%= link_to admin_courses_path, class: "btn btn-secondary" do %>
+          <i class="fas fa-arrow-left mr-1"></i> Quay lại
+        <% end %>
+        <%= f.submit submit_label, class: "btn btn-info px-4 font-weight-bold" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const grid = document.getElementById('lesson-grid');
+    if (!grid) return;
+
+    const searchInput = document.getElementById('lesson-quick-search');
+    const hiddenInputs = document.getElementById('selected-lessons-inputs');
+    const countBadge = document.getElementById('lesson-count-badge');
+    const searchUrl = grid.dataset.searchUrl;
+    let debounceTimer = null;
+
+    function selectedIds() {
+      return Array.from(hiddenInputs.querySelectorAll('input[type="hidden"]')).map((el) => el.value);
+    }
+
+    function updateCount() {
+      countBadge.textContent = `${selectedIds().length} bài`;
+    }
+
+    function ensureHiddenInput(id) {
+      if (hiddenInputs.querySelector(`input[value="${id}"]`)) return;
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = 'course[lesson_ids][]';
+      input.value = id;
+      hiddenInputs.appendChild(input);
+    }
+
+    function removeHiddenInput(id) {
+      const input = hiddenInputs.querySelector(`input[value="${id}"]`);
+      if (input) input.remove();
+    }
+
+    function lessonCardHtml(lesson, isSelected) {
+      const title = lesson.kanji || lesson.name || 'Bài học';
+      const desc = lesson.lesson_description || lesson.lessonDescription || '';
+      const jlpt = lesson.jlpt ? `N${lesson.jlpt}` : '';
+      return `
+        <div class="col-md-6 mb-3 lesson-item" data-lesson-id="${lesson.id}">
+          <label class="lesson-card-label">
+            <input type="checkbox" class="lesson-checkbox" data-lesson-id="${lesson.id}" ${isSelected ? 'checked' : ''}>
+            <div class="lesson-card-content">
+              <div class="mr-3">
+                <span class="lesson-title font-weight-bold text-secondary" style="font-size: 1.4rem;">${title}</span>
+              </div>
+              <div class="flex-grow-1" style="line-height: 1.2;">
+                <div class="font-weight-bold text-dark">${desc ? desc.slice(0, 40) : `Bài học #${lesson.id}`}</div>
+                <div class="small text-muted mt-1">
+                  ${jlpt ? `<span class="badge badge-light border">${jlpt}</span>` : ''}
+                  ID: ${lesson.id}
+                </div>
+              </div>
+              <div class="check-icon text-info ml-2" style="display: none;">
+                <i class="fas fa-check-circle fa-lg"></i>
+              </div>
+            </div>
+          </label>
+        </div>
+      `;
+    }
+
+    function renderResults(results) {
+      if (!results.length) {
+        grid.innerHTML = `
+          <div class="col-12 text-center text-muted py-5">
+            <i class="fas fa-inbox fa-2x mb-2 text-gray-300"></i><br>
+            Không tìm thấy bài học phù hợp.
+          </div>
+        `;
+        return;
+      }
+      const ids = selectedIds();
+      grid.innerHTML = results.map((lesson) => lessonCardHtml(lesson, ids.includes(String(lesson.id)))).join('');
+    }
+
+    function fetchLessons(term) {
+      $.getJSON(searchUrl, { q: term })
+        .done(function(data) {
+          renderResults(data.results || []);
+        })
+        .fail(function() {
+          renderResults([]);
+        });
+    }
+
+    grid.addEventListener('change', function(event) {
+      const checkbox = event.target.closest('.lesson-checkbox');
+      if (!checkbox) return;
+      const id = checkbox.dataset.lessonId;
+      if (checkbox.checked) {
+        ensureHiddenInput(id);
+      } else {
+        removeHiddenInput(id);
+      }
+      updateCount();
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function(event) {
+        const term = event.target.value.trim();
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function() {
+          if (term.length < 1) {
+            if (selectedIds().length > 0) {
+              return;
+            }
+            grid.innerHTML = `
+              <div class="col-12 text-center text-muted py-5">
+                <i class="fas fa-search fa-2x mb-2 text-gray-300"></i><br>
+                Nhập từ khóa để tìm bài học.
+              </div>
+            `;
+            return;
+          }
+          fetchLessons(term);
+        }, 300);
+      });
+    }
+
+    updateCount();
+  })();
+</script>

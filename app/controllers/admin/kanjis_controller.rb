@@ -1,6 +1,6 @@
 class Admin::KanjisController < ApplicationController
   # ================= CẤU HÌNH LOCALHOST =================
-  BASE_URL = "http://localhost:8080/api/v1/kanjis"
+  BASE_URL = "#{Rails.configuration.x.api_base_url}/api/v1/kanjis"
 
   API_HEADERS = {
     'Content-Type' => 'application/json'
@@ -53,10 +53,14 @@ class Admin::KanjisController < ApplicationController
         end
       else
         @kanjis = []
+        @total_pages = 1
+        @total_elements = 0
         flash.now[:alert] = "Backend trả về lỗi: #{response.code}"
       end
     rescue => e
       @kanjis = []
+      @total_pages = 1
+      @total_elements = 0
       flash.now[:alert] = "Lỗi kết nối Server Java: #{e.message}"
     end
   end

@@ -1,7 +1,7 @@
 class Admin::ExamsController < ApplicationController
   # Định nghĩa URL của API Java
-  API_URL = "http://localhost:8080/api/v1/exams"
-  QUESTIONS_API_URL = "http://localhost:8080/api/v1/questions"
+  API_URL = "#{Rails.configuration.x.api_base_url}/api/v1/exams"
+  QUESTIONS_API_URL = "#{Rails.configuration.x.api_base_url}/api/v1/questions"
 
   # 1. DANH SÁCH EXAM
   def index

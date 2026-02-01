@@ -1,9 +1,9 @@
 class Admin::LessonsController < ApplicationController
   # Cấu hình đường dẫn API Java
-  API_URL = "http://localhost:8080/api/v1/lessons"
+  API_URL = "#{Rails.configuration.x.api_base_url}/api/v1/lessons"
 
   # Đường dẫn API lấy Kanji để đổ vào dropdown
-  KANJI_API_URL = "http://localhost:8080/api/v1/kanjis"
+  KANJI_API_URL = "#{Rails.configuration.x.api_base_url}/api/v1/kanjis"
 
   API_HEADERS = { 'Content-Type' => 'application/json' }
 
@@ -61,6 +61,35 @@ class Admin::LessonsController < ApplicationController
     rescue => e
       @lessons = []
       flash.now[:alert] = "Không kết nối được Java: #{e.message}"
+    end
+  end
+
+  # GET /admin/lessons/search
+  def search
+    keyword = params[:q].to_s.strip
+    java_params = { search: keyword, page: 0, size: 20 }
+    begin
+      response = HTTParty.get(API_URL, query: java_params, headers: API_HEADERS)
+      results = []
+      if response.success?
+        body = JSON.parse(response.body)
+        data = body["data"] || {}
+        lessons = data.is_a?(Hash) ? (data["lessons"] || []) : Array(data)
+        results = lessons.map do |lesson|
+          label = lesson["kanji"] || lesson["name"] || "Bài học"
+          {
+            id: lesson["id"],
+            text: "#{label} (##{lesson["id"]})",
+            kanji: lesson["kanji"],
+            name: lesson["name"],
+            jlpt: lesson["jlpt"],
+            lesson_description: lesson["lessonDescription"]
+          }
+        end
+      end
+      render json: { results: results }
+    rescue StandardError => e
+      render json: { results: [], error: e.message }, status: :ok
     end
   end
 

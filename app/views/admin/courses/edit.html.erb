@@ -1,0 +1,11 @@
+<div class="container-fluid pt-3">
+  <div class="row mb-4 align-items-center">
+    <div class="col-sm-8">
+      <h3 class="m-0 text-dark font-weight-bold">
+        <i class="fas fa-edit text-info mr-2"></i>Chỉnh sửa Khóa học
+      </h3>
+    </div>
+  </div>
+
+  <%= render "form", form_url: admin_course_path(@course["id"]), form_method: :put, submit_label: "Lưu thay đổi" %>
+</div>

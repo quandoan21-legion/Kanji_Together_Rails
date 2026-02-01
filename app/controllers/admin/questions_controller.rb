@@ -3,8 +3,9 @@ require 'json'
 
 class Admin::QuestionsController < ApplicationController
   # URL API của Java
-  JAVA_API_URL = "http://localhost:8080/api/v1/questions"
-  JAVA_KANJI_API_URL = "http://localhost:8080/api/v1/kanjis"
+  BASE_URL = Rails.configuration.x.api_base_url
+  JAVA_API_URL = "#{BASE_URL}/api/v1/questions"
+  JAVA_KANJI_API_URL = "#{BASE_URL}/api/v1/kanjis"
 
   layout 'application'
 
@@ -64,7 +65,7 @@ class Admin::QuestionsController < ApplicationController
 
   def show
     # Gọi API Java lấy chi tiết câu hỏi theo ID
-    response = HTTParty.get("#{ENV['API_URL'] || 'http://localhost:8080'}/api/v1/questions/#{params[:id]}")
+    response = HTTParty.get("#{JAVA_API_URL}/#{params[:id]}")
 
     if response.success?
       @question = JSON.parse(response.body)
@@ -108,7 +109,7 @@ class Admin::QuestionsController < ApplicationController
     question_params = params[:question] || params
     payload = build_payload(question_params)
 
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = http_client_for(uri)
     request = Net::HTTP::Post.new(uri.request_uri, header)
     request.body = payload.to_json
 
@@ -136,7 +137,7 @@ class Admin::QuestionsController < ApplicationController
     payload = build_payload(question_params)
     payload[:id] = id.to_i
 
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = http_client_for(uri)
     request = Net::HTTP::Put.new(uri.request_uri, header)
     request.body = payload.to_json
 
@@ -158,7 +159,7 @@ class Admin::QuestionsController < ApplicationController
   def destroy
     id = params[:id]
     uri = URI("#{JAVA_API_URL}/#{id}")
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = http_client_for(uri)
     request = Net::HTTP::Delete.new(uri.request_uri)
 
     begin
@@ -174,6 +175,11 @@ class Admin::QuestionsController < ApplicationController
   end
 
   private
+  def http_client_for(uri)
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = (uri.scheme == 'https')
+    http
+  end
 
   def fetch_kanjis
     # Gửi size lớn để lấy đủ danh sách chọn cho đề thi N1

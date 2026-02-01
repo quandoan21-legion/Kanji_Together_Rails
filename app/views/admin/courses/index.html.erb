@@ -1,0 +1,55 @@
+<div class="container-fluid pt-3">
+  <div class="row mb-4 align-items-center">
+    <div class="col-sm-6">
+      <h3 class="m-0 text-dark font-weight-bold">
+        <i class="fas fa-layer-group text-info mr-2"></i>Quản lý Khóa học
+      </h3>
+    </div>
+    <div class="col-sm-6 text-right">
+      <%= link_to new_admin_course_path, class: "btn btn-info shadow-sm rounded-pill px-4 font-weight-bold" do %>
+        <i class="fas fa-plus-circle mr-1"></i> Tạo Khóa học
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-body table-responsive p-0">
+      <table class="table table-hover table-bordered mb-0">
+        <thead class="bg-light text-center text-uppercase small font-weight-bold">
+        <tr>
+          <th width="80px">ID</th>
+          <th>Tên Khóa học</th>
+          <th width="140px">Danh mục</th>
+          <th width="160px">Thời gian</th>
+          <th width="180px">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @courses.any? %>
+          <% @courses.each do |course| %>
+            <tr>
+              <td class="text-center text-muted align-middle">#<%= course["id"] %></td>
+              <td class="align-middle font-weight-bold text-dark"><%= course["name"] || "---" %></td>
+              <td class="text-center align-middle"><%= course["category"] || "---" %></td>
+              <td class="text-center align-middle"><%= course["time_to_finish"] || "---" %></td>
+              <td class="text-center align-middle">
+                <%= link_to admin_course_path(course["id"]), class: "btn btn-info btn-circle mr-1", title: "Xem chi tiết" do %>
+                  <i class="fas fa-eye"></i>
+                <% end %>
+                <%= link_to edit_admin_course_path(course["id"]), class: "btn btn-primary btn-circle mr-1", title: "Sửa" do %>
+                  <i class="fas fa-edit"></i>
+                <% end %>
+                <%= button_to admin_course_path(course["id"]), method: :delete, class: "btn btn-danger btn-circle", form: { style: "display:inline-block;" }, data: { confirm: "Bạn chắc chắn muốn xóa khóa học này?" }, title: "Xóa" do %>
+                  <i class="fas fa-trash"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr><td colspan="5" class="text-center py-5 text-muted">Không có khóa học nào.</td></tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -110,7 +110,7 @@
                   <% @active_kanjis.each do |k| %>
                     <% is_selected = current_ids.include?(k["id"].to_i) %>
 
-                    <div class="col-md-6 mb-3 kanji-item" data-filter="<%= k['kanji'].downcase %> <%= k['translation']&.downcase %> <%= k['hanViet']&.downcase %> n<%= k['jlpt'] %>">
+                    <div class="col-md-6 mb-3 kanji-item" data-filter="<%= k['kanji'].to_s.downcase %> <%= k['translation'].to_s.downcase %> <%= k['hanViet'].to_s.downcase %> n<%= k['jlpt'] %>">
                       <label class="kanji-card-label">
                         <%# CHECKBOX ẨN %>
                         <input type="checkbox"
