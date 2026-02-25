@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     end
     resources :courses
     resources :kanjis do
+      collection do
+        get :search
+      end
       member do
         put :approve
         put :reject
@@ -19,7 +22,7 @@ Rails.application.routes.draw do
     resources :user_kanjis, only: [:index, :edit, :update, :destroy]
     resources :questions
     resources :exams
-    resources :stories, only: [:index, :show, :destroy] do
+    resources :stories, only: [:index, :show, :new, :create, :destroy] do
       member do
         patch :approve
         put :approve

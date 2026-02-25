@@ -1,0 +1,208 @@
+<style>
+    .content-wrapper, .main-content, .content { padding-top: 0 !important; margin-top: 0 !important; }
+    .content-header { display: none !important; }
+    .container-fluid {
+        padding-top: 10px !important;
+        margin-top: 0 !important;
+        padding-bottom: 20px !important;
+    }
+
+    .search-container {
+        background: #f8f9fa;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        margin-bottom: 20px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .custom-stories-table th, .custom-stories-table td {
+        font-size: 1.05rem;
+        vertical-align: middle !important;
+    }
+
+    .kanji-display {
+        font-size: 2.3rem;
+        line-height: 1;
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    .btn-circle {
+        width: 34px; height: 34px; border-radius: 50%;
+        display: inline-flex; align-items: center; justify-content: center;
+        padding: 0; transition: all 0.2s;
+    }
+
+    .pagination-wrapper {
+        display: flex; justify-content: center; width: 100%;
+    }
+    .custom-pagination-bar {
+        display: inline-flex; gap: 6px; background: #fff; border-radius: 999px;
+        padding: 8px 15px; border: 1px solid #dee2e6;
+    }
+    .custom-pagination-bar a, .custom-pagination-bar span {
+        min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center;
+        border-radius: 50%; font-size: 0.9rem; font-weight: 600; text-decoration: none;
+    }
+</style>
+
+<div class="container-fluid">
+  <div class="row mb-4 align-items-center">
+    <div class="col-sm-6">
+      <h3 class="m-0 text-dark font-weight-bold">
+        <i class="fas fa-book text-primary mr-2"></i>Quản lý Câu chuyện Kanji
+      </h3>
+    </div>
+    <div class="col-sm-6 text-right">
+      <%= link_to new_admin_story_path, class: "btn btn-success shadow-sm rounded-pill px-4 font-weight-bold" do %>
+        <i class="fas fa-plus-circle mr-1"></i> Tạo Mới
+      <% end %>
+    </div>
+  </div>
+
+  <%# --- THANH TÌM KIẾM --- %>
+  <div class="search-container shadow-sm mb-4">
+    <%= form_with url: admin_stories_path, method: :get, local: true, class: "form-inline" do |f| %>
+
+      <%# 1. LỌC TRẠNG THÁI %>
+      <div class="input-group input-group-sm mr-2 mb-2 mb-sm-0">
+        <div class="input-group-prepend">
+          <label class="input-group-text bg-white border-right-0 font-weight-bold text-muted">Trạng thái</label>
+        </div>
+        <%= f.select :status,
+                     options_for_select([['-- Tất cả --', ''], ['Chờ duyệt', 'PENDING'], ['Đã duyệt', 'APPROVED'], ['Đã từ chối', 'REJECTED']], params[:status]),
+                     {}, { class: "form-control border-left-0 custom-select", onchange: "this.form.submit()" } %>
+      </div>
+
+      <%# 2. TÌM KIẾM TỪ KHÓA (Kanji) %>
+      <div class="input-group input-group-sm flex-grow-1" style="max-width: 400px;">
+        <%= f.text_field :keyword, value: params[:keyword], class: "form-control", placeholder: "Tìm kiếm Kanji..." %>
+        <div class="input-group-append">
+          <button class="btn btn-primary px-3 font-weight-bold" type="submit">Tìm</button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-white py-3">
+      <h5 class="card-title font-weight-bold text-dark mb-0">
+        <i class="fas fa-list-ul mr-1 text-primary"></i> Danh sách Câu chuyện
+        <span class="ml-2 text-muted">(Tổng: <%= @total_elements %>)</span>
+      </h5>
+    </div>
+
+    <div class="card-body table-responsive p-0">
+      <table class="table table-hover table-bordered mb-0 custom-stories-table">
+        <thead class="bg-light text-center text-uppercase small font-weight-bold">
+        <tr>
+          <th width="70px">ID</th>
+          <th width="110px">Kanji</th>
+          <th>Câu chuyện</th>
+          <th width="130px">Tác giả</th>
+          <th width="160px">Trạng thái</th>
+          <th width="180px">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if @stories.any? %>
+          <% @stories.each do |s| %>
+            <%
+              status = s["status"].to_s.upcase
+              is_pending = status == 'PENDING'
+            %>
+            <tr>
+              <td class="text-center text-muted font-weight-bold">#<%= s["id"] %></td>
+              <td class="text-center">
+                <span class="kanji-display"><%= s["kanji_text"] %></span>
+              </td>
+              <td class="px-3">
+                <div class="font-weight-bold text-dark" style="max-height: 40px; overflow: hidden;">
+                  <%= truncate(s["kanji_story"], length: 80) %>
+                </div>
+                <div class="text-muted small mt-1">ID Kanji: <span class="text-primary">#<%= s["kanji_id"] %></span></div>
+              </td>
+              <td class="text-center text-muted small">
+                <%= s["user_email"] || "Admin" %>
+                <div class="text-muted font-italic" style="font-size: 0.85rem;">
+                  <%= s["create_at"].present? ? Time.parse(s["create_at"]).strftime("%d/%m/%Y") : "---" %>
+                </div>
+              </td>
+              <td class="text-center">
+                <%
+                  if status == 'PENDING' then badge_class, badge_text = 'badge-warning text-white', 'Chờ duyệt'
+                  elsif status == 'APPROVED' then badge_class, badge_text = 'badge-success', 'Đã duyệt'
+                  elsif status == 'REJECTED' then badge_class, badge_text = 'badge-danger', 'Đã từ chối'
+                  else badge_class, badge_text = 'badge-secondary', 'Không xác định'
+                  end
+                %>
+                <span class="badge <%= badge_class %> p-2 shadow-sm" style="min-width: 100px;"><%= badge_text %></span>
+              </td>
+              <td class="text-center">
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                  <%= link_to admin_story_path(s["id"]), class: "btn btn-info btn-circle", title: "Xem chi tiết" do %>
+                    <i class="fas fa-eye"></i>
+                  <% end %>
+                  <% if is_pending %>
+                    <%= link_to admin_story_path(s["id"]), class: "btn btn-primary btn-circle", title: "Duyệt" do %>
+                      <i class="fas fa-check"></i>
+                    <% end %>
+                  <% end %>
+                  <%= button_to admin_story_path(s["id"]), method: :delete, class: "btn btn-danger btn-circle", data: { confirm: "Xóa câu chuyện này?" }, title: "Xóa" do %>
+                    <i class="fas fa-trash"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr><td colspan="6" class="text-center py-5 text-muted font-italic">Không tìm thấy dữ liệu.</td></tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer bg-white border-top py-3">
+      <div class="pagination-wrapper">
+        <div class="custom-pagination-bar">
+          <%# ===== PREV ===== %>
+          <% if @current_page > 1 %>
+            <%= link_to admin_stories_path(page: @current_page - 1, keyword: params[:keyword], status: params[:status]), class: "nav-arrow mr-2" do %>&laquo;<% end %>
+          <% end %>
+
+          <%# ===== PAGE NUMBERS ===== %>
+          <%
+            window = 2
+            start_page = [@current_page - window, 1].max
+            end_page   = [@current_page + window, @total_pages].min
+          %>
+
+          <% if start_page > 1 %>
+            <%= link_to "1", admin_stories_path(page: 1, keyword: params[:keyword], status: params[:status]), class: "mx-1" %>
+            <% if start_page > 2 %><span class="mx-1 text-muted">…</span><% end %>
+          <% end %>
+
+          <% (start_page..end_page).each do |p| %>
+            <% if p == @current_page %>
+              <span class="mx-1 font-weight-bold text-white bg-primary px-3 py-1 rounded-pill"><%= p %></span>
+            <% else %>
+              <%= link_to p, admin_stories_path(page: p, keyword: params[:keyword], status: params[:status]), class: "mx-1 px-3 py-1 rounded-pill text-primary" %>
+            <% end %>
+          <% end %>
+
+          <% if end_page < @total_pages %>
+            <% if end_page < @total_pages - 1 %><span class="mx-1 text-muted">…</span><% end %>
+            <%= link_to @total_pages, admin_stories_path(page: @total_pages, keyword: params[:keyword], status: params[:status]), class: "mx-1" %>
+          <% end %>
+
+          <%# ===== NEXT ===== %>
+          <% if @current_page < @total_pages %>
+            <%= link_to admin_stories_path(page: @current_page + 1, keyword: params[:keyword], status: params[:status]), class: "nav-arrow ml-2" do %>&raquo;<% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -8,6 +8,7 @@ WorkingDirectory=/home/quandoan/Kanji_Together_Rails
 Environment=RAILS_ENV=production
 Environment=PORT=3001
 Environment=RAILS_LOG_TO_STDOUT=1
+Environment=API_BASE_URL=https://109b-14-191-33-21.ngrok-free.app
 ExecStart=/usr/bin/env bash -lc 'bundle exec puma -C config/puma.rb'
 Restart=on-failure
 RestartSec=5

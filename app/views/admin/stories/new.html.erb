@@ -1,0 +1,378 @@
+<style>
+  .content-wrapper, .main-content, .content { padding-top: 0 !important; margin-top: 0 !important; }
+  .content-header { display: none !important; }
+  .container-fluid {
+    padding-top: 10px !important;
+    margin-top: 0 !important;
+    padding-bottom: 20px !important;
+  }
+
+  .story-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+  }
+
+  .kanji-display-container {
+    display: none;
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 2px dashed #cbd5e0;
+  }
+
+  .selected-kanji-char {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #1a202c;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .selected-kanji-info {
+    font-size: 1.1rem;
+    color: #4a5568;
+  }
+
+  .form-group label {
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .select2-container--default .select2-selection--single {
+    height: 45px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    padding-top: 8px;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 43px;
+  }
+
+  .story-textarea {
+    min-height: 200px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e0;
+    padding: 15px;
+    font-size: 1rem;
+    line-height: 1.6;
+    width: 100%;
+  }
+
+  .story-textarea:focus {
+    outline: none;
+    border-color: #4e73df;
+    box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.1);
+  }
+
+  .counter-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: #718096;
+  }
+
+  .counter-container.invalid {
+    color: #e53e3e;
+  }
+
+  .counter-container.valid {
+    color: #38a169;
+  }
+
+  .btn-submit {
+    background: #4e73df;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    transition: all 0.2s;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .btn-submit:hover:not(:disabled) {
+    background: #2e59d9;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .btn-submit:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+  }
+
+  .kanji-result-item {
+    padding: 5px 0;
+  }
+
+  .kanji-result-char {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .kanji-result-meaning {
+    font-size: 0.9rem;
+    color: #4a5568;
+  }
+
+  .kanji-result-jlpt {
+    float: right;
+    background: #edf2f7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+
+  .loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Đang xử lý...</span>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row mb-4 align-items-center">
+    <div class="col-sm-6">
+      <h3 class="m-0 text-dark font-weight-bold">
+        <i class="fas fa-plus-circle text-primary mr-2"></i>Tạo Câu chuyện Kanji
+      </h3>
+    </div>
+    <div class="col-sm-6 text-right">
+      <%= link_to admin_stories_path, class: "btn btn-outline-secondary px-4 rounded-pill" do %>
+        <i class="fas fa-arrow-left mr-1"></i> Quay lại
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="story-card">
+        <% if flash[:alert] %>
+          <div class="alert alert-danger alert-dismissible fade show mb-4">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <i class="fas fa-exclamation-circle mr-2"></i> <%= flash[:alert] %>
+          </div>
+        <% end %>
+
+        <%= form_with url: admin_stories_path, method: :post, local: true, id: "storyForm" do |f| %>
+          
+          <!-- Hidden Fields for Controller Payload Compatibility -->
+          <%= f.hidden_field :kanji_id, id: "hidden_kanji_id", value: @story[:kanji_id] %>
+          <%= f.hidden_field :kanji_text, id: "hidden_kanji_text", value: @story[:kanji_text] %>
+          <%= f.hidden_field :user_translation, id: "hidden_translation", value: @story[:user_translation] %>
+          <%= f.hidden_field :user_meaning, id: "hidden_meaning", value: @story[:user_meaning] %>
+          <%= f.hidden_field :user_onyomi, id: "hidden_onyomi", value: @story[:user_onyomi] %>
+          <%= f.hidden_field :user_kunyomi, id: "hidden_kunyomi", value: @story[:user_kunyomi] %>
+          <%= f.hidden_field :user_num_strokes, id: "hidden_strokes", value: @story[:user_num_strokes] %>
+          <%= f.hidden_field :user_radical, id: "hidden_radical", value: @story[:user_radical] %>
+          <%= f.hidden_field :user_components, id: "hidden_components", value: @story[:user_components] %>
+          <%= f.hidden_field :user_vocabulary, id: "hidden_vocabulary", value: @story[:user_vocabulary] %>
+          <%= f.hidden_field :user_examples, id: "hidden_examples", value: @story[:user_examples] %>
+          <%= f.hidden_field :status, value: @story[:status] || "APPROVED" %>
+
+          <div class="form-group mb-4">
+            <label for="kanji_selector">Tìm kiếm Kanji <span class="text-danger">*</span></label>
+            <select id="kanji_selector" class="form-control" style="width: 100%"></select>
+            <small class="text-muted mt-2 d-block">Nhập ký tự Kanji hoặc ý nghĩa để tìm kiếm</small>
+          </div>
+
+          <div id="kanjiDisplay" class="kanji-display-container" <%= 'style="display: block;"'.html_safe if @story[:kanji_id].present? %>>
+            <div class="selected-kanji-char" id="selectedKanjiChar"><%= @story[:kanji_text] %></div>
+            <div class="selected-kanji-info" id="selectedKanjiInfo">
+              <%= "#{@story[:user_translation]} | #{@story[:user_meaning]}" if @story[:kanji_id].present? %>
+            </div>
+          </div>
+
+          <div class="form-group mb-4">
+            <label for="kanji_story">Câu chuyện của bạn <span class="text-danger">*</span></label>
+            <%= f.text_area :kanji_story, 
+                           class: "story-textarea", 
+                           id: "kanjiStoryArea", 
+                           placeholder: "Viết một câu chuyện thú vị để nhớ Kanji này (tối thiểu 50 ký tự)...",
+                           required: true,
+                           value: @story[:kanji_story] %>
+            <div class="counter-container <%= 'valid' if (@story[:kanji_story]&.length || 0) >= 50 %>" id="charCounter">
+              <span id="currentCharCount"><%= @story[:kanji_story]&.length || 0 %></span> / 50 ký tự tối thiểu
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit" id="submitBtn" <%= 'disabled' unless @story[:kanji_id].present? && (@story[:kanji_story]&.length || 0) >= 50 %>>
+            <i class="fas fa-paper-plane mr-2"></i> Tạo câu chuyện
+          </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function() {
+  const $kanjiSelector = $('#kanji_selector');
+  const $storyArea = $('#kanjiStoryArea');
+  const $submitBtn = $('#submitBtn');
+  const $charCounter = $('#charCounter');
+  const $currentCharCount = $('#currentCharCount');
+  const $loadingOverlay = $('#loadingOverlay');
+  
+  const minChars = 50;
+  let isKanjiSelected = <%= @story[:kanji_id].present? ? 'true' : 'false' %>;
+
+  // Initialize Select2 with remote data
+  $kanjiSelector.select2({
+    placeholder: 'Tìm kiếm Kanji (vd: 口, mount, ...)',
+    allowClear: true,
+    ajax: {
+      url: '<%= search_admin_kanjis_path %>',
+      dataType: 'json',
+      delay: 300,
+      data: function(params) {
+        return {
+          search: params.term,
+          page: (params.page || 1) - 1, // Java uses 0-based indexing
+          size: 20
+        };
+      },
+      processResults: function(data, params) {
+        params.page = params.page || 1;
+        
+        let kanjis = [];
+        let totalPages = 1;
+
+        if (data.data) {
+          if (Array.isArray(data.data.kanjis)) {
+            kanjis = data.data.kanjis;
+          } else if (Array.isArray(data.data.content)) {
+            kanjis = data.data.content;
+          }
+          totalPages = data.data.totalPages || 1;
+        }
+        
+        return {
+          results: kanjis.map(function(item) {
+            return {
+              id: item.id,
+              text: item.kanji,
+              kanji: item
+            };
+          }),
+          pagination: {
+            more: params.page < totalPages
+          }
+        };
+      },
+      cache: true
+    },
+    templateResult: formatKanji,
+    templateSelection: formatKanjiSelection,
+    escapeMarkup: function(m) { return m; }
+  });
+
+  // Run initial validation
+  validateForm();
+
+  function formatKanji(repo) {
+    if (repo.loading) return "Đang tìm kiếm...";
+    if (!repo.kanji) return repo.text;
+
+    const kanji = repo.kanji;
+    return `
+      <div class="kanji-result-item">
+        <span class="kanji-result-jlpt">N${kanji.jlpt || '?'}</span>
+        <span class="kanji-result-char">${kanji.kanji}</span>
+        <span class="kanji-result-meaning">${kanji.meaning || kanji.translation || ''}</span>
+      </div>
+    `;
+  }
+
+  function formatKanjiSelection(repo) {
+    return repo.text || repo.element.text;
+  }
+
+  // Handle Kanji Selection
+  $kanjiSelector.on('select2:select', function(e) {
+    const kanji = e.params.data.kanji;
+    if (!kanji) return;
+
+    isKanjiSelected = true;
+    
+    // Show Display Card
+    $('#selectedKanjiChar').text(kanji.kanji);
+    $('#selectedKanjiInfo').text(`${kanji.translation || ''} | N${kanji.jlpt || '?'} | ${kanji.meaning || ''}`);
+    $('#kanjiDisplay').fadeIn();
+
+    // Fill Hidden Fields
+    $('#hidden_kanji_id').val(kanji.id);
+    $('#hidden_kanji_text').val(kanji.kanji);
+    $('#hidden_translation').val(kanji.translation || '');
+    $('#hidden_meaning').val(kanji.meaning || '');
+    $('#hidden_onyomi').val(kanji.on_pronunciation || '');
+    $('#hidden_kunyomi').val(kanji.kun_pronunciation || '');
+    $('#hidden_strokes').val(kanji.num_strokes || '');
+    $('#hidden_radical').val(kanji.radical || '');
+    $('#hidden_components').val(kanji.components || '');
+    $('#hidden_vocabulary').val(kanji.vocabulary || '');
+    $('#hidden_examples').val(kanji.examples || '');
+
+    validateForm();
+  });
+
+  $kanjiSelector.on('select2:clear', function() {
+    isKanjiSelected = false;
+    $('#kanjiDisplay').hide();
+    $('#hidden_kanji_id').val('');
+    $('#hidden_kanji_text').val('');
+    validateForm();
+  });
+
+  // Character Counter and Validation
+  $storyArea.on('input', function() {
+    const length = $(this).val().trim().length;
+    $currentCharCount.text(length);
+
+    if (length < minChars) {
+      $charCounter.removeClass('valid').addClass('invalid');
+    } else {
+      $charCounter.removeClass('invalid').addClass('valid');
+    }
+    
+    validateForm();
+  });
+
+  function validateForm() {
+    const storyLength = $storyArea.val().trim().length;
+    const isValid = isKanjiSelected && storyLength >= minChars;
+    $submitBtn.prop('disabled', !isValid);
+  }
+
+  // Loading state on submit
+  $('#storyForm').on('submit', function() {
+    $loadingOverlay.css('display', 'flex');
+  });
+});
+</script>
