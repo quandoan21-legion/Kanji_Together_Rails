@@ -7,71 +7,9 @@ class Admin::StoriesController < ApplicationController
     'Content-Type' => 'application/json'
   }
 
-  skip_before_action :verify_authenticity_token, only: [:approve, :reject, :create]
+  skip_before_action :verify_authenticity_token, only: [:approve, :reject]
 
-  # ================= NEW =================
-  def new
-    @story = {}
-  end
 
-  # ================= CREATE =================
-  def create
-    story_id = params[:id]
-
-    puts "\n" + "="*80
-    puts "🟢 [CREATE STORY] REQUEST"
-    puts "="*80
-    puts "Payload: #{params.to_json}"
-    puts "="*80 + "\n"
-
-    payload = {
-      kanji_id: params[:kanji_id],
-      kanji_text: params[:kanji_text],
-      kanji_story: params[:kanji_story],
-      user_translation: params[:user_translation],
-      user_meaning: params[:user_meaning],
-      user_num_strokes: params[:user_num_strokes]&.to_i,
-      user_radical: params[:user_radical],
-      user_components: params[:user_components],
-      user_vocabulary: params[:user_vocabulary],
-      user_examples: params[:user_examples],
-      user_onyomi: params[:user_onyomi],
-      user_kunyomi: params[:user_kunyomi],
-      status: params[:status] || "APPROVED",
-      is_active: true
-    }
-
-    puts "📋 Final Payload: #{payload.to_json}"
-    puts "="*80 + "\n"
-
-    response = HTTParty.post(BASE_URL,
-                            body: payload.to_json,
-                            headers: API_HEADERS,
-                            verify: false)
-
-    puts "🟢 [CREATE STORY] RESPONSE"
-    puts "="*80
-    puts "Status Code: #{response.code}"
-    puts "Response Body: #{response.body}"
-    puts "="*80 + "\n"
-
-    if response.success?
-      puts "✅ Story created successfully!"
-      redirect_to admin_stories_path, notice: "Đã tạo câu chuyện thành công!"
-    else
-      puts "❌ Story creation failed!"
-      parsed = JSON.parse(response.body) rescue {}
-      flash.now[:alert] = "Lỗi khi tạo: #{parsed['message'] || 'Dữ liệu không hợp lệ'}"
-      @errors = parsed['errors'] || {}
-      @story = payload
-
-      render :new
-    end
-  rescue => e
-    puts "⚠️  Exception: #{e.message}"
-    puts e.backtrace.first(5)
-    redirect_to admin_stories_path, alert: "Lỗi: #{e.message}"
-  end
   def index
     @page_title = "Quản lý Câu chuyện Kanji"
 
@@ -155,6 +93,74 @@ class Admin::StoriesController < ApplicationController
     end
   rescue => e
     redirect_to admin_stories_path, alert: "Lỗi hệ thống: #{e.message}"
+  end
+
+  # ================= EDIT =================
+  def edit
+    response = HTTParty.get("#{BASE_URL}/#{params[:id]}", headers: API_HEADERS, verify: false)
+
+    if response.success?
+      json_body = JSON.parse(response.body)
+      @story = json_body["data"].is_a?(Array) ? json_body["data"].first : (json_body["data"] || {})
+
+      if @story.blank?
+        redirect_to admin_stories_path, alert: "Không tìm thấy câu chuyện."
+      end
+    else
+      redirect_to admin_stories_path, alert: "Không tìm thấy dữ liệu (API Error: #{response.code})."
+    end
+  rescue => e
+    puts ">>> LỖI TẠI EDIT: #{e.message}"
+    redirect_to admin_stories_path, alert: "Lỗi kết nối hệ thống: #{e.message}"
+  end
+
+  # ================= UPDATE =================
+  def update
+    story_id = params[:id]
+    kanji_story = params[:kanji_story]
+
+    if kanji_story.blank?
+      flash.now[:alert] = "Câu chuyện không được để trống"
+      response = HTTParty.get("#{BASE_URL}/#{story_id}", headers: API_HEADERS, verify: false)
+      @story = JSON.parse(response.body)["data"] rescue {}
+      render :edit
+      return
+    end
+
+    # Fetch current story to get kanji_text and kanji_id
+    current_response = HTTParty.get("#{BASE_URL}/#{story_id}", headers: API_HEADERS, verify: false)
+    
+    if !current_response.success?
+      flash.now[:alert] = "Lỗi: Không tìm thấy câu chuyện"
+      render :edit
+      return
+    end
+
+    current_story = JSON.parse(current_response.body)["data"] rescue {}
+    
+    payload = {
+      kanji_id: current_story["kanji_id"],
+      kanji_text: current_story["kanji_text"],
+      kanji_story: kanji_story,
+      approval_status: "approved"
+    }
+
+    response = HTTParty.put("#{BASE_URL}/#{story_id}",
+                            body: payload.to_json,
+                            headers: API_HEADERS,
+                            verify: false)
+
+    if response.success?
+      redirect_to admin_stories_path, notice: "Đã cập nhật câu chuyện thành công!"
+    else
+      error_msg = JSON.parse(response.body)["message"] rescue "Có lỗi từ backend"
+      flash.now[:alert] = "Cập nhật thất bại: #{error_msg}"
+      @story = current_story
+      render :edit
+    end
+  rescue => e
+    puts ">>> LỖI TẠI UPDATE: #{e.message}"
+    redirect_to admin_stories_path, alert: "Lỗi: #{e.message}"
   end
 
   # ================= APPROVE =================

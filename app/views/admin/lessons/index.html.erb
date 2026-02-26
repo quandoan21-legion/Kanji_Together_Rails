@@ -14,7 +14,7 @@
     .custom-pagination-bar a, .custom-pagination-bar span { min-width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; text-decoration: none; font-weight: 600; }
 
     /* Style tên bài học */
-    .lesson-name { font-weight: 700; color: #2c3e50; font-size: 1.1rem; }
+    .lesson-name { font-weight: 700; color: #2c3e50; font-size: 1.1rem; word-wrap: break-word; white-space: normal; }
     a.text-decoration-none:hover .lesson-name { color: #3b82f6; text-decoration: underline; }
 
     /* Ẩn trước các dòng để làm hiệu ứng hiện ra từ từ */
@@ -92,15 +92,7 @@
 
               <td class="align-middle">
                 <%= link_to admin_lesson_path(lesson["id"]), class: "text-decoration-none" do %>
-                  <%# --- QUAN TRỌNG: Sửa key "name" thành "kanji" để hiện tên --- %>
-                  <span class="lesson-name text-dark"><%= lesson["kanji"] || "---" %></span>
-                <% end %>
-
-                <%# Kiểm tra mô tả có tồn tại không %>
-                <% if lesson["lessonDescription"].present? %>
-                  <div class="text-muted small mt-1">
-                    <i class="fas fa-info-circle mr-1"></i><%= truncate(lesson["lessonDescription"], length: 50) %>
-                  </div>
+                  <span class="lesson-name text-dark"><%= lesson["kanji"].present? ? lesson["kanji"] : ("Lesson #" + lesson["id"].to_s) %></span>
                 <% end %>
               </td>
 
@@ -121,12 +113,8 @@
                   <i class="fas fa-eye"></i>
                 <% end %>
 
-                <%= link_to edit_admin_lesson_path(lesson["id"]), class: "btn btn-primary btn-circle mr-1", title: "Sửa" do %>
+                <%= link_to edit_admin_lesson_path(lesson["id"]), class: "btn btn-primary btn-circle", title: "Sửa" do %>
                   <i class="fas fa-edit"></i>
-                <% end %>
-
-                <%= button_to admin_lesson_path(lesson["id"]), method: :delete, class: "btn btn-danger btn-circle", form: {style: 'display:inline-block;'}, data: { confirm: "Bạn chắc chắn muốn xóa bài học này?" }, title: "Xóa" do %>
-                  <i class="fas fa-trash"></i>
                 <% end %>
               </td>
             </tr>

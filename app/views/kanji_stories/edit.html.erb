@@ -1,0 +1,44 @@
+<% content_for :title, "Edit Kanji Story" %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Edit Kanji Story</h4>
+        </div>
+        <div class="card-body">
+          <% if flash[:alert] %>
+            <div class="alert alert-danger alert-dismissible fade show">
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              <%= flash[:alert] %>
+            </div>
+          <% end %>
+
+          <%= form_with url: kanji_story_path(@story["id"]), method: :patch, local: true, id: "storyForm" do |f| %>
+            <div class="form-group mb-3">
+              <label for="kanji_text" class="form-label">Kanji Character</label>
+              <input type="text" class="form-control" value="<%= @story['kanji_text'] %>" disabled>
+            </div>
+
+            <div class="form-group mb-3">
+              <label for="kanji_story" class="form-label">Your Story <span class="text-danger">*</span></label>
+              <%= f.text_area :kanji_story, 
+                             class: "form-control", 
+                             id: "kanji_story",
+                             rows: 8,
+                             placeholder: "Write a memorable story to remember this kanji...",
+                             value: @story["kanji_story"],
+                             required: true %>
+            </div>
+
+            <div class="d-flex gap-2">
+              <%= f.submit "Update Story", class: "btn btn-primary" %>
+              <%= link_to "Back to Stories", kanji_stories_path, class: "btn btn-secondary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

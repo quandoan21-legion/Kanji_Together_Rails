@@ -22,13 +22,19 @@ Rails.application.routes.draw do
     resources :user_kanjis, only: [:index, :edit, :update, :destroy]
     resources :questions
     resources :exams
-    resources :stories, only: [:index, :show, :new, :create, :destroy] do
+    resources :stories, only: [:index, :show, :destroy, :edit, :update] do
       member do
         patch :approve
         put :approve
         patch :reject
         put :reject
       end
+    end
+  end
+
+  resources :kanji_stories, only: [:index, :new, :create, :edit, :update] do
+    collection do
+      post :generate_story
     end
   end
 end

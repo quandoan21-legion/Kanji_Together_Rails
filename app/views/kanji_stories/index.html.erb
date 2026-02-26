@@ -1,0 +1,63 @@
+<% content_for :title, "Kanji Stories" %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Kanji Stories</h2>
+        <%= link_to "Create Story", new_kanji_story_path, class: "btn btn-primary" %>
+      </div>
+
+      <% if flash[:notice] %>
+        <div class="alert alert-success alert-dismissible fade show">
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          <%= flash[:notice] %>
+        </div>
+      <% end %>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead class="table-light">
+              <tr>
+                <th width="15%">Kanji</th>
+                <th>Story</th>
+                <th width="15%" class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="3" class="text-center py-5 text-muted">
+                  No stories yet. <%= link_to "Create your first story", new_kanji_story_path %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .action-buttons { 
+    display: flex; 
+    gap: 8px; 
+    justify-content: center; 
+  }
+  .action-buttons a, .action-buttons button { 
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-icon {
+    width: 40px;
+    height: 40px;
+    padding: 8px !important;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

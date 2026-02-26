@@ -1,0 +1,145 @@
+<% content_for :title, "Create Kanji Story" %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Create Kanji Story</h4>
+        </div>
+        <div class="card-body">
+          <% if flash[:alert] %>
+            <div class="alert alert-danger alert-dismissible fade show">
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              <%= flash[:alert] %>
+            </div>
+          <% end %>
+
+          <%= form_with url: kanji_stories_path, method: :post, local: true, id: "storyForm" do |f| %>
+            <div class="form-group mb-3">
+              <label for="kanji_text" class="form-label">Select Kanji <span class="text-danger">*</span></label>
+              <select id="kanji_selector" class="form-select" required style="width: 100%;">
+                <option value="">Choose a Kanji...</option>
+                <% @kanji_list.each do |k| %>
+                  <option value="<%= k['id'] %>" data-kanji-text="<%= k['kanji'] %>">
+                    <%= k['kanji'] %> - <%= k['meaning'] || k['translation'] %>
+                  </option>
+                <% end %>
+              </select>
+            </div>
+
+            <div class="form-group mb-4" id="kanjiDisplayContainer" style="display: none;">
+              <label class="form-label">Kanji Character</label>
+              <div class="kanji-display-hero" id="kanjiDisplayHero"></div>
+            </div>
+
+            <%= f.hidden_field :kanji_id, id: "kanji_id" %>
+            <%= f.hidden_field :kanji_text, id: "kanji_text" %>
+
+            <div class="form-group mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label for="kanji_story" class="form-label">Your Story <span class="text-danger">*</span></label>
+                <button type="button" class="btn btn-sm btn-outline-info" id="generateBtn" disabled>
+                  <i class="fas fa-wand-magic-sparkles mr-1"></i> Generate Story
+                </button>
+              </div>
+              <%= f.text_area :kanji_story, 
+                             class: "form-control", 
+                             id: "kanji_story",
+                             rows: 8,
+                             placeholder: "Write a memorable story to remember this kanji...",
+                             required: true %>
+            </div>
+
+            <div class="d-flex gap-2">
+              <%= f.submit "Create Story", class: "btn btn-primary" %>
+              <%= link_to "Back to Stories", kanji_stories_path, class: "btn btn-secondary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .kanji-display-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 50px 40px;
+    text-align: center;
+    font-size: 5rem;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 10px;
+    margin-bottom: 20px;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const selector = document.getElementById('kanji_selector');
+  const kanjiIdInput = document.getElementById('kanji_id');
+  const kanjiTextInput = document.getElementById('kanji_text');
+  const kanjiDisplayContainer = document.getElementById('kanjiDisplayContainer');
+  const kanjiDisplayHero = document.getElementById('kanjiDisplayHero');
+  const generateBtn = document.getElementById('generateBtn');
+  const kanjiStory = document.getElementById('kanji_story');
+
+  selector.addEventListener('change', function() {
+    const option = selector.options[selector.selectedIndex];
+    if (option.value) {
+      kanjiIdInput.value = option.value;
+      kanjiTextInput.value = option.dataset.kanjiText;
+      kanjiDisplayHero.textContent = option.dataset.kanjiText;
+      kanjiDisplayContainer.style.display = 'block';
+      generateBtn.disabled = false;
+    } else {
+      kanjiIdInput.value = '';
+      kanjiTextInput.value = '';
+      kanjiDisplayContainer.style.display = 'none';
+      generateBtn.disabled = true;
+    }
+  });
+
+  generateBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const kanji = kanjiTextInput.value;
+    if (!kanji) {
+      alert('Please select a kanji first');
+      return;
+    }
+
+    generateBtn.disabled = true;
+    generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Generating...';
+
+    fetch('<%= generate_story_kanji_stories_path %>', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ kanji: kanji })
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success && data.story) {
+        kanjiStory.value = data.story;
+        kanjiStory.style.borderColor = '#28a745';
+      } else {
+        alert('Failed to generate story: ' + (data.error || 'Unknown error'));
+      }
+    })
+    .catch(err => {
+      alert('Error generating story: ' + err.message);
+    })
+    .finally(() => {
+      generateBtn.disabled = false;
+      generateBtn.innerHTML = '<i class="fas fa-wand-magic-sparkles mr-1"></i> Generate Story';
+    });
+  });
+});
+</script>
+

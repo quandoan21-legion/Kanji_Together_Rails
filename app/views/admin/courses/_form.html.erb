@@ -22,7 +22,7 @@
           <%= f.select :category,
                        options_for_select([["GENERAL", "GENERAL"], ["GRAMMAR", "GRAMMAR"], ["JLPT", "JLPT"], ["KANJI", "KANJI"], ["VOCAB", "VOCAB"]], @course["category"]),
                        { include_blank: "-- Chọn --" },
-                       class: "form-control" %>
+                       class: "form-control", required: true %>
         </div>
       </div>
 
@@ -33,20 +33,18 @@
 
       <div class="form-row">
         <div class="form-group col-md-6">
-          <%= f.label :thumbnail_url, "Thumbnail URL" %>
-          <%= f.text_field :thumbnail_url, value: @course["thumbnail_url"], class: "form-control" %>
+          <%= f.label :time_to_finish, "Thời gian hoàn thành <span class='text-danger'>*</span>" %>
+          <%= f.text_field :time_to_finish, value: @course["time_to_finish"], class: "form-control", placeholder: "Ví dụ: 4 weeks", required: true %>
         </div>
         <div class="form-group col-md-6">
-          <%= f.label :cover_image_url, "Cover Image URL" %>
-          <%= f.text_field :cover_image_url, value: @course["cover_image_url"], class: "form-control" %>
+          <%= f.label :thumbnail_url, "URL hình thumbnail" %>
+          <%= f.text_field :thumbnail_url, value: @course["thumbnail_url"], class: "form-control", placeholder: "https://example.com/thumb.jpg" %>
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <%= f.label :time_to_finish, "Thời gian hoàn thành" %>
-          <%= f.text_field :time_to_finish, value: @course["time_to_finish"], class: "form-control" %>
-        </div>
+      <div class="form-group">
+        <%= f.label :cover_image_url, "URL ảnh bìa" %>
+        <%= f.text_field :cover_image_url, value: @course["cover_image_url"], class: "form-control", placeholder: "https://example.com/cover.jpg" %>
       </div>
 
       <div class="form-group">
@@ -166,10 +164,9 @@
                 <span class="lesson-title font-weight-bold text-secondary" style="font-size: 1.4rem;">${title}</span>
               </div>
               <div class="flex-grow-1" style="line-height: 1.2;">
-                <div class="font-weight-bold text-dark">${desc ? desc.slice(0, 40) : `Bài học #${lesson.id}`}</div>
+                <div class="font-weight-bold text-dark">${desc ? desc : `Bài học #${lesson.id}`}</div>
                 <div class="small text-muted mt-1">
                   ${jlpt ? `<span class="badge badge-light border">${jlpt}</span>` : ''}
-                  ID: ${lesson.id}
                 </div>
               </div>
               <div class="check-icon text-info ml-2" style="display: none;">
@@ -223,15 +220,7 @@
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(function() {
           if (term.length < 1) {
-            if (selectedIds().length > 0) {
-              return;
-            }
-            grid.innerHTML = `
-              <div class="col-12 text-center text-muted py-5">
-                <i class="fas fa-search fa-2x mb-2 text-gray-300"></i><br>
-                Nhập từ khóa để tìm bài học.
-              </div>
-            `;
+            fetchLessons('');
             return;
           }
           fetchLessons(term);
@@ -240,5 +229,6 @@
     }
 
     updateCount();
+    fetchLessons('');
   })();
 </script>

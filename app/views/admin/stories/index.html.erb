@@ -55,7 +55,7 @@
       </h3>
     </div>
     <div class="col-sm-6 text-right">
-      <%= link_to new_admin_story_path, class: "btn btn-success shadow-sm rounded-pill px-4 font-weight-bold" do %>
+      <%= link_to new_kanji_story_path, class: "btn btn-success shadow-sm rounded-pill px-4 font-weight-bold" do %>
         <i class="fas fa-plus-circle mr-1"></i> Tạo Mới
       <% end %>
     </div>
@@ -144,8 +144,11 @@
                   <%= link_to admin_story_path(s["id"]), class: "btn btn-info btn-circle", title: "Xem chi tiết" do %>
                     <i class="fas fa-eye"></i>
                   <% end %>
+                  <%= link_to edit_admin_story_path(s["id"]), class: "btn btn-primary btn-circle", title: "Sửa" do %>
+                    <i class="fas fa-edit"></i>
+                  <% end %>
                   <% if is_pending %>
-                    <%= link_to admin_story_path(s["id"]), class: "btn btn-primary btn-circle", title: "Duyệt" do %>
+                    <%= link_to admin_story_path(s["id"]), class: "btn btn-success btn-circle", title: "Duyệt" do %>
                       <i class="fas fa-check"></i>
                     <% end %>
                   <% end %>

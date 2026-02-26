@@ -9,24 +9,6 @@ class Admin::KanjisController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:approve, :reject]
 
   # ================= SEARCH (FOR SELECT2) =================
-  def search
-    java_params = {
-      search: params[:search],
-      is_active: true,
-      size: params[:size] || 20,
-      page: params[:page] || 0
-    }
-
-    response = HTTParty.get(BASE_URL, query: java_params, headers: API_HEADERS, verify: false)
-
-    if response.success?
-      render json: response.body
-    else
-      render json: { error: "API Error" }, status: :bad_gateway
-    end
-  rescue => e
-    render json: { error: e.message }, status: :internal_server_error
-  end
 
   # ================= INDEX =================
   def index

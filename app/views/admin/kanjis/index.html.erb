@@ -160,9 +160,6 @@
                   <% else %>
                     <%= link_to edit_admin_kanji_path(k["id"]), class: "btn btn-primary btn-circle mr-2", title: "Sửa" do %> <i class="fas fa-edit"></i> <% end %>
                   <% end %>
-                  <% if status != 'PENDING' %>
-                    <%= button_to admin_kanji_path(k["id"]), method: :delete, class: "btn btn-danger btn-circle shadow-xs", data: { confirm: "Xóa vĩnh viễn Kanji này?" }, title: "Xóa" do %> <i class="fas fa-trash"></i> <% end %>
-                  <% end %>
                 </div>
               </td>
             </tr>

@@ -44,40 +44,137 @@ class Admin::CoursesController < ApplicationController
   end
 
   def create
-    payload = course_payload
-    response = HTTParty.post(API_URL, headers: API_HEADERS, body: payload.to_json)
+    course_data = course_payload
+    lesson_data = course_lesson_payload
+    lesson_ids = lesson_data[:lesson_ids]
+    
+    puts "\n" + "="*80
+    puts "🔵 [CREATE COURSE] STEP 1: CREATE COURSE"
+    puts "="*80
+    puts "Payload: #{course_data.to_json}"
+    puts "URL: #{API_URL}"
+    puts "="*80 + "\n"
+    
+    response = HTTParty.post(API_URL, headers: API_HEADERS, body: course_data.to_json)
+    
+    puts "\n" + "="*80
+    puts "🔵 [CREATE COURSE] RESPONSE"
+    puts "="*80
+    puts "Status Code: #{response.code}"
+    puts "Response Body: #{response.body}"
+    puts "="*80 + "\n"
+    
     if response.success?
-      redirect_to admin_courses_path, notice: "Tạo khóa học thành công!"
+      course_response = JSON.parse(response.body)["data"] || {}
+      course_id = course_response["id"]
+      
+      # Step 2: Link lessons if any were selected
+      if lesson_ids.any?
+        puts "\n" + "="*80
+        puts "🔵 [CREATE COURSE] STEP 2: LINK LESSONS"
+        puts "="*80
+        puts "Course ID: #{course_id}"
+        puts "Lesson IDs: #{lesson_ids.inspect}"
+        
+        # Merge course data with lesson_ids for the PUT request
+        update_payload = course_data.merge(lesson_ids: lesson_ids)
+        puts "Payload: #{update_payload.to_json}"
+        puts "URL: #{API_URL}/#{course_id}"
+        puts "="*80 + "\n"
+        
+        lesson_response = HTTParty.put("#{API_URL}/#{course_id}", 
+                                       headers: API_HEADERS, 
+                                       body: update_payload.to_json)
+        
+        puts "\n" + "="*80
+        puts "🔵 [CREATE COURSE] LESSON LINK RESPONSE"
+        puts "="*80
+        puts "Status Code: #{lesson_response.code}"
+        puts "Response Body: #{lesson_response.body}"
+        puts "="*80 + "\n"
+        
+        if lesson_response.success?
+          redirect_to admin_courses_path, notice: "Tạo khóa học và liên kết bài học thành công!"
+        else
+          error_msg = JSON.parse(lesson_response.body)["message"] rescue "Có lỗi từ server"
+          redirect_to admin_courses_path, alert: "Tạo khóa học thành công nhưng liên kết bài học thất bại: #{error_msg}"
+        end
+      else
+        redirect_to admin_courses_path, notice: "Tạo khóa học thành công!"
+      end
     else
       error_msg = JSON.parse(response.body)["message"] rescue "Có lỗi từ server"
       flash.now[:alert] = "Tạo thất bại: #{error_msg}"
-      @course = payload
-      load_selected_lessons(payload[:lesson_ids])
+      @course = course_data
+      load_selected_lessons(lesson_ids)
       render :new
     end
   rescue StandardError => e
     flash.now[:alert] = "Lỗi kết nối: #{e.message}"
-    @course = payload
-    load_selected_lessons(payload[:lesson_ids])
+    @course = course_data
+    load_selected_lessons(lesson_ids)
     render :new
   end
 
   def update
-    payload = course_payload
-    response = HTTParty.put("#{API_URL}/#{params[:id]}", headers: API_HEADERS, body: payload.to_json)
+    course_data = course_payload
+    lesson_data = course_lesson_payload
+    lesson_ids = lesson_data[:lesson_ids]
+    
+    puts "\n" + "="*80
+    puts "🔵 [UPDATE COURSE] STEP 1: UPDATE COURSE DATA"
+    puts "="*80
+    puts "Course ID: #{params[:id]}"
+    puts "Payload: #{course_data.to_json}"
+    puts "URL: #{API_URL}/#{params[:id]}"
+    puts "="*80 + "\n"
+    
+    response = HTTParty.put("#{API_URL}/#{params[:id]}", headers: API_HEADERS, body: course_data.to_json)
+    
+    puts "\n" + "="*80
+    puts "🔵 [UPDATE COURSE] RESPONSE"
+    puts "="*80
+    puts "Status Code: #{response.code}"
+    puts "Response Body: #{response.body}"
+    puts "="*80 + "\n"
+    
     if response.success?
+      # Step 2: Update lessons - send full course data + lesson_ids
+      puts "\n" + "="*80
+      puts "🔵 [UPDATE COURSE] STEP 2: LINK LESSONS"
+      puts "="*80
+      puts "Course ID: #{params[:id]}"
+      puts "Lesson IDs: #{lesson_ids.inspect}"
+      
+      # Merge course data with lesson_ids for the PUT request
+      update_payload = course_data.merge(lesson_ids: lesson_ids)
+      puts "Payload: #{update_payload.to_json}"
+      puts "URL: #{API_URL}/#{params[:id]}"
+      puts "="*80 + "\n"
+      
+      lesson_response = HTTParty.put("#{API_URL}/#{params[:id]}", 
+                                     headers: API_HEADERS, 
+                                     body: update_payload.to_json)
+      
+      puts "\n" + "="*80
+      puts "🔵 [UPDATE COURSE] LESSON LINK RESPONSE"
+      puts "="*80
+      puts "Status Code: #{lesson_response.code}"
+      puts "Response Body: #{lesson_response.body}"
+      puts "="*80 + "\n"
+      
       redirect_to admin_courses_path, notice: "Cập nhật khóa học thành công!"
     else
       error_msg = JSON.parse(response.body)["message"] rescue "Có lỗi từ server"
       flash.now[:alert] = "Cập nhật thất bại: #{error_msg}"
-      @course = payload.merge("id" => params[:id])
-      load_selected_lessons(payload[:lesson_ids])
+      @course = course_data.merge("id" => params[:id])
+      load_selected_lessons(lesson_ids)
       render :edit
     end
   rescue StandardError => e
     flash.now[:alert] = "Lỗi kết nối: #{e.message}"
-    @course = payload.merge("id" => params[:id])
-    load_selected_lessons(payload[:lesson_ids])
+    @course = course_data.merge("id" => params[:id])
+    load_selected_lessons(lesson_ids)
     render :edit
   end
 
@@ -117,9 +214,6 @@ class Admin::CoursesController < ApplicationController
 
   def course_payload
     raw = params[:course] || {}
-    lesson_ids = raw[:lesson_ids]
-    lesson_ids = lesson_ids.split(",") if lesson_ids.is_a?(String)
-    lesson_ids = Array(lesson_ids).reject(&:blank?).map(&:to_i)
 
     {
       name: raw[:name],
@@ -127,7 +221,17 @@ class Admin::CoursesController < ApplicationController
       category: raw[:category],
       thumbnail_url: raw[:thumbnail_url],
       cover_image_url: raw[:cover_image_url],
-      time_to_finish: raw[:time_to_finish],
+      time_to_finish: raw[:time_to_finish]
+    }
+  end
+
+  def course_lesson_payload
+    raw = params[:course] || {}
+    lesson_ids = raw[:lesson_ids]
+    lesson_ids = lesson_ids.split(",") if lesson_ids.is_a?(String)
+    lesson_ids = Array(lesson_ids).reject(&:blank?).map(&:to_i)
+
+    {
       lesson_ids: lesson_ids
     }
   end

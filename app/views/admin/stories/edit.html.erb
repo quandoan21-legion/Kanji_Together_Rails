@@ -1,0 +1,110 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Edit Kanji Story</h4>
+        </div>
+        <div class="card-body">
+          <% if flash[:alert] %>
+            <div class="alert alert-danger alert-dismissible fade show">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <%= flash[:alert] %>
+            </div>
+          <% end %>
+
+          <%= form_with url: admin_story_path(@story["id"]), method: :patch, local: true, id: "storyForm" do |f| %>
+            <div class="form-group mb-4">
+              <label class="form-label">Kanji Character</label>
+              <div class="kanji-display-hero">
+                <%= @story["kanji_text"] %>
+              </div>
+            </div>
+
+            <div class="form-group mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label for="kanji_story" class="form-label">Câu chuyện <span class="text-danger">*</span></label>
+
+              </div>
+              <%= f.text_area :kanji_story, 
+                             class: "form-control", 
+                             id: "kanji_story",
+                             rows: 8,
+                             placeholder: "Nhập câu chuyện...",
+                             value: @story["kanji_story"],
+                             required: true %>
+            </div>
+
+            <div class="d-flex gap-2">
+              <%= f.submit "Lưu thay đổi", class: "btn btn-primary" %>
+              <%= link_to "Quay lại", admin_stories_path, class: "btn btn-secondary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .kanji-display-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 50px 40px;
+    text-align: center;
+    font-size: 5rem;
+    font-weight: bold;
+    color: white;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 10px;
+    margin-bottom: 20px;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const generateBtn = document.getElementById('generateBtn');
+  const kanjiStory = document.getElementById('kanji_story');
+  const kanji = '<%= @story["kanji_text"] %>';
+
+  if (generateBtn) {
+    generateBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const kanji = '<%= @story["kanji_text"] %>';
+      if (!kanji) {
+        alert('Kanji not found');
+        return;
+      }
+
+      generateBtn.disabled = true;
+      generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i> Generating...';
+
+      fetch('<%= generate_story_kanji_stories_path %>', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ kanji: kanji })
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.success && data.story) {
+          kanjiStory.value = data.story;
+          kanjiStory.style.borderColor = '#28a745';
+        } else {
+          alert('Failed to generate story: ' + (data.error || 'Unknown error'));
+        }
+      })
+      .catch(err => {
+        alert('Error generating story: ' + err.message);
+      })
+      .finally(() => {
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = '<i class="fas fa-wand-magic-sparkles mr-1"></i> Generate Story';
+      });
+    });
+  }
+});
+</script>
